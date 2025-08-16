@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitch Chat-Befehle</title>
+    <style>
+        @keyframes fadeInFromTop {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes growIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #000000; 
+            color: #e0e0e0; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        h1 { 
+            color: #ff3333; 
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+            margin-bottom: 5px; 
+            opacity: 0; 
+            animation: fadeInFromTop 0.6s ease-out forwards; 
+            z-index: 2;
+        }
+        
+        .prefix-container { 
+            margin-bottom: 20px; 
+            font-size: 1.1em; 
+            font-weight: bold;
+            color: #e0e0e0; 
+            background-color: #1a1a1a;
+            border: 1px solid #ff3333;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            border-radius: 8px;
+            padding: 10px 20px;
+            text-align: center;
+            opacity: 0; 
+            animation: fadeInFromTop 0.6s ease-out 0.2s forwards; 
+            z-index: 2;
+        }
+        
+        table { 
+            width: 100%; 
+            max-width: 800px; 
+            border-collapse: collapse; 
+            background-color: #1a1a1a; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            border: 1px solid #ff3333;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            opacity: 0; 
+            animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
+            z-index: 2;
+        }
+        
+        thead tr { 
+            opacity: 0; 
+            animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
+        }
+        th, td { 
+            padding: 18px 20px; 
+            text-align: left; 
+            border-bottom: 1px solid #330000; 
+            color: #e0e0e0;
+        }
+        th { 
+            background-color: #4d0000;
+            color: #ffffff; 
+            font-weight: bold; 
+            cursor: pointer; 
+            user-select: none; 
+            position: relative; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        th:hover { 
+            background-color: #660000; 
+        }
+        th.sorted { 
+            background-color: #660000; 
+        }
+        
+        .sort-icon { 
+            position: absolute; 
+            right: 20px; 
+            top: 50%;
+            transform: translateY(-50%);
+            color: inherit; 
+        }
+        
+        tr:hover { 
+            background-color: #220000; 
+        }
+        
+        #sort-command { 
+            width: 25%; 
+        }
+        #sort-shortcut { 
+            width: 25%; 
+        }
+        
+        tr { 
+            opacity: 0; 
+        }
+        tr.animated { 
+            animation: slideInUp 0.5s ease-out forwards; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Twitch Bot-Befehle</h1>
+    <div class="prefix-container">
+        Bot-Prefix: !
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th id="sort-command" data-sort-order="asc">Befehl <span class="sort-icon"></span></th>
+                <th id="sort-shortcut" data-sort-order="asc">Kürzel <span class="sort-icon"></span></th>
+                <th id="sort-description" data-sort-order="asc">Beschreibung<span class="sort-icon"></span></th>
+            </tr>
+        </thead>
+        <tbody id="command-table-body">
+
+            <tr>
+                <td>beleidigung</td>
+                <td>beleidigen</td>
+                <td>Ein Spaßbefehl mit dem man jemanden Beleidigen kann. (Es gibt mehrere Szenarien, die auftreten können als Beleidigung)</td>
+            </tr>
+            <tr>
+                <td>biddää</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem man.... Joa gute Frage eigentlich... xDD</td>
+            </tr>
+            <tr>
+                <td>bug</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem man mein Bot ein Statement zu seinen Bugs gibt.</td>
+            </tr>
+            <tr>
+                <td>cheater</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem man jemanden als Cheater enttarnt und dem auf entsprechende Plattform canceln sollte.</td>
+            </tr>
+            <tr>
+                <td>dc</td>
+                <td>dc</td>
+                <td>Ein Befehl mit dem man den Link zum Discord-Server von Flo bekommt.</td>
+            </tr>
+            <tr>
+                <td>dtest</td>
+                <td>dtest</td>
+                <td>Ein Spaßbefehl mit dem man testen kann, ob man schlauer oder dümmer als Flo ist.</td>
+            </tr>
+            <tr>
+                <td>dämlichkeitstest</td>
+                <td>dätest</td>
+                <td>Ein Spaßbefehl mit dem man testen kann, wie dähhmlich jemand ist. (bewusst mit H geschrieben)</td>
+            </tr>
+            <tr>
+                <td>fc</td>
+                <td>-</td>
+                <td>Ein Befehl mit dem man den Freundescode von Flo bekommt.</td>
+            </tr>
+            <tr>
+                <td>flotator</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem ein Zeichen setzt, dass Flo seine Macht missbraucht.</td>
+            </tr>
+            <tr>
+                <td>followage</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem ein überprüfen kann, wie lange jemand schon dem Kanal folgt, bzw. ob die Person überhaupt folgt.</td>
+            </tr>
+            <tr>
+                <td>geschenk</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem ein jemanden ein Geschenk machen kann.</td>
+            </tr>
+            <tr>
+                <td>itest</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl der nur existiert, weil Meisti einen itest verlangte, bzw. weil das große I schwer von einem Kleinen L unterscheidbar ist.</td>
+            </tr>
+            <tr>
+                <td>jumpscare</td>
+                <td>js</td>
+                <td>Ein Soundalert Befehl mit dem man einen Jumpscare auslösen kann. (Wichtiger Hinweis: Der Jumpscare wird bewusst mit einer zufälligen Verzögerung ausgelöst, um den Überraschungseffekt zu erhöhen)</td>
+            </tr>
+            <tr>
+                <td>keks</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem man zeigen kann, dass man mit jemanden seinen Keks teilen würde, wenn der Keks nur echt wäre</td>
+            </tr>
+            <tr>
+                <td>liebestest</td>
+                <td>ltest</td>
+                <td>Ein Spaßbefehl mit dem man testen kann, wie sehr jemand eine Person, bzw. sich selbst liebt.</td>
+            </tr>
+            <tr>
+                <td>lostheitstest</td>
+                <td>lotest</td>
+                <td>Ein Spaßbefehl mit dem man testen kann, wie lost jemand ist.</td>
+            </tr>
+            <tr>
+                <td>lurk</td>
+                <td>-</td>
+                <td>Ein Befehl mit dem man bescheid geben kann, dass man in den Lurk geht.</td>
+            </tr>
+            <tr>
+                <td>setgame</td>
+                <td>game</td>
+                <td>Ein Befehl rein für Mods, mit dem das gestreamte Game geändert werden kann</td>
+            </tr>
+            <tr>
+                <td>settitle</td>
+                <td>title</td>
+                <td>Ein Befehl rein für Mods, mit dem der Streamtitel geändert werden kann</td>
+            </tr>
+            <tr>
+                <td>shoutout</td>
+                <td>so</td>
+                <td>Ein Befehl rein für Mods um jemanden einen Shoutout zu geben</td>
+            </tr>
+            <tr>
+                <td>streik</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl, der ein Zeichen setzt.</td>
+            </tr>
+            <tr>
+                <td>test</td>
+                <td>-</td>
+                <td>Ein Befehl mit dem man den testen kann, ob der Bot auf Befehle reagiert oder ein Fehler vorliegt.</td>
+            </tr>
+            <tr>
+                <td>unlurk</td>
+                <td>-</td>
+                <td>Ein Befehl mit dem man mitteilen kann, dass man nun nicht mehr lurkt.</td>
+            </tr>
+            <tr>
+                <td>vod</td>
+                <td>-</td>
+                <td>Ein Befehl mit dem man den Link direkt zu Flos VOD Kanal bekommt.</td>
+            </tr>
+            <tr>
+                <td>ytb</td>
+                <td>-</td>
+                <td>Ein Befehl mit dem man den Link direkt zu Flos Best of Kanal bekommt.</td>
+            </tr>
+            <tr>
+                <td>ytlp</td>
+                <td>-</td>
+                <td>Ein Befehl mit dem man den Link direkt zu Flos LP Kanal bekommt.</td>
+            </tr>
+            <tr>
+                <td>votebann</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne bannen würde.</td>
+            </tr>
+            <tr>
+                <td>voteja</td>
+                <td>ja</td>
+                <td>Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dafür ist.</td>
+            </tr>
+            <tr>
+                <td>votejain</td>
+                <td>jain</td>
+                <td>Wenn ein Voting aktiv ist, kanns man damit den Zufall entscheiden lassen, ob man dafür oder dagegen ist.</td>
+            </tr>
+            <tr>
+                <td>votenein</td>
+                <td>nein</td>
+                <td>Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dagegen ist.</td>
+            </tr>
+            <tr>
+                <td>votetimeout</td>
+                <td>-</td>
+                <td>Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne timeouten würde.</td>
+            </tr>
+            <tr>
+                <td>commands</td>
+                <td>-</td>
+                <td>Ein Befehl, der alle verfügbaren Befehle auflistet.</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function applyRowAnimation(delay = 0.8) {
+            const rows = document.querySelectorAll('#command-table-body tr');
+            rows.forEach((row, index) => {
+                row.classList.remove('animated');
+                void row.offsetWidth; // Trigger reflow
+                row.classList.add('animated');
+                row.style.animationDelay = `${delay + index * 0.05}s`;
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => applyRowAnimation(0.8));
+
+        let currentSortColumn = null;
+        let sortOrder = 'asc';
+
+        function sortTableByColumn(columnId) {
+            const tableBody = document.getElementById('command-table-body');
+            const header = document.getElementById(columnId);
+            
+            if (currentSortColumn !== columnId) {
+                sortOrder = 'asc';
+                if (currentSortColumn) {
+                    document.getElementById(currentSortColumn).classList.remove('sorted');
+                }
+            } else {
+                sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+            }
+            currentSortColumn = columnId;
+            header.classList.add('sorted');
+
+            const columnIndex = header.cellIndex;
+            const rows = Array.from(tableBody.rows);
+            
+            const sortedRows = rows.sort((a, b) => {
+                const aText = a.cells[columnIndex].textContent.toLowerCase();
+                const bText = b.cells[columnIndex].textContent.toLowerCase();
+
+                let comparison = 0;
+
+                if (columnId === 'sort-shortcut') {
+                    const aIsSpecial = !/^[a-z0-9]/.test(aText);
+                    const bIsSpecial = !/^[a-z0-9]/.test(bText);
+
+                    if (aIsSpecial && !bIsSpecial) {
+                        comparison = 1;
+                    } else if (!aIsSpecial && bIsSpecial) {
+                        comparison = -1;
+                    } else {
+                        comparison = aText.localeCompare(bText);
+                    }
+                } else {
+                    comparison = aText.localeCompare(bText);
+                }
+
+                return sortOrder === 'asc' ? comparison : -comparison;
+            });
+
+            sortedRows.forEach(row => tableBody.appendChild(row));
+            
+            applyRowAnimation(0);
+
+            document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
+            header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
+        }
+
+        document.getElementById('sort-command').onclick = () => sortTableByColumn('sort-command');
+        document.getElementById('sort-shortcut').onclick = () => sortTableByColumn('sort-shortcut');
+        document.getElementById('sort-description').onclick = () => sortTableByColumn('sort-description');
+    </script>
+</body>
+</html>
