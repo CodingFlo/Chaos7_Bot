@@ -30,13 +30,47 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
+            position: relative;
+            overflow-x: hidden;
+            z-index: 1;
         }
+
+        /* --- Animierter Sternenhimmel-Hintergrund --- */
+        .stars, .twinkling, .clouds {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        .stars {
+            background: #000 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0AdHcZ1IAAAAhSURBVFhH7c6hAQAgEAPB1P8B9r5VwI9Cg0Hl9gT2t+UuAC0V8+W7YyX1AAAAAElFTkSuQmCC') repeat top center;
+            z-index: -3;
+        }
+        
+        .twinkling{
+            background:transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0AdHcZ1IAAAAiSURBVFhH7c6xEQAgEAPBMf8H1k8E0zFq8eLh9fWpA+gGg/D/77m2G9cAAAAASUVORK5CYII=') repeat top center;
+            animation: move-twink-back 200s linear infinite;
+            z-index: -2;
+        }
+
+        @keyframes move-twink-back {
+            from {background-position:0 0;}
+            to {background-position:-10000px 5000px;}
+        }
+
+        /* --- Ende Hintergrund --- */
         
         h1 { 
             color: #ff3333; 
             margin-bottom: 5px; 
             opacity: 0; 
             animation: fadeInFromTop 0.6s ease-out forwards; 
+            z-index: 2;
         }
         
         .prefix-container { 
@@ -45,6 +79,7 @@
             color: #ffffff; 
             opacity: 0; 
             animation: fadeInFromTop 0.6s ease-out 0.2s forwards; 
+            z-index: 2;
         }
         
         table { 
@@ -57,6 +92,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 0 10px #ff333330;
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
+            z-index: 2;
         }
         
         thead tr { 
@@ -113,6 +149,8 @@
     </style>
 </head>
 <body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
     <h1>Twitch Bot-Befehle</h1>
     <div class="prefix-container">
         Bot-Prefix: !
