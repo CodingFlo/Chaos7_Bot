@@ -137,7 +137,7 @@
             <tr>
                 <th id="sort-command" data-sort-order="asc">Befehl <span class="sort-icon"></span></th>
                 <th id="sort-shortcut" data-sort-order="asc">Kürzel <span class="sort-icon"></span></th>
-                <th>Beschreibung</th>
+                <th id="sort-description" data-sort-order="asc">Beschreibung<span class="sort-icon"></span></th>
             </tr>
         </thead>
         <tbody id="command-table-body">
@@ -372,6 +372,7 @@
 
         document.getElementById('sort-command').onclick = () => sortTableByColumn('sort-command');
         document.getElementById('sort-shortcut').onclick = () => sortTableByColumn('sort-shortcut');
+        document.getElementById('sort-description').onclick = () => sortTableByColumn('sort-description');
     </script>
 </body>
 </html>
