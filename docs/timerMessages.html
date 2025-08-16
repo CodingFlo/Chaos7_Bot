@@ -111,13 +111,11 @@
         }
         
         #sort-message { 
-            width: 40%; 
-        }
-        #sort-interval { 
-            width: 20%; 
+            width: 70%;
         }
         #sort-min-messages { 
-            width: 20%; 
+            width: 30%; 
+            text-align: center;
         }
         
         tr { 
@@ -131,47 +129,40 @@
 <body>
     <h1>Twitch Timer-Nachrichten</h1>
     <div class="prefix-container">
-        Das sind Nachrichten, die automatisch gesendet werden.
+        Intervall: 30 Minuten | Mind. Nachrichten: 30
     </div>
     <table>
         <thead>
             <tr>
                 <th id="sort-message" data-sort-order="asc">Nachricht <span class="sort-icon"></span></th>
-                <th id="sort-interval" data-sort-order="asc">Intervall (Minuten) <span class="sort-icon"></span></th>
                 <th id="sort-min-messages" data-sort-order="asc">Mind. Nachrichten <span class="sort-icon"></span></th>
             </tr>
         </thead>
         <tbody id="command-table-body">
 
             <tr>
-                <td>undefined</td>
-                <td>undefined</td>
-                <td>undefined</td>
+                <td>Du willst einen geistigen Keks teilen, jemanden beleidigen, einen IQ-Test oder einen Dämlichkeits-Test durchführen? Dann probiere doch mal !keks, !beleidigung, !dtest und !dätest im Chat aus! :D</td>
+                <td style="text-align: center;">30</td>
             </tr>
             <tr>
-                <td>undefined</td>
-                <td>undefined</td>
-                <td>undefined</td>
+                <td>Du willst keinen weiteren Stream verpassen oder Flo eine Freude machen? Dann folge doch rein :D</td>
+                <td style="text-align: center;">30</td>
             </tr>
             <tr>
-                <td>undefined</td>
-                <td>undefined</td>
-                <td>undefined</td>
+                <td>Du willst wissen wo Flo noch überall unterwegs ist? Ja dann nutz doch mal !ytb, !ytlp, !yto oder !dc :D</td>
+                <td style="text-align: center;">30</td>
             </tr>
             <tr>
-                <td>undefined</td>
-                <td>undefined</td>
-                <td>undefined</td>
+                <td>Wusstest du schon das es Alert-Commands gibt? Nein? Dann probier doch mal !js ;)</td>
+                <td style="text-align: center;">30</td>
             </tr>
             <tr>
-                <td>undefined</td>
-                <td>undefined</td>
-                <td>undefined</td>
+                <td>Du willst wissen wie viel dein Bot Wert ist? Dann probier doch mal !commands im chat aus! :D (manche Befehle können nur von Mods genutzt werden)</td>
+                <td style="text-align: center;">30</td>
             </tr>
             <tr>
-                <td>undefined</td>
-                <td>undefined</td>
-                <td>undefined</td>
+                <td>Auch wenn flo derzeitig keine Videos hochlädt, ist er bei Christarios Mario Kart world Projekt dabei! Würde mich freuen, wenn ihr dort mal vorbeischauen würdet! :D https://www.youtube.com/watch?v=GkqULK7U-wY&list=PLssKwqO3-TtutsLxseh8TfyFKtvP4I7rc</td>
+                <td style="text-align: center;">30</td>
             </tr>
         </tbody>
     </table>
@@ -214,8 +205,7 @@
                 const bText = b.cells[columnIndex].textContent.toLowerCase();
                 
                 let comparison = 0;
-                // Spezielle Behandlung für numerische Spalten
-                if (columnId === 'sort-interval' || columnId === 'sort-min-messages') {
+                if (columnId === 'sort-min-messages') {
                     const aNum = parseFloat(aText);
                     const bNum = parseFloat(bText);
                     comparison = aNum - bNum;
@@ -228,7 +218,6 @@
 
             sortedRows.forEach(row => tableBody.appendChild(row));
             
-            // Sofortige Animation ohne Verzögerung
             applyRowAnimation(0);
 
             document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
@@ -236,7 +225,6 @@
         }
 
         document.getElementById('sort-message').onclick = () => sortTableByColumn('sort-message');
-        document.getElementById('sort-interval').onclick = () => sortTableByColumn('sort-interval');
         document.getElementById('sort-min-messages').onclick = () => sortTableByColumn('sort-min-messages');
     </script>
 </body>
