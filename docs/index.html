@@ -33,7 +33,7 @@
         }
         
         h1 { 
-            color: #ff2a2a; 
+            color: #ff3333; 
             margin-bottom: 5px; 
             opacity: 0; 
             animation: fadeInFromTop 0.6s ease-out forwards; 
@@ -51,10 +51,10 @@
             width: 100%; 
             max-width: 800px; 
             border-collapse: collapse; 
-            background-color: #330000; 
+            background-color: #111111; 
             border-radius: 8px; 
             overflow: hidden; 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 0 10px #ff333330;
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
         }
@@ -64,33 +64,37 @@
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
         }
         th, td { 
-            padding: 15px; 
+            padding: 18px 20px; 
             text-align: left; 
-            border-bottom: 1px solid #ff0000; 
+            border-bottom: 1px solid #330000; 
         }
         th { 
-            background-color: #b30000; 
+            background-color: #4d0000;
             color: #ffffff; 
             font-weight: bold; 
             cursor: pointer; 
             user-select: none; 
             position: relative; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         th:hover { 
-            background-color: #cc0000; 
+            background-color: #660000; 
         }
         th.sorted { 
-            background-color: #cc0000; 
+            background-color: #660000; 
         }
         
         .sort-icon { 
             position: absolute; 
-            right: 10px; 
+            right: 20px; 
+            top: 50%;
+            transform: translateY(-50%);
             color: inherit; 
         }
         
         tr:hover { 
-            background-color: #4d0000; 
+            background-color: #220000; 
         }
         
         #sort-command { 
@@ -145,7 +149,7 @@
             </tr>
             <tr>
                 <td>dc</td>
-                <td>-</td>
+                <td>tc</td>
                 <td>Ein Befehl mit dem man den Link zum Discord-Server von Flo bekommt.</td>
             </tr>
             <tr>
