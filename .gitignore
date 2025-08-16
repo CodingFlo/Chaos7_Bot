@@ -1,3 +1,14 @@
+# Ignoriere alle Ordner und Dateien im Hauptverzeichnis
 *
+
+# Mache eine Ausnahme für den docs-Ordner
 !docs/
+
+# Ignoriere alle Dateien und Ordner im docs-Ordner
+docs/*
+
+# Mache eine Ausnahme für die index.html im docs-Ordner
+!docs/index.html
+
+# Mache eine Ausnahme für die .gitignore-Datei selbst
 !.gitignore
