@@ -39,7 +39,6 @@
             position: relative;
             overflow-x: hidden;
             z-index: 1;
-            animation: pulse-glow 4s infinite alternate; 
         }
         
         h1 { 
@@ -85,25 +84,11 @@
             background-color: #4d0000;
             color: #ffffff; 
             font-weight: bold; 
-            cursor: pointer; 
             user-select: none; 
             position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-        th:hover { 
-            background-color: #660000; 
-        }
-        th.sorted { 
-            background-color: #660000; 
-        }
-        
-        .sort-icon { 
-            position: absolute; 
-            right: 20px; 
-            top: 50%;
-            transform: translateY(-50%);
-            color: inherit; 
+            text-align: center;
         }
         
         tr:hover { 
@@ -111,11 +96,7 @@
         }
         
         #sort-message { 
-            width: 70%;
-        }
-        #sort-min-messages { 
-            width: 30%; 
-            text-align: center;
+            width: 100%;
         }
         
         tr { 
@@ -134,35 +115,28 @@
     <table>
         <thead>
             <tr>
-                <th id="sort-message" data-sort-order="asc">Nachricht <span class="sort-icon"></span></th>
-                <th id="sort-min-messages" data-sort-order="asc">Mind. Nachrichten <span class="sort-icon"></span></th>
+                <th>Nachricht</th>
             </tr>
         </thead>
         <tbody id="command-table-body">
 
             <tr>
                 <td>Du willst einen geistigen Keks teilen, jemanden beleidigen, einen IQ-Test oder einen Dämlichkeits-Test durchführen? Dann probiere doch mal !keks, !beleidigung, !dtest und !dätest im Chat aus! :D</td>
-                <td style="text-align: center;">30</td>
             </tr>
             <tr>
                 <td>Du willst keinen weiteren Stream verpassen oder Flo eine Freude machen? Dann folge doch rein :D</td>
-                <td style="text-align: center;">30</td>
             </tr>
             <tr>
                 <td>Du willst wissen wo Flo noch überall unterwegs ist? Ja dann nutz doch mal !ytb, !ytlp, !yto oder !dc :D</td>
-                <td style="text-align: center;">30</td>
             </tr>
             <tr>
                 <td>Wusstest du schon das es Alert-Commands gibt? Nein? Dann probier doch mal !js ;)</td>
-                <td style="text-align: center;">30</td>
             </tr>
             <tr>
                 <td>Du willst wissen wie viel dein Bot Wert ist? Dann probier doch mal !commands im chat aus! :D (manche Befehle können nur von Mods genutzt werden)</td>
-                <td style="text-align: center;">30</td>
             </tr>
             <tr>
                 <td>Auch wenn flo derzeitig keine Videos hochlädt, ist er bei Christarios Mario Kart world Projekt dabei! Würde mich freuen, wenn ihr dort mal vorbeischauen würdet! :D https://www.youtube.com/watch?v=GkqULK7U-wY&list=PLssKwqO3-TtutsLxseh8TfyFKtvP4I7rc</td>
-                <td style="text-align: center;">30</td>
             </tr>
         </tbody>
     </table>
@@ -178,54 +152,6 @@
         }
         
         document.addEventListener('DOMContentLoaded', () => applyRowAnimation(0.8));
-
-        let currentSortColumn = null;
-        let sortOrder = 'asc';
-
-        function sortTableByColumn(columnId) {
-            const tableBody = document.getElementById('command-table-body');
-            const header = document.getElementById(columnId);
-            
-            if (currentSortColumn !== columnId) {
-                sortOrder = 'asc';
-                if (currentSortColumn) {
-                    document.getElementById(currentSortColumn).classList.remove('sorted');
-                }
-            } else {
-                sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-            }
-            currentSortColumn = columnId;
-            header.classList.add('sorted');
-
-            const columnIndex = header.cellIndex;
-            const rows = Array.from(tableBody.rows);
-            
-            const sortedRows = rows.sort((a, b) => {
-                const aText = a.cells[columnIndex].textContent.toLowerCase();
-                const bText = b.cells[columnIndex].textContent.toLowerCase();
-                
-                let comparison = 0;
-                if (columnId === 'sort-min-messages') {
-                    const aNum = parseFloat(aText);
-                    const bNum = parseFloat(bText);
-                    comparison = aNum - bNum;
-                } else {
-                    comparison = aText.localeCompare(bText);
-                }
-
-                return sortOrder === 'asc' ? comparison : -comparison;
-            });
-
-            sortedRows.forEach(row => tableBody.appendChild(row));
-            
-            applyRowAnimation(0);
-
-            document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
-            header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
-        }
-
-        document.getElementById('sort-message').onclick = () => sortTableByColumn('sort-message');
-        document.getElementById('sort-min-messages').onclick = () => sortTableByColumn('sort-min-messages');
     </script>
 </body>
 </html>
