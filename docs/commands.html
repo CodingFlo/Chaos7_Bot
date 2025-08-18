@@ -73,14 +73,20 @@
             background-color: #161616;
             border-radius: 8px; 
             overflow: hidden; 
-            border: 3px solid #ff3333; /* Border dicker gemacht, um Sichtbarkeit zu gewährleisten */
+            border: 3px solid #ff3333;
             box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
             z-index: 2;
         }
         
-        thead, tbody {
+        thead {
+            /* Hintergrund für den gesamten Kopfbereich */
+            background-color: #800000;
+            border: none;
+            box-shadow: none;
+        }
+        tbody {
             border: none;
             box-shadow: none;
             background-color: transparent;
@@ -94,10 +100,10 @@
             padding: 18px 20px; 
             text-align: left; 
             border-bottom: 1px solid #800000;
-            color: #d0d0d0;
+            color: #ffffff;
         }
         th { 
-            background-color: #800000;
+            /* Hintergrund von hier entfernt und auf thead verschoben */
             color: #ffffff; 
             font-weight: bold; 
             cursor: pointer; 
