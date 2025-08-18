@@ -98,7 +98,7 @@
             color: #d0d0d0;
         }
         th { 
-            background-color: #800000;
+            background-color: #800000; /* Hintergrundfarbe für die Überschrift */
             color: #ffffff; 
             font-weight: bold; 
             cursor: pointer; 
@@ -199,16 +199,16 @@
                 box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
                 background-color: #161616;
                 padding: 10px;
-                transition: transform 0.4s ease, box-shadow 0.4s ease;
+                transition: none; /* Hover-Animation für die Karten entfernt */
             }
             tr:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 5px 25px rgba(255, 51, 51, 0.7);
+                transform: none; /* Hover-Animation für die Karten entfernt */
+                box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
             }
             /* Jede Zelle ist jetzt eine separate Zeile */
             td {
                 display: block;
-                text-align: left; /* Text linksbündig */
+                text-align: left;
                 padding: 10px 0;
                 border-bottom: none;
                 word-break: break-word;
@@ -216,7 +216,7 @@
             /* Das Label ist jetzt eine eigene Überschriftzeile */
             td::before {
                 content: attr(data-label);
-                display: block; /* Zeilenumbruch nach dem Label */
+                display: block;
                 font-weight: bold;
                 text-transform: uppercase;
                 color: #ff3333;
