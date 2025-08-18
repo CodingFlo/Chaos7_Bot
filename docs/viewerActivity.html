@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuschauer-Aktivitätsranking</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        @keyframes fadeInFromTop { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes growIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; background-color: #000000; color: #d0d0d0;
+            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; 
+            position: relative; overflow-x: hidden;
+            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px); background-size: 15px 15px;
+        }
+        h1 { font-family: 'Orbitron', sans-serif; color: #ff3333; text-shadow: none; margin: 0 0 20px 0;
+            opacity: 0; animation: fadeInFromTop 0.6s ease-out forwards; z-index: 2; text-align: center;
+        }
+        .command-table-wrapper {
+            width: 100%; max-width: 800px; border-radius: 8px; border: 1px solid #ff3333;
+            opacity: 0; animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards;
+            z-index: 2; background-color: #161616; box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+        }
+        .command-table { width: 100%; border-collapse: collapse; background-color: transparent; }
+        thead, tbody { border: none; box-shadow: none; background-color: transparent; }
+        thead { z-index: 10; }
+        thead tr { background-color: #800000; opacity: 0; animation: fadeInFromTop 0.5s ease-out 0.8s forwards; display: table-row; }
+        th, td { padding: 18px 20px; text-align: left; color: #ffffff; border-bottom: 1px solid #ff3333; }
+        th { font-weight: bold; cursor: pointer; user-select: none; position: relative; text-transform: uppercase;
+            letter-spacing: 1px; border-right: 1px solid #ff3333; text-shadow: none;
+        }
+        th:first-child { border-top-left-radius: 7px; }
+        th:last-child { border-right: none; border-top-right-radius: 7px; }
+        th:hover { background-color: #990000; }
+        th.sorted { background-color: #990000; }
+        .sort-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: inherit; }
+        tbody tr:hover { background-color: #220000; box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+            transform: scale(1.01); transition: all 0.2s ease-in-out;
+        }
+        #sort-username { width: 40%; }
+        #sort-activity { width: 30%; }
+        #sort-rank { width: 30%; }
+        tr { opacity: 0; }
+        tr.animated { animation: slideInUp 0.5s ease-out forwards; }
+        @media (max-width: 600px) {
+            .command-table-wrapper { border: none; box-shadow: none; background-color: transparent; border-radius: 0; }
+            .command-table { background-color: transparent; }
+            thead { display: block; margin-bottom: 25px; border: none; box-shadow: none; }
+            thead tr { display: flex; justify-content: space-around; animation: none; opacity: 1; background-color: #161616; }
+            th { display: flex; flex: 1; text-align: center; padding: 15px 10px; border-bottom: none;
+                justify-content: center; align-items: center; border-right: 1px solid #ff3333; background-color: #161616; color: #ffffff;
+            }
+            th:first-child, th:last-child { border-top-left-radius: 0; border-top-right-radius: 0; }
+            th:hover { background-color: #220000; }
+            th.sorted { background-color: #ff3333; }
+            th:last-child { border-right: none; }
+            .sort-icon { position: static; transform: none; margin-left: 5px; }
+            tbody { display: block; border: none; box-shadow: none; background-color: transparent; }
+            tr { display: block; margin-bottom: 25px; border: 1px solid #ff3333; border-radius: 8px;
+                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8); background-color: #161616; padding: 10px;
+                transition: none; animation: slideInUp 0.5s ease-out forwards;
+            }
+            tr:hover { transform: none; box-shadow: 0 0 20px rgba(255, 51, 51, 0.8); }
+            td { display: block; text-align: left; padding: 10px 0; border-bottom: none; word-break: break-word; }
+            td::before { content: attr(data-label); display: block; font-weight: bold; text-transform: uppercase; color: #ff3333; margin-bottom: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Zuschauer-Aktivitätsranking</h1>
+    <div class="command-table-wrapper">
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th id="sort-username" data-sort-order="asc">Benutzername <span class="sort-icon"></span></th>
+                    <th id="sort-activity" data-sort-order="asc">Aktivität <span class="sort-icon"></span></th>
+                    <th id="sort-rank" data-sort-order="asc">Rang<span class="sort-icon"></span></th>
+                </tr>
+            </thead>
+            <tbody id="command-table-body">
+                
+            <tr>
+                <td colspan="3" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function applyRowAnimation(delay = 0.8) {
+            const rows = document.querySelectorAll('#command-table-body tr');
+            rows.forEach((row, index) => {
+                row.classList.remove('animated');
+                void row.offsetWidth;
+                row.classList.add('animated');
+                row.style.animationDelay = `${delay + index * 0.05}s`;
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => applyRowAnimation(0.8));
+        let currentSortColumn = 'sort-activity';
+        let sortOrder = 'desc';
+        function sortTableByColumn(columnId) {
+            const tableBody = document.getElementById('command-table-body');
+            const header = document.getElementById(columnId);
+            if (currentSortColumn !== columnId) {
+                sortOrder = 'asc';
+                if (currentSortColumn) {
+                    const prevHeader = document.getElementById(currentSortColumn);
+                    if (prevHeader) prevHeader.classList.remove('sorted');
+                }
+            } else {
+                sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+            }
+            currentSortColumn = columnId;
+            header.classList.add('sorted');
+            const columnIndex = header.cellIndex;
+            const rows = Array.from(tableBody.rows);
+            const sortedRows = rows.sort((a, b) => {
+                const aText = a.cells[columnIndex].textContent;
+                const bText = b.cells[columnIndex].textContent;
+                let comparison;
+                if (columnId === 'sort-activity' || columnId === 'sort-rank') {
+                    const aValue = parseFloat(aText.replace(/[^0-9.]/g, ''));
+                    const bValue = parseFloat(bText.replace(/[^0-9.]/g, ''));
+                    comparison = aValue - bValue;
+                } else {
+                    comparison = aText.localeCompare(bText);
+                }
+                return sortOrder === 'asc' ? comparison : -comparison;
+            });
+            sortedRows.forEach(row => tableBody.appendChild(row));
+            applyRowAnimation(0);
+            document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
+            if (header.querySelector('.sort-icon')) {
+                 header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
+            }
+        }
+        document.getElementById('sort-username').onclick = () => sortTableByColumn('sort-username');
+        document.getElementById('sort-activity').onclick = () => sortTableByColumn('sort-activity');
+        document.getElementById('sort-rank').onclick = () => sortTableByColumn('sort-rank');
+        document.addEventListener('DOMContentLoaded', () => {
+            sortTableByColumn('sort-activity');
+            const rankHeader = document.getElementById('sort-rank');
+            if (rankHeader) {
+                rankHeader.classList.remove('sorted');
+                rankHeader.querySelector('.sort-icon').textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
