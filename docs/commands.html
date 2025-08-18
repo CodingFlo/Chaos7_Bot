@@ -103,7 +103,6 @@
             display: table-row;
         }
 
-        /* Border zwischen den Zellen jetzt rot */
         th, td { 
             padding: 18px 20px; 
             text-align: left; 
@@ -118,14 +117,25 @@
             position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-right: 1px solid #ff3333; /* Trennlinien */
             text-shadow: none;
         }
-        
-        th:last-child {
-            border-right: none;
-        }
 
+        /* Separator Line as a pseudo-element */
+        th::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 1px;
+            background-color: #ff3333;
+            z-index: 1; /* Ensure it's above the background */
+        }
+        th:last-child::after {
+            display: none;
+        }
+        
         /* Hover-Effekt für die einzelnen THs */
         th:hover {
             background-color: #990000;
@@ -199,8 +209,12 @@
                 border-bottom: none;
                 justify-content: center;
                 align-items: center;
-                border-right: 1px solid #ff3333;
                 background-color: #800000;
+            }
+            th::after {
+                height: 100%;
+                top: 0;
+                transform: none;
             }
             th:hover {
                 background-color: #990000;
