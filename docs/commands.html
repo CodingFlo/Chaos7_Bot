@@ -190,6 +190,7 @@
                 justify-content: space-around;
                 animation: none;
                 opacity: 1;
+                /* Background-Color in thead tr wurde entfernt, da die THs jetzt eine eigene Farbe haben */
                 background-color: transparent;
             }
             th {
@@ -201,7 +202,7 @@
                 justify-content: center;
                 align-items: center;
                 border-right: 1px solid #ff3333;
-                background-color: #800000; /* Hintergrundfarbe angepasst */
+                background-color: #161616; /* Standard-Farbe der Buttons */
             }
             th:first-child,
             th:last-child {
@@ -209,10 +210,10 @@
                 border-top-right-radius: 0;
             }
             th:hover {
-                background-color: #990000; /* Hintergrundfarbe für Hover-Effekt angepasst */
+                background-color: #990000; /* Hover-Effekt angepasst */
             }
             th.sorted {
-                background-color: #990000; /* Hintergrundfarbe für den Klick-Zustand angepasst */
+                background-color: #800000; /* Sortierter/geklickter Zustand angepasst */
             }
             th:last-child {
                 border-right: none;
