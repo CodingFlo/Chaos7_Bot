@@ -66,14 +66,14 @@
         }
         
         /* Desktop-Design: Eine einzige, große Box für die ganze Tabelle */
-        table { 
+        .command-table { 
             width: 100%; 
             max-width: 800px; 
             border-collapse: collapse; 
             background-color: #161616;
             border-radius: 8px; 
             overflow: hidden; 
-            border: 1px solid #ff3333;
+            border: 3px solid #ff3333; /* Border dicker gemacht, um Sichtbarkeit zu gewährleisten */
             box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
@@ -133,7 +133,6 @@
             width: 25%; 
         }
         
-        /* Die Zeilen im Desktop-Modus haben keine separaten Ränder */
         tr {
             opacity: 0; 
         }
@@ -143,7 +142,7 @@
 
         /* ----- Responsive Anpassungen für Handys ----- */
         @media (max-width: 600px) {
-            table {
+            .command-table {
                 border: none;
                 box-shadow: none;
                 background-color: transparent;
@@ -229,7 +228,7 @@
     <div class="prefix-container">
         Bot-Prefix: !
     </div>
-    <table>
+    <table class="command-table">
         <thead>
             <tr>
                 <th id="sort-command" data-sort-order="asc">Befehl <span class="sort-icon"></span></th>
