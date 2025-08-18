@@ -46,43 +46,67 @@
             opacity: 0; 
             animation: fadeInFromTop 0.6s ease-out forwards; 
             z-index: 2;
-            text-align: center; /* Hauptüberschrift zentrieren */
+            text-align: center;
         }
         
+        /* Die ursprüngliche Box für das Bot-Prefix wurde wiederhergestellt */
         .prefix-container { 
             margin-bottom: 25px;
             font-size: 1.1em; 
             font-weight: bold;
             color: #d0d0d0;
-            background-color: transparent; /* Box entfernt */
-            border: none; /* Keine Border */
-            box-shadow: none; /* Kein Schatten */
-            border-radius: 0;
-            padding: 0;
+            background-color: #1a1a1a;
+            border: 1px solid #ff3333;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            border-radius: 8px;
+            padding: 10px 20px;
             text-align: center;
             opacity: 0; 
             animation: fadeInFromTop 0.6s ease-out 0.2s forwards; 
             z-index: 2;
         }
         
+        /* Die Haupttabelle ist jetzt ein unsichtbarer Container für die beiden Boxen */
         table { 
             width: 100%; 
             max-width: 800px; 
             border-collapse: collapse; 
-            background-color: #161616;
+            background-color: transparent; /* Hintergrund entfernt */
             border-radius: 8px; 
             overflow: hidden; 
-            border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            border: none; /* Rahmen entfernt */
+            box-shadow: none; /* Schatten entfernt */
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
             z-index: 2;
+        }
+        
+        /* Box-Design für den Tabellenkopf */
+        thead {
+            display: table-header-group; /* Wieder als Tabellenkopf anzeigen */
+            border: 1px solid #ff3333;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            margin-bottom: 25px;
         }
         
         thead tr { 
             opacity: 0; 
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
         }
+
+        /* Box-Design für den Tabellenkörper */
+        tbody {
+            display: table-row-group; /* Wieder als Tabellenkörper anzeigen */
+            border: 1px solid #ff3333;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #161616;
+        }
+        
         th, td { 
             padding: 18px 20px; 
             text-align: left; 
@@ -136,34 +160,33 @@
         /* ----- Responsive Anpassungen für Handys ----- */
         @media (max-width: 600px) {
             table {
-                border: none;
-                box-shadow: none;
                 background-color: transparent;
             }
             thead {
-                display: block; /* Wieder sichtbar machen */
+                display: block;
                 margin-bottom: 25px;
                 border: 1px solid #ff3333;
-                border-radius: 8px;
                 box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+                border-radius: 8px;
                 overflow: hidden;
+                background-color: #1a1a1a;
             }
             thead tr {
-                display: flex; /* Flexbox für nebeneinanderliegende Buttons */
+                display: flex;
                 justify-content: space-around;
                 background-color: #1a1a1a;
                 animation: none;
                 opacity: 1;
             }
             th {
-                display: flex; /* Buttons in einer Zeile */
-                flex: 1; /* Gleichmäßige Verteilung */
+                display: flex;
+                flex: 1;
                 text-align: center;
                 padding: 15px 10px;
                 border-bottom: none;
                 justify-content: center;
                 align-items: center;
-                border-right: 1px solid #ff3333; /* Trennlinie zwischen den Buttons */
+                border-right: 1px solid #ff3333;
             }
             th:last-child {
                 border-right: none;
@@ -174,8 +197,14 @@
                 margin-left: 5px;
             }
 
+            tbody {
+                display: block; /* Auch hier als Block darstellen */
+                border: none; /* Box-Design entfernen, da jede Zeile ihre eigene Box ist */
+                box-shadow: none;
+                background-color: transparent;
+            }
             tr {
-                display: block; /* Zeilen als Blöcke darstellen, um sie zu stapeln */
+                display: block;
                 margin-bottom: 25px;
                 border: 1px solid #ff3333;
                 border-radius: 8px;
@@ -189,13 +218,13 @@
                 box-shadow: 0 5px 25px rgba(255, 51, 51, 0.7);
             }
             td {
-                display: block; /* Zellen als Blöcke darstellen */
+                display: block;
                 text-align: right;
                 padding: 10px;
                 border-bottom: none;
             }
             td::before {
-                content: attr(data-label); /* Zeigt den Spaltennamen als Label */
+                content: attr(data-label);
                 float: left;
                 font-weight: bold;
                 text-transform: uppercase;
