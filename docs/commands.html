@@ -97,7 +97,7 @@
             position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-bottom: none; /* Keine Border am Tabellenkopf */
+            border-bottom: none;
         }
         th:hover { 
             background-color: #990000;
@@ -131,6 +131,46 @@
         tr.animated { 
             animation: slideInUp 0.5s ease-out forwards; 
         }
+
+        /* ----- Responsive Anpassungen für Handys ----- */
+        @media (max-width: 600px) {
+            table {
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
+            }
+            thead {
+                display: none; /* Tabellenkopf auf Handys ausblenden */
+            }
+            tr {
+                display: block; /* Zeilen als Blöcke darstellen, um sie zu stapeln */
+                margin-bottom: 25px;
+                border: 1px solid #ff3333;
+                border-radius: 8px;
+                box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+                background-color: #161616;
+                padding: 10px;
+                transition: transform 0.4s ease, box-shadow 0.4s ease;
+            }
+            tr:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 25px rgba(255, 51, 51, 0.7);
+            }
+            td {
+                display: block; /* Zellen als Blöcke darstellen */
+                text-align: right;
+                padding: 10px;
+                border-bottom: none;
+            }
+            td::before {
+                content: attr(data-label); /* Zeigt den Spaltennamen als Label */
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #ff3333;
+                margin-right: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -149,179 +189,179 @@
         <tbody id="command-table-body">
 
             <tr>
-                <td>beleidigung</td>
-                <td>beleidigen</td>
-                <td>Ein Spaßbefehl mit dem man jemanden Beleidigen kann. (Es gibt mehrere Szenarien, die auftreten können als Beleidigung)</td>
+                <td data-label="Befehl">beleidigung</td>
+                <td data-label="Kürzel">beleidigen</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man jemanden Beleidigen kann. (Es gibt mehrere Szenarien, die auftreten können als Beleidigung)</td>
             </tr>
             <tr>
-                <td>biddää</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem man.... Joa gute Frage eigentlich... xDD</td>
+                <td data-label="Befehl">biddää</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man.... Joa gute Frage eigentlich... xDD</td>
             </tr>
             <tr>
-                <td>bug</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem man mein Bot ein Statement zu seinen Bugs gibt.</td>
+                <td data-label="Befehl">bug</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man mein Bot ein Statement zu seinen Bugs gibt.</td>
             </tr>
             <tr>
-                <td>cheater</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem man jemanden als Cheater enttarnt und dem auf entsprechende Plattform canceln sollte.</td>
+                <td data-label="Befehl">cheater</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man jemanden als Cheater enttarnt und dem auf entsprechende Plattform canceln sollte.</td>
             </tr>
             <tr>
-                <td>dc</td>
-                <td>dc</td>
-                <td>Ein Befehl mit dem man den Link zum Discord-Server von Flo bekommt.</td>
+                <td data-label="Befehl">dc</td>
+                <td data-label="Kürzel">dc</td>
+                <td data-label="Beschreibung">Ein Befehl mit dem man den Link zum Discord-Server von Flo bekommt.</td>
             </tr>
             <tr>
-                <td>dtest</td>
-                <td>dtest</td>
-                <td>Ein Spaßbefehl mit dem man testen kann, ob man schlauer oder dümmer als Flo ist.</td>
+                <td data-label="Befehl">dtest</td>
+                <td data-label="Kürzel">dtest</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, ob man schlauer oder dümmer als Flo ist.</td>
             </tr>
             <tr>
-                <td>dämlichkeitstest</td>
-                <td>dätest</td>
-                <td>Ein Spaßbefehl mit dem man testen kann, wie dähhmlich jemand ist. (bewusst mit H geschrieben)</td>
+                <td data-label="Befehl">dämlichkeitstest</td>
+                <td data-label="Kürzel">dätest</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie dähhmlich jemand ist. (bewusst mit H geschrieben)</td>
             </tr>
             <tr>
-                <td>fc</td>
-                <td>-</td>
-                <td>Ein Befehl mit dem man den Freundescode von Flo bekommt.</td>
+                <td data-label="Befehl">fc</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Befehl mit dem man den Freundescode von Flo bekommt.</td>
             </tr>
             <tr>
-                <td>flotator</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem ein Zeichen setzt, dass Flo seine Macht missbraucht.</td>
+                <td data-label="Befehl">flotator</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein Zeichen setzt, dass Flo seine Macht missbraucht.</td>
             </tr>
             <tr>
-                <td>followage</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem ein überprüfen kann, wie lange jemand schon dem Kanal folgt, bzw. ob die Person überhaupt folgt.</td>
+                <td data-label="Befehl">followage</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein überprüfen kann, wie lange jemand schon dem Kanal folgt, bzw. ob die Person überhaupt folgt.</td>
             </tr>
             <tr>
-                <td>geschenk</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem ein jemanden ein Geschenk machen kann.</td>
+                <td data-label="Befehl">geschenk</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein jemanden ein Geschenk machen kann.</td>
             </tr>
             <tr>
-                <td>itest</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl der nur existiert, weil Meisti einen itest verlangte, bzw. weil das große I schwer von einem Kleinen L unterscheidbar ist.</td>
+                <td data-label="Befehl">itest</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl der nur existiert, weil Meisti einen itest verlangte, bzw. weil das große I schwer von einem Kleinen L unterscheidbar ist.</td>
             </tr>
             <tr>
-                <td>jumpscare</td>
-                <td>js</td>
-                <td>Ein Soundalert Befehl mit dem man einen Jumpscare auslösen kann. (Wichtiger Hinweis: Der Jumpscare wird bewusst mit einer zufälligen Verzögerung ausgelöst, um den Überraschungseffekt zu erhöhen)</td>
+                <td data-label="Befehl">jumpscare</td>
+                <td data-label="Kürzel">js</td>
+                <td data-label="Beschreibung">Ein Soundalert Befehl mit dem man einen Jumpscare auslösen kann. (Wichtiger Hinweis: Der Jumpscare wird bewusst mit einer zufälligen Verzögerung ausgelöst, um den Überraschungseffekt zu erhöhen)</td>
             </tr>
             <tr>
-                <td>keks</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem man zeigen kann, dass man mit jemanden seinen Keks teilen würde, wenn der Keks nur echt wäre</td>
+                <td data-label="Befehl">keks</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man mit jemanden seinen Keks teilen würde, wenn der Keks nur echt wäre</td>
             </tr>
             <tr>
-                <td>liebestest</td>
-                <td>ltest</td>
-                <td>Ein Spaßbefehl mit dem man testen kann, wie sehr jemand eine Person, bzw. sich selbst liebt.</td>
+                <td data-label="Befehl">liebestest</td>
+                <td data-label="Kürzel">ltest</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie sehr jemand eine Person, bzw. sich selbst liebt.</td>
             </tr>
             <tr>
-                <td>lostheitstest</td>
-                <td>lotest</td>
-                <td>Ein Spaßbefehl mit dem man testen kann, wie lost jemand ist.</td>
+                <td data-label="Befehl">lostheitstest</td>
+                <td data-label="Kürzel">lotest</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie lost jemand ist.</td>
             </tr>
             <tr>
-                <td>lurk</td>
-                <td>-</td>
-                <td>Ein Befehl mit dem man bescheid geben kann, dass man in den Lurk geht.</td>
+                <td data-label="Befehl">lurk</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Befehl mit dem man bescheid geben kann, dass man in den Lurk geht.</td>
             </tr>
             <tr>
-                <td>onlyfans</td>
-                <td>of</td>
-                <td>Ein Spaßbefehl für den Link zu meinem Discord-Server.</td>
+                <td data-label="Befehl">onlyfans</td>
+                <td data-label="Kürzel">of</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl für den Link zu meinem Discord-Server.</td>
             </tr>
             <tr>
-                <td>setgame</td>
-                <td>game</td>
-                <td>Ein Befehl rein für Mods, mit dem das gestreamte Game geändert werden kann</td>
+                <td data-label="Befehl">setgame</td>
+                <td data-label="Kürzel">game</td>
+                <td data-label="Beschreibung">Ein Befehl rein für Mods, mit dem das gestreamte Game geändert werden kann</td>
             </tr>
             <tr>
-                <td>settitle</td>
-                <td>title</td>
-                <td>Ein Befehl rein für Mods, mit dem der Streamtitel geändert werden kann</td>
+                <td data-label="Befehl">settitle</td>
+                <td data-label="Kürzel">title</td>
+                <td data-label="Beschreibung">Ein Befehl rein für Mods, mit dem der Streamtitel geändert werden kann</td>
             </tr>
             <tr>
-                <td>shoutout</td>
-                <td>so</td>
-                <td>Ein Befehl rein für Mods um jemanden einen Shoutout zu geben</td>
+                <td data-label="Befehl">shoutout</td>
+                <td data-label="Kürzel">so</td>
+                <td data-label="Beschreibung">Ein Befehl rein für Mods um jemanden einen Shoutout zu geben</td>
             </tr>
             <tr>
-                <td>streik</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl, der ein Zeichen setzt.</td>
+                <td data-label="Befehl">streik</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl, der ein Zeichen setzt.</td>
             </tr>
             <tr>
-                <td>test</td>
-                <td>-</td>
-                <td>Ein Befehl mit dem man den testen kann, ob der Bot auf Befehle reagiert oder ein Fehler vorliegt.</td>
+                <td data-label="Befehl">test</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Befehl mit dem man den testen kann, ob der Bot auf Befehle reagiert oder ein Fehler vorliegt.</td>
             </tr>
             <tr>
-                <td>unlurk</td>
-                <td>-</td>
-                <td>Ein Befehl mit dem man mitteilen kann, dass man nun nicht mehr lurkt.</td>
+                <td data-label="Befehl">unlurk</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Befehl mit dem man mitteilen kann, dass man nun nicht mehr lurkt.</td>
             </tr>
             <tr>
-                <td>vod</td>
-                <td>-</td>
-                <td>Ein Befehl mit dem man den Link direkt zu Flos VOD Kanal bekommt.</td>
+                <td data-label="Befehl">vod</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos VOD Kanal bekommt.</td>
             </tr>
             <tr>
-                <td>ytb</td>
-                <td>-</td>
-                <td>Ein Befehl mit dem man den Link direkt zu Flos Best of Kanal bekommt.</td>
+                <td data-label="Befehl">ytb</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos Best of Kanal bekommt.</td>
             </tr>
             <tr>
-                <td>ytlp</td>
-                <td>-</td>
-                <td>Ein Befehl mit dem man den Link direkt zu Flos LP Kanal bekommt.</td>
+                <td data-label="Befehl">ytlp</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos LP Kanal bekommt.</td>
             </tr>
             <tr>
-                <td>votebann</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne bannen würde.</td>
+                <td data-label="Befehl">votebann</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne bannen würde.</td>
             </tr>
             <tr>
-                <td>voteja</td>
-                <td>ja</td>
-                <td>Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dafür ist.</td>
+                <td data-label="Befehl">voteja</td>
+                <td data-label="Kürzel">ja</td>
+                <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dafür ist.</td>
             </tr>
             <tr>
-                <td>votejain</td>
-                <td>jain</td>
-                <td>Wenn ein Voting aktiv ist, kanns man damit den Zufall entscheiden lassen, ob man dafür oder dagegen ist.</td>
+                <td data-label="Befehl">votejain</td>
+                <td data-label="Kürzel">jain</td>
+                <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kanns man damit den Zufall entscheiden lassen, ob man dafür oder dagegen ist.</td>
             </tr>
             <tr>
-                <td>votenein</td>
-                <td>nein</td>
-                <td>Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dagegen ist.</td>
+                <td data-label="Befehl">votenein</td>
+                <td data-label="Kürzel">nein</td>
+                <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dagegen ist.</td>
             </tr>
             <tr>
-                <td>votetimeout</td>
-                <td>-</td>
-                <td>Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne timeouten würde.</td>
+                <td data-label="Befehl">votetimeout</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne timeouten würde.</td>
             </tr>
             <tr>
-                <td>info</td>
-                <td>-</td>
-                <td>Ein Befehl, der einige Informationen bezüglich Chaos7 gibt.</td>
+                <td data-label="Befehl">info</td>
+                <td data-label="Kürzel">-</td>
+                <td data-label="Beschreibung">Ein Befehl, der einige Informationen bezüglich Chaos7 gibt.</td>
             </tr>
             <tr>
-                <td>commands</td>
-                <td>command</td>
-                <td>Ein Befehl, der alle verfügbaren Befehle auflistet.</td>
+                <td data-label="Befehl">commands</td>
+                <td data-label="Kürzel">command</td>
+                <td data-label="Beschreibung">Ein Befehl, der alle verfügbaren Befehle auflistet.</td>
             </tr>
             <tr>
-                <td>timermessages</td>
-                <td>tm</td>
-                <td>Ein Befehl, der alle verfügbaren Timer-Nachrichten auflistet.</td>
+                <td data-label="Befehl">timermessages</td>
+                <td data-label="Kürzel">tm</td>
+                <td data-label="Beschreibung">Ein Befehl, der alle verfügbaren Timer-Nachrichten auflistet.</td>
             </tr>
         </tbody>
     </table>
@@ -388,7 +428,9 @@
             applyRowAnimation(0);
 
             document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
-            header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
+            if (header.querySelector('.sort-icon')) {
+                 header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
+            }
         }
 
         document.getElementById('sort-command').onclick = () => sortTableByColumn('sort-command');
