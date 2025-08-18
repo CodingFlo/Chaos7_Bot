@@ -65,6 +65,7 @@
             z-index: 2;
         }
         
+        /* Desktop-Design: Eine einzige, große Box für die ganze Tabelle */
         table { 
             width: 100%; 
             max-width: 800px; 
@@ -132,12 +133,8 @@
             width: 25%; 
         }
         
-        /* Border für jede Zeile */
+        /* Die Zeilen im Desktop-Modus haben keine separaten Ränder */
         tr {
-            border: 1px solid #ff3333;
-            margin-bottom: 5px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
             opacity: 0; 
         }
         tr.animated { 
