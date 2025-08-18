@@ -49,7 +49,6 @@
             text-align: center;
         }
         
-        /* Die ursprüngliche Box für das Bot-Prefix wurde wiederhergestellt */
         .prefix-container { 
             margin-bottom: 25px;
             font-size: 1.1em; 
@@ -57,7 +56,7 @@
             color: #d0d0d0;
             background-color: #1a1a1a;
             border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5); /* Glow-Effekt */
             border-radius: 8px;
             padding: 10px 20px;
             text-align: center;
@@ -66,26 +65,24 @@
             z-index: 2;
         }
         
-        /* Die Haupttabelle ist jetzt ein unsichtbarer Container für die beiden Boxen */
         table { 
             width: 100%; 
             max-width: 800px; 
             border-collapse: collapse; 
-            background-color: transparent; /* Hintergrund entfernt */
+            background-color: transparent;
             border-radius: 8px; 
             overflow: hidden; 
-            border: none; /* Rahmen entfernt */
-            box-shadow: none; /* Schatten entfernt */
+            border: none;
+            box-shadow: none;
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
             z-index: 2;
         }
         
-        /* Box-Design für den Tabellenkopf */
         thead {
-            display: table-header-group; /* Wieder als Tabellenkopf anzeigen */
+            display: table-header-group;
             border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5); /* Glow-Effekt */
             border-radius: 8px;
             overflow: hidden;
             background-color: #1a1a1a;
@@ -97,11 +94,10 @@
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
         }
 
-        /* Box-Design für den Tabellenkörper */
         tbody {
-            display: table-row-group; /* Wieder als Tabellenkörper anzeigen */
+            display: table-row-group;
             border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5); /* Glow-Effekt */
             border-radius: 8px;
             overflow: hidden;
             background-color: #161616;
@@ -198,8 +194,8 @@
             }
 
             tbody {
-                display: block; /* Auch hier als Block darstellen */
-                border: none; /* Box-Design entfernen, da jede Zeile ihre eigene Box ist */
+                display: block;
+                border: none;
                 box-shadow: none;
                 background-color: transparent;
             }
