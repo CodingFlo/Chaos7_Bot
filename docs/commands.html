@@ -183,15 +183,14 @@
                 margin-bottom: 25px;
                 border: none;
                 box-shadow: none;
-                /* Hinzufügen der Hintergrundfarbe zur thead */
-                background-color: #161616;
+                background-color: transparent;
             }
             thead tr {
                 display: flex;
                 justify-content: space-around;
                 animation: none;
                 opacity: 1;
-                background-color: transparent;
+                background-color: #ffffff; /* Weißer Hintergrund für thead tr */
             }
             th {
                 display: flex;
@@ -202,7 +201,8 @@
                 justify-content: center;
                 align-items: center;
                 border-right: 1px solid #ff3333;
-                background-color: transparent; /* Entfernt die Hintergrundfarbe von den th-Elementen */
+                background-color: transparent;
+                color: #000000; /* Textfarbe auf Schwarz geändert für bessere Lesbarkeit auf weißem Hintergrund */
             }
             th:first-child,
             th:last-child {
@@ -210,10 +210,10 @@
                 border-top-right-radius: 0;
             }
             th:hover {
-                background-color: #990000; /* Hover-Effekt angepasst */
+                background-color: #f0f0f0; /* Leicht grauer Hover-Effekt */
             }
             th.sorted {
-                background-color: #800000; /* Sortierter/geklickter Zustand angepasst */
+                background-color: #e0e0e0; /* Etwas dunkleres Grau für den geklickten Zustand */
             }
             th:last-child {
                 border-right: none;
@@ -222,6 +222,7 @@
                 position: static;
                 transform: none;
                 margin-left: 5px;
+                color: #ff3333;
             }
 
             tbody {
