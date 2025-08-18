@@ -183,14 +183,14 @@
                 margin-bottom: 25px;
                 border: none;
                 box-shadow: none;
-                background-color: transparent;
             }
             thead tr {
                 display: flex;
                 justify-content: space-around;
                 animation: none;
                 opacity: 1;
-                background-color: transparent;
+                /* Hintergrundfarbe für thead tr in der mobilen Ansicht */
+                background-color: #800000; 
             }
             th {
                 display: flex;
@@ -201,7 +201,7 @@
                 justify-content: center;
                 align-items: center;
                 border-right: 1px solid #ff3333;
-                background-color: #161616; /* Standard-Farbe der Buttons */
+                background-color: transparent; /* Entfernt die Hintergrundfarbe von den th-Elementen */
                 color: #ffffff;
             }
             th:first-child,
@@ -209,11 +209,9 @@
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
             }
-            /* Hover-Effekt für Mobile */
             th:hover {
                 background-color: #220000; 
             }
-            /* Sortierter/geklickter Zustand für Mobile */
             th.sorted {
                 background-color: #ff3333; 
             }
