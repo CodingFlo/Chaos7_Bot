@@ -65,7 +65,7 @@
             z-index: 2;
         }
         
-        /* Haupt-Tabelle als eine einzige leuchtende Box */
+        /* Desktop-Design: Eine einzige, große Box für die ganze Tabelle */
         table { 
             width: 100%; 
             max-width: 800px; 
@@ -80,7 +80,7 @@
             z-index: 2;
         }
         
-        /* Die inneren Sektionen haben keine eigenen Boxen mehr */
+        /* Die inneren Sektionen haben auf dem Desktop keine eigenen Boxen */
         thead, tbody {
             border: none;
             box-shadow: none;
@@ -143,11 +143,13 @@
 
         /* ----- Responsive Anpassungen für Handys ----- */
         @media (max-width: 600px) {
+            /* Auf dem Handy hat die Haupttabelle keine Ränder oder Schatten */
             table {
                 border: none;
                 box-shadow: none;
                 background-color: transparent;
             }
+            
             /* Die Kopfzeile ist jetzt die einzige Box */
             thead {
                 display: block;
@@ -186,6 +188,10 @@
 
             tbody {
                 display: block;
+                /* Keine Border oder Schatten, da jede Zeile ihre eigene Box ist */
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
             }
             tr {
                 display: block;
@@ -206,7 +212,6 @@
                 text-align: right;
                 padding: 10px;
                 border-bottom: none;
-                /* Korrekter Zeilenumbruch für die Beschreibung */
                 word-break: break-word;
             }
             td::before {
