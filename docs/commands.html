@@ -183,14 +183,14 @@
                 margin-bottom: 25px;
                 border: none;
                 box-shadow: none;
-                background-color: transparent;
+                /* Hinzufügen der Hintergrundfarbe zur thead */
+                background-color: #161616;
             }
             thead tr {
                 display: flex;
                 justify-content: space-around;
                 animation: none;
                 opacity: 1;
-                /* Background-Color in thead tr wurde entfernt, da die THs jetzt eine eigene Farbe haben */
                 background-color: transparent;
             }
             th {
@@ -202,7 +202,7 @@
                 justify-content: center;
                 align-items: center;
                 border-right: 1px solid #ff3333;
-                background-color: #161616; /* Standard-Farbe der Buttons */
+                background-color: transparent; /* Entfernt die Hintergrundfarbe von den th-Elementen */
             }
             th:first-child,
             th:last-child {
