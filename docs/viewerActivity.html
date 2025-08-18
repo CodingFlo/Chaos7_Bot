@@ -26,16 +26,19 @@
             font-size: 1.1em;
             font-weight: bold;
             color: #d0d0d0;
-            background-color: #1a1a1a;
+            /* Verbesserungen für Design */
+            background-color: rgba(22, 22, 22, 0.7);
             border: 1px solid #ff3333;
-            box-shadow: 0 0 10px #ff3333;
-            border-radius: 8px;
-            padding: 10px 20px;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.8), 0 0 5px rgba(255, 51, 51, 0.6);
+            border-radius: 12px;
+            padding: 15px 25px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             opacity: 0;
             animation: fadeInFromTop 0.6s ease-out 0.2s forwards;
             z-index: 2;
+            text-shadow: 1px 1px 2px #000;
+            backdrop-filter: blur(5px);
         }
         .command-table-wrapper {
             width: 100%; max-width: 800px; border-radius: 8px; border: 1px solid #ff3333;
@@ -90,8 +93,8 @@
 <body>
     <h1>📊 Zuschauer-Aktivitätsranking von Chaos7</h1>
     <div class="info-box">
-        Letzte Aktualisierung: 18.08.2025, 22:06<br>
-        Aktivitäten der letzten 90 Tage<br>Aktualisiert alle 30 Minuten.
+        Letzte Aktualisierung: 18.08.2025, 22:08<br>
+        Aktualisiert alle 30 Minuten.<br>Aktivitäten der letzten 90 Tage zählen für das Ranking.
     </div>
     <div class="command-table-wrapper">
         <table class="command-table">
@@ -162,7 +165,7 @@
             });
             
             sortedRows.forEach(row => tableBody.appendChild(row));
-            applyRowAnimation(); // Aufruf ohne delay, aber die Funktion definiert es selbst
+            applyRowAnimation();
             document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
             if (header.querySelector('.sort-icon')) {
                  header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
