@@ -69,7 +69,7 @@
             width: 100%;
             max-width: 800px;
             border-radius: 8px;
-            border: 1px solid #ff3333; /* Breite auf 1px reduziert */
+            border: 1px solid #ff3333;
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
             z-index: 2;
@@ -117,14 +117,18 @@
             position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-right: 1px solid #ff3333; /* Trennlinien wieder eingefügt */
+            border-right: 1px solid #ff3333;
             text-shadow: none;
         }
-
+        
+        th:first-child {
+            border-top-left-radius: 8px;
+        }
         th:last-child {
             border-right: none;
+            border-top-right-radius: 8px;
         }
-        
+
         /* Hover-Effekt für die einzelnen THs */
         th:hover {
             background-color: #990000;
@@ -200,6 +204,11 @@
                 align-items: center;
                 border-right: 1px solid #ff3333;
                 background-color: #800000;
+            }
+            th:first-child,
+            th:last-child {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
             }
             th:hover {
                 background-color: #990000;
