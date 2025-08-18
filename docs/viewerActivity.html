@@ -11,11 +11,7 @@
         @keyframes fadeInFromTop { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes growIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px #ff3333, 0 0 10px #ff3333, 0 0 15px #ff3333, 0 0 20px rgba(255, 51, 51, 0.4); }
-            50% { box-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333, 0 0 30px #ff3333, 0 0 40px rgba(255, 51, 51, 0.6); }
-        }
-
+        
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; background-color: #000000; color: #d0d0d0;
             margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; 
@@ -27,18 +23,19 @@
             opacity: 0; animation: fadeInFromTop 0.6s ease-out forwards; z-index: 2; text-align: center;
         }
         .info-box {
-            font-size: 0.9em;
+            font-size: 1.2em;
             font-weight: bold;
-            color: #ffffff;
+            color: #d0d0d0;
             background-color: #1a1a1a;
-            border: 2px solid #800000;
+            border: 1px solid #ff3333;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
             border-radius: 8px;
-            padding: 15px 25px;
+            padding: 10px 20px;
             text-align: center;
-            margin-top: -10px;
             margin-bottom: 20px;
             opacity: 0;
-            animation: fadeInFromTop 0.6s ease-out 0.2s forwards, glow 2s ease-in-out infinite;
+            animation: fadeInFromTop 0.6s ease-out 0.2s forwards;
+            z-index: 2;
         }
         .command-table-wrapper {
             width: 100%; max-width: 800px; border-radius: 8px; border: 1px solid #ff3333;
@@ -93,7 +90,7 @@
 <body>
     <h1>📊 Zuschauer-Aktivitätsranking von Chaos7</h1>
     <div class="info-box">
-        Letzte Aktualisierung: 18.08.2025, 21:49<br>
+        Letzte Aktualisierung: 18.08.2025, 21:50<br>
         Aktualisiert alle 30 Minuten.
     </div>
     <div class="command-table-wrapper">
