@@ -190,7 +190,7 @@
                 justify-content: space-around;
                 animation: none;
                 opacity: 1;
-                background-color: #ffffff; /* Weißer Hintergrund für thead tr */
+                background-color: transparent;
             }
             th {
                 display: flex;
@@ -201,19 +201,21 @@
                 justify-content: center;
                 align-items: center;
                 border-right: 1px solid #ff3333;
-                background-color: transparent;
-                color: #000000; /* Textfarbe auf Schwarz geändert für bessere Lesbarkeit auf weißem Hintergrund */
+                background-color: #161616; /* Standard-Farbe der Buttons */
+                color: #ffffff;
             }
             th:first-child,
             th:last-child {
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
             }
+            /* Jetzt wird der Hover-Effekt für Mobile angepasst */
             th:hover {
-                background-color: #f0f0f0; /* Leicht grauer Hover-Effekt */
+                background-color: #220000; 
             }
+            /* Jetzt wird der Select-Effekt (sorted) für Mobile angepasst */
             th.sorted {
-                background-color: #e0e0e0; /* Etwas dunkleres Grau für den geklickten Zustand */
+                background-color: #330000; 
             }
             th:last-child {
                 border-right: none;
@@ -222,7 +224,6 @@
                 position: static;
                 transform: none;
                 margin-left: 5px;
-                color: #ff3333;
             }
 
             tbody {
