@@ -73,15 +73,15 @@
             background-color: #161616;
             border-radius: 8px; 
             overflow: hidden; 
-            border: 3px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            border: none; /* Border entfernt */
+            /* Border-Ersatz durch insets box-shadow */
+            box-shadow: inset 0 0 0 3px #ff3333, 0 0 15px rgba(255, 51, 51, 0.5);
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
             z-index: 2;
         }
         
         thead {
-            /* Hintergrund für den gesamten Kopfbereich */
             background-color: #800000;
             border: none;
             box-shadow: none;
@@ -103,7 +103,6 @@
             color: #ffffff;
         }
         th { 
-            /* Hintergrund von hier entfernt und auf thead verschoben */
             color: #ffffff; 
             font-weight: bold; 
             cursor: pointer; 
