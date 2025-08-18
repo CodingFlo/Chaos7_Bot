@@ -113,15 +113,20 @@
             border-bottom: 1px solid #ff3333;
         }
         
-        /* Hover-Effekt nur für den sortierten Button */
-        th.sorted:hover {
-            background-color: #aa1111;
-        }
+        /* Entfernt den allgemeinen th:hover Effekt */
+        /* th:hover { 
+            background-color: #990000;
+        } */
         
         th.sorted { 
             background-color: #990000;
         }
         
+        /* Neuer, fokussierter Hover-Effekt nur für den sortierten Button */
+        th.sorted:hover {
+            background-color: #aa1111;
+        }
+
         .sort-icon { 
             position: absolute; 
             right: 20px; 
