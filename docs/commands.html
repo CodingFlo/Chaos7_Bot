@@ -113,20 +113,12 @@
             border-bottom: 1px solid #ff3333;
         }
         
-        /* Entfernt den allgemeinen th:hover Effekt */
-        /* th:hover { 
-            background-color: #990000;
-        } */
+        /* Kein Hover-Effekt auf dem Tabellenkopf */
         
         th.sorted { 
             background-color: #990000;
         }
         
-        /* Neuer, fokussierter Hover-Effekt nur für den sortierten Button */
-        th.sorted:hover {
-            background-color: #aa1111;
-        }
-
         .sort-icon { 
             position: absolute; 
             right: 20px; 
@@ -135,7 +127,8 @@
             color: inherit; 
         }
         
-        tr:hover { 
+        /* Hover-Effekt nur für die Zeilen des Tabellenkörpers */
+        tbody tr:hover { 
             background-color: #220000; 
         }
         
