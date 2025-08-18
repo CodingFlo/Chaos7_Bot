@@ -73,8 +73,7 @@
             background-color: #161616;
             border-radius: 8px; 
             overflow: hidden; 
-            border: none; /* Border entfernt */
-            /* Border-Ersatz durch insets box-shadow */
+            border: none;
             box-shadow: inset 0 0 0 3px #ff3333, 0 0 15px rgba(255, 51, 51, 0.5);
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
@@ -91,17 +90,20 @@
             box-shadow: none;
             background-color: transparent;
         }
-        
+
         thead tr { 
             opacity: 0; 
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
         }
+
+        /* Border zwischen den Zellen jetzt rot */
         th, td { 
             padding: 18px 20px; 
             text-align: left; 
-            border-bottom: 1px solid #800000;
+            border-bottom: 1px solid #ff3333; 
             color: #ffffff;
         }
+
         th { 
             color: #ffffff; 
             font-weight: bold; 
@@ -110,7 +112,7 @@
             position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-bottom: none;
+            border-bottom: 1px solid #ff3333; /* Border am Tabellenkopf */
         }
         th:hover { 
             background-color: #990000;
