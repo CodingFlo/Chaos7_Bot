@@ -140,8 +140,39 @@
                 background-color: transparent;
             }
             thead {
-                display: none; /* Tabellenkopf auf Handys ausblenden */
+                display: block; /* Wieder sichtbar machen */
+                margin-bottom: 25px;
+                border: 1px solid #ff3333;
+                border-radius: 8px;
+                box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+                overflow: hidden;
             }
+            thead tr {
+                display: flex; /* Flexbox für nebeneinanderliegende Buttons */
+                justify-content: space-around;
+                background-color: #1a1a1a;
+                animation: none;
+                opacity: 1;
+            }
+            th {
+                display: flex; /* Buttons in einer Zeile */
+                flex: 1; /* Gleichmäßige Verteilung */
+                text-align: center;
+                padding: 15px 10px;
+                border-bottom: none;
+                justify-content: center;
+                align-items: center;
+                border-right: 1px solid #ff3333; /* Trennlinie zwischen den Buttons */
+            }
+            th:last-child {
+                border-right: none;
+            }
+            .sort-icon {
+                position: static;
+                transform: none;
+                margin-left: 5px;
+            }
+
             tr {
                 display: block; /* Zeilen als Blöcke darstellen, um sie zu stapeln */
                 margin-bottom: 25px;
