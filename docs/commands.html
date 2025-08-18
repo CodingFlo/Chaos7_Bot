@@ -95,6 +95,7 @@
             position: sticky;
             top: 0;
             z-index: 10;
+            border-bottom: 1px solid #ff3333;
         }
         
         thead tr { 
@@ -109,7 +110,8 @@
             border-bottom: 1px solid #ff3333; 
             color: #ffffff;
         }
-
+        
+        /* Neue Regel: Nur noch border-right auf th */
         th { 
             font-weight: bold; 
             cursor: pointer; 
@@ -117,8 +119,7 @@
             position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-bottom: 1px solid #ff3333;
-            border-right: 1px solid #ff3333;
+            border-right: 1px solid rgba(255, 51, 51, 0.5); /* Semi-transparente Linie */
             text-shadow: none;
         }
         
