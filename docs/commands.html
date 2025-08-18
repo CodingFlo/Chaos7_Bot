@@ -70,6 +70,7 @@
             max-width: 800px;
             border-radius: 8px;
             border: 3px solid #ff3333;
+            overflow: hidden; 
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
             z-index: 2;
@@ -95,7 +96,6 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            border-bottom: 1px solid #ff3333;
         }
         
         thead tr { 
@@ -110,8 +110,7 @@
             border-bottom: 1px solid #ff3333; 
             color: #ffffff;
         }
-        
-        /* Neue Regel: Nur noch border-right auf th */
+
         th { 
             font-weight: bold; 
             cursor: pointer; 
@@ -119,7 +118,7 @@
             position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-right: 1px solid rgba(255, 51, 51, 0.5); /* Semi-transparente Linie */
+            border-right: 1px solid #ff3333;
             text-shadow: none;
         }
         
