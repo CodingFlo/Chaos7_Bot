@@ -6,31 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuschauer-Aktivitätsranking</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
         
         @keyframes fadeInFromTop { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes growIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px #ff3333, 0 0 10px #ff3333, 0 0 15px #ff3333, 0 0 20px rgba(255, 51, 51, 0.4); }
-            50% { box-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333, 0 0 30px #ff3333, 0 0 40px rgba(255, 51, 51, 0.6); }
+            0%, 100% { box-shadow: 0 0 5px #64c0ff, 0 0 10px #64c0ff, 0 0 15px #64c0ff, 0 0 20px rgba(100, 192, 255, 0.4); }
+            50% { box-shadow: 0 0 10px #64c0ff, 0 0 20px #64c0ff, 0 0 30px #64c0ff, 0 0 40px rgba(100, 192, 255, 0.6); }
         }
 
         body { 
-            font-family: 'Segoe UI', Arial, sans-serif; background-color: #000000; color: #d0d0d0;
+            font-family: 'Segoe UI', Arial, sans-serif; background-color: #0e172a; color: #f0f5ff;
             margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; 
             position: relative; overflow-x: hidden;
-            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px); background-size: 15px 15px;
+            background-image: radial-gradient(circle at 1px 1px, rgba(100, 192, 255, 0.1) 1px, transparent 0); background-size: 20px 20px;
         }
-        h1 { font-family: 'Orbitron', sans-serif; color: #ff3333; text-shadow: none; margin: 0 0 20px 0;
+        h1 { 
+            color: #64c0ff; text-shadow: 0 0 10px rgba(100, 192, 255, 0.5); margin: 0 0 20px 0;
             opacity: 0; animation: fadeInFromTop 0.6s ease-out forwards; z-index: 2; text-align: center;
         }
         .info-box {
             font-size: 0.9em;
             font-weight: bold;
             color: #ffffff;
-            background-color: #1a1a1a;
-            border: 2px solid #800000;
+            background-color: #1a2333;
+            border: 2px solid #64c0ff;
             border-radius: 8px;
             padding: 15px 25px;
             text-align: center;
@@ -40,24 +41,24 @@
             animation: fadeInFromTop 0.6s ease-out 0.2s forwards, glow 2s ease-in-out infinite;
         }
         .command-table-wrapper {
-            width: 100%; max-width: 800px; border-radius: 8px; border: 1px solid #ff3333;
+            width: 100%; max-width: 800px; border-radius: 8px; border: 1px solid #64c0ff;
             opacity: 0; animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards;
-            z-index: 2; background-color: #161616; box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+            z-index: 2; background-color: #1a2333; box-shadow: 0 0 15px rgba(100, 192, 255, 0.5);
         }
         .command-table { width: 100%; border-collapse: collapse; background-color: transparent; }
         thead, tbody { border: none; box-shadow: none; background-color: transparent; }
         thead { z-index: 10; }
-        thead tr { background-color: #800000; opacity: 0; animation: fadeInFromTop 0.5s ease-out 0.8s forwards; display: table-row; }
-        th, td { padding: 18px 20px; text-align: left; color: #ffffff; border-bottom: 1px solid #ff3333; }
+        thead tr { background-color: #1f486e; opacity: 0; animation: fadeInFromTop 0.5s ease-out 0.8s forwards; display: table-row; }
+        th, td { padding: 18px 20px; text-align: left; color: #ffffff; border-bottom: 1px solid #64c0ff; }
         th { font-weight: bold; cursor: pointer; user-select: none; position: relative; text-transform: uppercase;
-            letter-spacing: 1px; border-right: 1px solid #ff3333; text-shadow: none;
+            letter-spacing: 1px; border-right: 1px solid #64c0ff; text-shadow: none;
         }
         th:first-child { border-top-left-radius: 7px; }
         th:last-child { border-right: none; border-top-right-radius: 7px; }
-        th:hover { background-color: #990000; }
-        th.sorted { background-color: #990000; }
+        th:hover { background-color: #2a5a80; }
+        th.sorted { background-color: #2a5a80; }
         .sort-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: inherit; }
-        tbody tr:hover { background-color: #220000; box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+        tbody tr:hover { background-color: #242d40; box-shadow: 0 0 15px rgba(100, 192, 255, 0.5);
             transform: scale(1.01); transition: all 0.2s ease-in-out;
         }
         #sort-username { width: 40%; }
@@ -69,30 +70,30 @@
             .command-table-wrapper { border: none; box-shadow: none; background-color: transparent; border-radius: 0; }
             .command-table { background-color: transparent; }
             thead { display: block; margin-bottom: 25px; border: none; box-shadow: none; }
-            thead tr { display: flex; justify-content: space-around; animation: none; opacity: 1; background-color: #161616; }
+            thead tr { display: flex; justify-content: space-around; animation: none; opacity: 1; background-color: #1a2333; }
             th { display: flex; flex: 1; text-align: center; padding: 15px 10px; border-bottom: none;
-                justify-content: center; align-items: center; border-right: 1px solid #ff3333; background-color: #161616; color: #ffffff;
+                justify-content: center; align-items: center; border-right: 1px solid #64c0ff; background-color: #1a2333; color: #ffffff;
             }
             th:first-child, th:last-child { border-top-left-radius: 0; border-top-right-radius: 0; }
-            th:hover { background-color: #220000; }
-            th.sorted { background-color: #ff3333; }
+            th:hover { background-color: #242d40; }
+            th.sorted { background-color: #64c0ff; }
             th:last-child { border-right: none; }
             .sort-icon { position: static; transform: none; margin-left: 5px; }
             tbody { display: block; border: none; box-shadow: none; background-color: transparent; }
-            tr { display: block; margin-bottom: 25px; border: 1px solid #ff3333; border-radius: 8px;
-                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8); background-color: #161616; padding: 10px;
+            tr { display: block; margin-bottom: 25px; border: 1px solid #64c0ff; border-radius: 8px;
+                box-shadow: 0 0 15px rgba(100, 192, 255, 0.5); background-color: #1a2333; padding: 10px;
                 transition: none; animation: slideInUp 0.5s ease-out forwards;
             }
-            tr:hover { transform: none; box-shadow: 0 0 20px rgba(255, 51, 51, 0.8); }
+            tr:hover { transform: none; box-shadow: 0 0 15px rgba(100, 192, 255, 0.5); }
             td { display: block; text-align: left; padding: 10px 0; border-bottom: none; word-break: break-word; }
-            td::before { content: attr(data-label); display: block; font-weight: bold; text-transform: uppercase; color: #ff3333; margin-bottom: 5px; }
+            td::before { content: attr(data-label); display: block; font-weight: bold; text-transform: uppercase; color: #64c0ff; margin-bottom: 5px; }
         }
     </style>
 </head>
 <body>
     <h1>📊 Zuschauer-Aktivitätsranking</h1>
     <div class="info-box">
-        Letzte Aktualisierung: 18.08.2025, 21:47<br>
+        Letzte Aktualisierung: 18.08.2025, 21:48<br>
         Aktualisiert alle 30 Minuten.
     </div>
     <div class="command-table-wrapper">
@@ -131,7 +132,10 @@
             if (currentSortColumn !== columnId) {
                 sortOrder = 'asc';
                 const prevHeader = document.getElementById(currentSortColumn);
-                if (prevHeader) prevHeader.classList.remove('sorted');
+                if (prevHeader) {
+                    prevHeader.classList.remove('sorted');
+                    prevHeader.querySelector('.sort-icon').textContent = '';
+                }
             } else {
                 sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
             }
@@ -164,11 +168,6 @@
         document.getElementById('sort-rank').onclick = () => sortTableByColumn('sort-rank');
         document.addEventListener('DOMContentLoaded', () => {
             sortTableByColumn('sort-activity');
-            const rankHeader = document.getElementById('sort-rank');
-            if (rankHeader) {
-                rankHeader.classList.remove('sorted');
-                rankHeader.querySelector('.sort-icon').textContent = '';
-            }
         });
     </script>
 </body>
