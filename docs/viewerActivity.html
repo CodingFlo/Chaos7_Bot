@@ -21,14 +21,20 @@
         h1 { font-family: 'Orbitron', sans-serif; color: #ff3333; text-shadow: none; margin: 0 0 20px 0;
             opacity: 0; animation: fadeInFromTop 0.6s ease-out forwards; z-index: 2; text-align: center;
         }
-        .update-info {
+        .info-box {
             font-size: 0.9em;
-            color: #ff3333;
+            font-weight: bold;
+            color: #ffffff; /* Geändert zu Weiß */
+            background-color: #1a1a1a;
+            border: 2px solid #ff3333;
+            border-radius: 8px;
+            padding: 15px 25px;
+            text-align: center;
             margin-top: -10px;
             margin-bottom: 20px;
             opacity: 0;
             animation: fadeInFromTop 0.6s ease-out 0.2s forwards;
-            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
         }
         .command-table-wrapper {
             width: 100%; max-width: 800px; border-radius: 8px; border: 1px solid #ff3333;
@@ -82,10 +88,10 @@
 </head>
 <body>
     <h1>📊 Zuschauer-Aktivitätsranking</h1>
-    <p class="update-info">
-        Letzte Aktualisierung: 18.08.2025, 21:26:37<br>
+    <div class="info-box">
+        Letzte Aktualisierung: 18.08.2025, 21:41:57<br>
         Aktualisiert alle 30 Minuten.
-    </p>
+    </div>
     <div class="command-table-wrapper">
         <table class="command-table">
             <thead>
@@ -123,7 +129,7 @@
                 sortOrder = 'asc';
                 if (currentSortColumn) {
                     const prevHeader = document.getElementById(currentSortColumn);
-                    if (prevHeader) prevHeader.classList.remove('sorted');
+                    if (prevTypeHeader) prevHeader.classList.remove('sorted');
                 }
             } else {
                 sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
