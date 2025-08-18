@@ -22,23 +22,33 @@
             font-family: 'Orbitron', sans-serif; color: #ff3333; text-shadow: none; margin: 0 0 20px 0;
             opacity: 0; animation: fadeInFromTop 0.6s ease-out forwards; z-index: 2; text-align: center;
         }
+        .info-box-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInFromTop 0.6s ease-out 0.2s forwards;
+            z-index: 2;
+        }
         .info-box {
             font-size: 1.1em;
             font-weight: bold;
             color: #d0d0d0;
-            /* Verbesserungen für Design */
             background-color: rgba(22, 22, 22, 0.7);
             border: 1px solid #ff3333;
             box-shadow: 0 0 15px rgba(255, 51, 51, 0.8), 0 0 5px rgba(255, 51, 51, 0.6);
             border-radius: 12px;
             padding: 15px 25px;
             text-align: center;
-            margin-bottom: 25px;
-            opacity: 0;
-            animation: fadeInFromTop 0.6s ease-out 0.2s forwards;
-            z-index: 2;
             text-shadow: 1px 1px 2px #000;
             backdrop-filter: blur(5px);
+        }
+        .info-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2em;
+            color: #ff3333;
+            margin: 0 0 10px 0;
         }
         .command-table-wrapper {
             width: 100%; max-width: 800px; border-radius: 8px; border: 1px solid #ff3333;
@@ -92,9 +102,16 @@
 </head>
 <body>
     <h1>📊 Zuschauer-Aktivitätsranking von Chaos7</h1>
-    <div class="info-box">
-        Letzte Aktualisierung: 18.08.2025, 22:09<br>
-        Aktualisiert alle 30 Minuten.<br>(Für das Ranking zählen nur Aktivitäten der letzten 90 Tage. Beginnend mit 18.08.2025)
+    <div class="info-box-container">
+        <div class="info-box">
+            <h2>Aktualisierungsstatus</h2>
+            <p>Letzte Aktualisierung: 18.08.2025, 22:11</p>
+            <p>Aktualisiert alle 30 Minuten.</p>
+        </div>
+        <div class="info-box">
+            <h2>Aktivitätszeitraum</h2>
+            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking, beginnend am 18.8.2025.</p>
+        </div>
     </div>
     <div class="command-table-wrapper">
         <table class="command-table">
