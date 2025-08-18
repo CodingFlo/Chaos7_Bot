@@ -150,20 +150,18 @@
                 background-color: transparent;
             }
             
-            /* Die Kopfzeile ist jetzt die einzige Box */
+            /* Kopfzeile wird zur einfachen Sortierleiste, ohne Box-Design */
             thead {
                 display: block;
                 margin-bottom: 25px;
-                border: 1px solid #ff3333;
-                box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
-                border-radius: 8px;
-                overflow: hidden;
-                background-color: #1a1a1a;
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
             }
             thead tr {
                 display: flex;
                 justify-content: space-around;
-                background-color: #1a1a1a;
+                background-color: transparent;
                 animation: none;
                 opacity: 1;
             }
@@ -176,6 +174,7 @@
                 justify-content: center;
                 align-items: center;
                 border-right: 1px solid #ff3333;
+                background-color: transparent;
             }
             th:last-child {
                 border-right: none;
@@ -188,7 +187,6 @@
 
             tbody {
                 display: block;
-                /* Keine Border oder Schatten, da jede Zeile ihre eigene Box ist */
                 border: none;
                 box-shadow: none;
                 background-color: transparent;
@@ -207,20 +205,22 @@
                 transform: translateY(-5px);
                 box-shadow: 0 5px 25px rgba(255, 51, 51, 0.7);
             }
+            /* Jede Zelle ist jetzt eine separate Zeile */
             td {
                 display: block;
-                text-align: right;
-                padding: 10px;
+                text-align: left; /* Text linksbündig */
+                padding: 10px 0;
                 border-bottom: none;
                 word-break: break-word;
             }
+            /* Das Label ist jetzt eine eigene Überschriftzeile */
             td::before {
                 content: attr(data-label);
-                float: left;
+                display: block; /* Zeilenumbruch nach dem Label */
                 font-weight: bold;
                 text-transform: uppercase;
                 color: #ff3333;
-                margin-right: 15px;
+                margin-bottom: 5px;
             }
         }
     </style>
