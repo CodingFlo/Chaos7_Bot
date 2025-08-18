@@ -65,44 +65,32 @@
             z-index: 2;
         }
         
+        /* Haupt-Tabelle als eine einzige leuchtende Box */
         table { 
             width: 100%; 
             max-width: 800px; 
             border-collapse: collapse; 
-            background-color: transparent;
+            background-color: #161616;
             border-radius: 8px; 
             overflow: hidden; 
-            border: none;
-            box-shadow: none;
+            border: 1px solid #ff3333;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
             opacity: 0; 
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
             z-index: 2;
         }
         
-        thead {
-            display: table-header-group;
-            border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #1a1a1a;
-            margin-bottom: 25px;
+        /* Die inneren Sektionen haben keine eigenen Boxen mehr */
+        thead, tbody {
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
         }
         
         thead tr { 
             opacity: 0; 
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
         }
-
-        tbody {
-            display: table-row-group;
-            border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #161616;
-        }
-        
         th, td { 
             padding: 18px 20px; 
             text-align: left; 
@@ -156,8 +144,11 @@
         /* ----- Responsive Anpassungen für Handys ----- */
         @media (max-width: 600px) {
             table {
+                border: none;
+                box-shadow: none;
                 background-color: transparent;
             }
+            /* Die Kopfzeile ist jetzt die einzige Box */
             thead {
                 display: block;
                 margin-bottom: 25px;
@@ -195,9 +186,6 @@
 
             tbody {
                 display: block;
-                border: none;
-                box-shadow: none;
-                background-color: transparent;
             }
             tr {
                 display: block;
@@ -218,6 +206,8 @@
                 text-align: right;
                 padding: 10px;
                 border-bottom: none;
+                /* Korrekter Zeilenumbruch für die Beschreibung */
+                word-break: break-word;
             }
             td::before {
                 content: attr(data-label);
