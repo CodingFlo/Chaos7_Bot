@@ -65,30 +65,36 @@
             z-index: 2;
         }
         
-        /* Desktop-Design: Eine einzige, große Box für die ganze Tabelle */
+        /* Desktop-Design: Container für die beiden Tabellenteile */
         .command-table { 
             width: 100%; 
             max-width: 800px; 
-            border-collapse: collapse; 
-            background-color: #161616;
-            border-radius: 8px; 
-            overflow: hidden; 
-            border: none;
-            box-shadow: inset 0 0 0 3px #ff3333, 0 0 15px rgba(255, 51, 51, 0.5);
-            opacity: 0; 
-            animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
+            background-color: transparent;
+            border-collapse: separate; 
+            border-spacing: 0;
+            opacity: 0;
+            animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards;
             z-index: 2;
         }
         
         thead {
+            display: block;
+            border: 3px solid #ff3333;
             background-color: #800000;
-            border: none;
-            box-shadow: none;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
         }
+
         tbody {
-            border: none;
-            box-shadow: none;
-            background-color: transparent;
+            display: block;
+            border: 3px solid #ff3333;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            background-color: #161616;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
         }
 
         thead tr { 
@@ -96,27 +102,41 @@
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
         }
 
-        /* Border zwischen den Zellen jetzt rot */
         th, td { 
             padding: 18px 20px; 
             text-align: left; 
-            border-bottom: 1px solid #ff3333; 
             color: #ffffff;
         }
 
-        th { 
-            color: #ffffff; 
+        th {
             font-weight: bold; 
             cursor: pointer; 
             user-select: none; 
             position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-bottom: 1px solid #ff3333; /* Border am Tabellenkopf */
         }
+
+        th:not(:last-child) {
+            border-right: 1px solid #ff3333;
+        }
+
+        td:not(:last-child) {
+            border-right: 1px solid #ff3333;
+        }
+        
+        tr {
+            border-bottom: 1px solid #ff3333;
+        }
+
+        tr:last-child {
+            border-bottom: none;
+        }
+
         th:hover { 
             background-color: #990000;
         }
+
         th.sorted { 
             background-color: #990000;
         }
@@ -149,26 +169,22 @@
 
         /* ----- Responsive Anpassungen für Handys ----- */
         @media (max-width: 600px) {
-            .command-table {
+            .command-table, thead, tbody {
                 border: none;
                 box-shadow: none;
                 background-color: transparent;
+                display: block;
+                border-radius: 0;
             }
             
-            thead {
-                display: block;
-                margin-bottom: 25px;
-                border: none;
-                box-shadow: none;
-                background-color: transparent;
-            }
             thead tr {
                 display: flex;
                 justify-content: space-around;
-                background-color: transparent;
                 animation: none;
                 opacity: 1;
+                margin-bottom: 25px;
             }
+            
             th {
                 display: flex;
                 flex: 1;
@@ -180,24 +196,21 @@
                 border-right: 1px solid #ff3333;
                 background-color: #800000;
             }
+            
             th:hover {
                 background-color: #990000;
             }
+            
             th:last-child {
                 border-right: none;
             }
+            
             .sort-icon {
                 position: static;
                 transform: none;
                 margin-left: 5px;
             }
 
-            tbody {
-                display: block;
-                border: none;
-                box-shadow: none;
-                background-color: transparent;
-            }
             tr {
                 display: block;
                 margin-bottom: 25px;
