@@ -98,6 +98,12 @@
             margin-bottom: 10px;
         }
 
+        .faq-question {
+            font-weight: bold;
+            color: #ff3333;
+            margin-top: 15px;
+        }
+
         p {
             margin: 0;
             font-size: 1em;
@@ -122,17 +128,18 @@
         <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/f7ba1f61-5771-4272-b8fc-9d170c4f9256-profile_image-70x70.png"
             alt="Bot Profilbild" class="profile-pic" style="animation-delay: 0.2s;">
         <h1 style="margin: 0; animation-delay: 0s;">Über den Bot</h1>
-        <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7863ec31-8858-47fe-a77e-354bd4535f44-profile_image-70x70.png"
-            alt="Dein Profilbild" class="profile-pic" style="animation-delay: 0.4s;">
+        <a href="https://www.twitch.tv/flo_ced_cob" target="_blank">
+            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7863ec31-8858-47fe-a77e-354bd4535f44-profile_image-70x70.png"
+                alt="Flo_Ced_CoB Profilbild" class="profile-pic" style="animation-delay: 0.4s;">
+        </a>
     </div>
     <div class="content-container">
 
         <div class="info-card" style="animation-delay: 0.6s;">
             <h2>Was ist das für ein Bot?</h2>
             <p>Der <strong>Chaos7</strong> Bot ist ein vollautomatisierter Chat-Bot, der speziell für den Twitch-Kanal
-                entwickelt
-                wurde. Er ist dafür zuständig, euch mit den wichtigsten Infos zu versorgen, den Chat zu moderieren und
-                für unterhaltsame Momente zu sorgen.</p>
+                entwickelt wurde. Er ist dafür zuständig, euch mit den wichtigsten Infos zu versorgen, den Chat zu
+                moderieren und für unterhaltsame Momente zu sorgen.</p>
         </div>
 
         <div class="info-card" style="animation-delay: 0.8s;">
@@ -157,6 +164,44 @@
             <p style="text-align: center;"><a href="commands.html">Zur Command-Liste</a></p>
         </div>
 
+        <div class="info-card" style="animation-delay: 1.4s;">
+            <h2>Die Technik dahinter</h2>
+            <p>Der Bot wurde in der Skriptsprache <strong>Node.js</strong> entwickelt und nutzt die
+                <strong>Twurple-API</strong>, um mit Twitch zu interagieren. Er läuft lokal auf dem PC von Flo_Ced_CoB
+                und ist daher nur während Streams erreichbar.
+            </p>
+        </div>
+
+        <div class="info-card" style="animation-delay: 1.6s;">
+            <h2>Häufig gestellte Fragen (FAQ)</h2>
+
+            <p class="faq-question">Warum wurde meine Nachricht automatisch von Chaos7 gelöscht?</p>
+            <p> Der Bot löscht automatisch Nachrichten, die Links von Nutzern enthalten, die keine Moderatoren sind.
+                Dies geschieht, um den Chat vor Spam und bösartigen Links zu schützen. Nur Links von Twitch und YouTube
+                sind daher erlaubt.</p>
+
+            <p class="faq-question">Wie kann ich einen neuen Befehl vorschlagen?</p>
+            <p>Befehlsvorschläge sind immer willkommen! Du kannst deinen Vorschlag einfach im Chat äußern oder an
+                Flo_Ced_CoB auf Discord senden.</p>
+
+            <p class="faq-question">Warum reagiert der Bot nicht auf meine Nachricht?</p>
+            <p>Das kann verschiedene Gründe haben: Der Bot ist offline, du hast den Befehl falsch geschrieben,
+                oder der Befehl erfordert eine bestimmte Benutzerrolle (z. B. Moderator). Wichtig ist hierbei zu
+                erwähnen, dass der Bot nur während Streams funktioniert und nicht 24/7 wie viele andere Bots</p>
+
+            <p class="faq-question">Warum hat der Bot keine 24/7-Verfügbarkeit?</p>
+            <p>Der Bot läuft lokal auf einem Computer und ist daher nur online, wenn der Streamer live ist. Eine
+                durchgehende Verfügbarkeit würde den Betrieb auf einem gemieteten oder gekauften Server erfordern, was
+                mit laufenden Kosten verbunden wäre.</p>
+
+            <p class="faq-question">Ist der Bot für andere Kanäle verfügbar?</p>
+            <p>Der Bot wurde speziell für diesen Kanal entwickelt und ist derzeit nicht für die Nutzung auf anderen
+                Kanälen vorgesehen. Bottario (der Chat-Bot von Christario) ist hierbei ein Ausnahme fall.</p>
+
+            <p class="faq-question">Ist der Bot Open Source?</p>
+            <p>Aktuell ist der Bot nicht Open Source. Derzeit gibt es auch keine Pläne, den Code öffentlich zugänglich
+                zu machen.</p>
+        </div>
     </div>
 </body>
 
