@@ -90,8 +90,8 @@
 <body>
     <h1>📊 Zuschauer-Aktivitätsranking von Chaos7</h1>
     <div class="info-box">
-        Letzte Aktualisierung: 18.08.2025, 21:55<br>
-        Aktualisiert alle 30 Minuten.
+        Letzte Aktualisierung: 18.08.2025, 22:06<br>
+        Aktivitäten der letzten 90 Tage<br>Aktualisiert alle 30 Minuten.
     </div>
     <div class="command-table-wrapper">
         <table class="command-table">
@@ -111,21 +111,26 @@
         </table>
     </div>
     <script>
-        function applyRowAnimation(delay = 0.8) {
+        
+        function applyRowAnimation() {
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
                 row.classList.remove('animated');
                 void row.offsetWidth;
                 row.classList.add('animated');
-                row.style.animationDelay = `${delay + index * 0.05}s`;
+                const delay = 0.8 + index * 0.05;
+                row.style.animationDelay = `${delay}s`;
             });
         }
-        document.addEventListener('DOMContentLoaded', () => applyRowAnimation(0.8));
+        document.addEventListener('DOMContentLoaded', applyRowAnimation);
+
         let currentSortColumn = 'sort-activity';
         let sortOrder = 'desc';
+
         function sortTableByColumn(columnId) {
             const tableBody = document.getElementById('command-table-body');
             const header = document.getElementById(columnId);
+            
             if (currentSortColumn !== columnId) {
                 sortOrder = 'asc';
                 const prevHeader = document.getElementById(currentSortColumn);
@@ -136,10 +141,12 @@
             } else {
                 sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
             }
+
             currentSortColumn = columnId;
             header.classList.add('sorted');
             const columnIndex = header.cellIndex;
             const rows = Array.from(tableBody.rows);
+            
             const sortedRows = rows.sort((a, b) => {
                 const aText = a.cells[columnIndex].textContent;
                 const bText = b.cells[columnIndex].textContent;
@@ -153,8 +160,9 @@
                 }
                 return sortOrder === 'asc' ? comparison : -comparison;
             });
+            
             sortedRows.forEach(row => tableBody.appendChild(row));
-            applyRowAnimation(0);
+            applyRowAnimation(); // Aufruf ohne delay, aber die Funktion definiert es selbst
             document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
             if (header.querySelector('.sort-icon')) {
                  header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
@@ -166,6 +174,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             sortTableByColumn('sort-activity');
         });
+    
     </script>
 </body>
 </html>
