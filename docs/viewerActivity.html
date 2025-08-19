@@ -105,7 +105,7 @@
     <div class="info-box-container">
         <div class="info-box">
             <h2>Stream-Statistiken</h2>
-            <p>Zuletzt aktualisiert: 19.08.2025, 21:13<br>Nächste Aktualisierung: In ca. 30 Minuten.</p>
+            <p>Zuletzt aktualisiert: 19.08.2025, 21:18<br>Nächste Aktualisierung: In ca. 30 Minuten.</p>
             <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking. Gesamt-Stream-Dauer: <strong>0s</strong></p>
         </div>
     </div>
@@ -116,7 +116,7 @@
                     <th id="sort-username">Benutzername <span class="sort-icon"></span></th>
                     <th id="sort-activity">Aktivität <span class="sort-icon"></span></th>
                     <th id="sort-rank">Rang<span class="sort-icon"></span></th>
-                    <th>Gesamtzeit</th>
+                    <th id="sort-time">Gesamtzeit<span class="sort-icon"></span></th>
                 </tr>
             </thead>
             <tbody id="command-table-body">
@@ -172,7 +172,29 @@
                     const aValue = parseFloat(aText.replace(/[^0-9.]/g, ''));
                     const bValue = parseFloat(bText.replace(/[^0-9.]/g, ''));
                     comparison = aValue - bValue;
-                } else {
+                } else if (columnId === 'sort-time') {
+                     // Funktion zur Konvertierung von formatiertem Text in Millisekunden
+                    const parseDuration = (durationStr) => {
+                        const parts = durationStr.match(/(d+)(d|h|m|s)/g);
+                        if (!parts) return 0;
+                        let totalMs = 0;
+                        parts.forEach(part => {
+                            const value = parseInt(part.slice(0, -1));
+                            const unit = part.slice(-1);
+                            switch(unit) {
+                                case 'd': totalMs += value * 24 * 60 * 60 * 1000; break;
+                                case 'h': totalMs += value * 60 * 60 * 1000; break;
+                                case 'm': totalMs += value * 60 * 1000; break;
+                                case 's': totalMs += value * 1000; break;
+                            }
+                        });
+                        return totalMs;
+                    };
+                    const aValue = parseDuration(aText);
+                    const bValue = parseDuration(bText);
+                    comparison = aValue - bValue;
+                }
+                 else {
                     comparison = aText.localeCompare(bText);
                 }
                 return sortOrder === 'asc' ? comparison : -comparison;
@@ -182,12 +204,13 @@
             applyRowAnimation();
             document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
             if (header.querySelector('.sort-icon')) {
-                 header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
+                header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
             }
         }
         document.getElementById('sort-username').onclick = () => sortTableByColumn('sort-username');
         document.getElementById('sort-activity').onclick = () => sortTableByColumn('sort-activity');
         document.getElementById('sort-rank').onclick = () => sortTableByColumn('sort-rank');
+        document.getElementById('sort-time').onclick = () => sortTableByColumn('sort-time');
         document.addEventListener('DOMContentLoaded', () => {
             sortTableByColumn('sort-activity');
         });
