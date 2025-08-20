@@ -28,15 +28,23 @@
             flex-direction: column; 
             align-items: center; 
             position: relative;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
-            background-size: 15px 15px;
+            overflow: hidden; /* Verhindert Scrollleisten durch das Canvas */
+        }
+
+        /* CSS für den animierten Hintergrund */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
             color: #ff3333;
-            margin: 0 0 25px 0; /* Abstand verkleinert */
+            margin: 0 0 25px 0;
             text-align: center;
             opacity: 0;
             animation: fadeInFromTop 0.6s ease-out forwards;
@@ -44,7 +52,7 @@
         }
 
         .info-container {
-            margin-bottom: 25px; /* Abstand verkleinert */
+            margin-bottom: 25px;
             padding: 10px 20px;
             font-size: 1.1em;
             font-weight: bold;
@@ -154,6 +162,9 @@
     </style>
 </head>
 <body>
+    <!-- Canvas für den animierten Hintergrund -->
+    <canvas id="background-canvas"></canvas>
+
     <h1 style="animation-delay: 0.2s;">Timer-Nachrichten von Chaos7</h1>
     <div class="info-container" style="animation-delay: 0.4s;">
         <span>Intervall: 30 Minuten</span>
@@ -195,5 +206,99 @@
             <p>Du willst wissen wer am wenigsten ein Hobby hat neben Flo? Dann nutze doch mal !ranking im Chat! ;)</p>
         </div>
     </div>
-</body>
-</html>
+    <script>
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let mouse = { x: undefined, y: undefined };
+        const maxRadius = 5;
+
+        // Funktion zur Erstellung und Aktualisierung der Partikel
+        function Particle(x, y, dx, dy, radius) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.radius = radius;
+            this.baseRadius = radius;
+            this.color = '#ff3333';
+            this.isNearMouse = false;
+
+            this.draw = function() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = this.isNearMouse ? 15 : 5;
+                ctx.fill();
+            };
+
+            this.update = function() {
+                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                    this.dx = -this.dx;
+                }
+                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                    this.dy = -this.dy;
+                }
+                this.x += this.dx;
+                this.y += this.dy;
+
+                const distance = Math.sqrt(
+                    Math.pow(mouse.x - this.x, 2) + Math.pow(mouse.y - this.y, 2)
+                );
+
+                if (distance < 100 && this.radius < maxRadius) {
+                    this.radius += 0.5;
+                    this.isNearMouse = true;
+                } else if (this.radius > this.baseRadius) {
+                    this.radius -= 0.1;
+                    this.isNearMouse = false;
+                }
+            };
+        }
+
+        // Initialisierung der Partikel
+        function initParticles() {
+            particles = [];
+            const numParticles = Math.floor((canvas.width * canvas.height) / 10000);
+            for (let i = 0; i < numParticles; i++) {
+                const radius = Math.random() * 2 + 1;
+                const x = Math.random() * (canvas.width - radius * 2) + radius;
+                const y = Math.random() * (canvas.height - radius * 2) + radius;
+                const dx = (Math.random() - 0.5) * 0.5;
+                const dy = (Math.random() - 0.5) * 0.5;
+                particles.push(new Particle(x, y, dx, dy, radius));
+            }
+        }
+
+        // Animationsschleife für den Hintergrund
+        function animateCanvas() {
+            requestAnimationFrame(animateCanvas);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+        }
+
+        // Event-Listener für Größenänderung und Mausbewegung
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Startet die Animation und die Initialisierung der Nachrichten
+        window.onload = function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+            animateCanvas();
+        };
+        // Funktion für die Animation der Nachrichten-Karten        function applyCardAnimation(delay = 0.8) {            const cards = document.querySelectorAll('.info-card');            cards.forEach((card, index) => {                card.classList.add('animated');                card.style.animationDelay = `${delay + index * 0.15 } s`;            });        }        document.addEventListener('DOMContentLoaded', () => {            applyCardAnimation(0.8);        });    </script></body></html>
