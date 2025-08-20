@@ -2,647 +2,645 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Befehle von Chaos7</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
-        @keyframes fadeInFromTop {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Befehle von Chaos7</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        @keyframes fadeInFromTop {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        @keyframes growIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        @keyframes growIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #000000; 
-            color: #d0d0d0;
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #000000; 
+            color: #d0d0d0;
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
 
-        #background-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        h1 { 
-            font-family: 'Orbitron', sans-serif;
-            color: #ff3333; 
-            text-shadow: none;
-            margin: 0 0 20px 0;
-            opacity: 0; 
-            animation: fadeInFromTop 0.6s ease-out forwards; 
-            z-index: 2;
-            text-align: center;
-        }
-        
-        .prefix-container { 
-            margin-bottom: 20px; 
-            font-size: 1.1em; 
-            font-weight: bold;
-            color: #d0d0d0;
-            background-color: #1a1a1a;
-            border: 1px solid #ff3333;
-            border-radius: 8px;
-            padding: 10px 20px;
-            text-align: center;
-            opacity: 0; 
-            animation: fadeInFromTop 0.6s ease-out 0.2s forwards; 
-            z-index: 2;
-        }
-        
-        .command-table-wrapper {
-            width: 100%;
-            max-width: 800px;
-            border-radius: 8px;
-            border: 1px solid #ff3333;
-            opacity: 0; 
-            animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
-            z-index: 2;
-            background-color: #161616;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
-            position: relative;
-        }
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        h1 { 
+            font-family: 'Orbitron', sans-serif;
+            color: #ff3333; 
+            text-shadow: none;
+            margin: 0 0 20px 0;
+            opacity: 0; 
+            animation: fadeInFromTop 0.6s ease-out forwards; 
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .prefix-container { 
+            margin-bottom: 20px; 
+            font-size: 1.1em; 
+            font-weight: bold;
+            color: #d0d0d0;
+            background-color: #1a1a1a;
+            border: 1px solid #ff3333;
+            border-radius: 8px;
+            padding: 10px 20px;
+            text-align: center;
+            opacity: 0; 
+            animation: fadeInFromTop 0.6s ease-out 0.2s forwards; 
+            z-index: 2;
+        }
+        
+        .command-table-wrapper {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            border: 1px solid #ff3333;
+            opacity: 0; 
+            animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards; 
+            z-index: 2;
+            background-color: #161616;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+            position: relative;
+        }
 
-        .command-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            background-color: transparent;
-        }
-        
-        thead, tbody {
-            border: none;
-            box-shadow: none;
-            background-color: transparent;
-        }
+        .command-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background-color: transparent;
+        }
+        
+        thead, tbody {
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
 
-        thead {
-            z-index: 10;
-        }
+        thead {
+            z-index: 10;
+        }
 
-        thead tr {
-            background-color: #800000;
-            opacity: 0; 
-            animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
-            display: table-row;
-        }
+        thead tr {
+            background-color: #800000;
+            opacity: 0; 
+            animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
+            display: table-row;
+        }
 
-        th, td { 
-            padding: 18px 20px; 
-            text-align: left; 
-            color: #ffffff;
-            border-bottom: 1px solid #ff3333;
-        }
+        th, td { 
+            padding: 18px 20px; 
+            text-align: left; 
+            color: #ffffff;
+            border-bottom: 1px solid #ff3333;
+        }
 
-        th { 
-            font-weight: bold; 
-            cursor: pointer; 
-            user-select: none; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-right: 1px solid #ff3333;
-            text-shadow: none;
-            /* Korrektur: Die Überschrift (th) wird zu einem Flex-Container. */
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            white-space: nowrap; /* Verhindert, dass der Text umbricht */
-        }
-        
-        th:first-child {
-            border-top-left-radius: 7px;
-        }
-        th:last-child {
-            border-right: none;
-            border-top-right-radius: 7px;
-        }
-            
-        th:hover,
-        th.sorted { 
-            background-color: #990000;
-        }
-        
-        .sort-icon { 
-            /* Korrektur: Das Icon ist jetzt ein Teil des Flex-Layouts */
-            position: static;
-            margin-left: 10px; /* Fügt Abstand zum Text hinzu */
-        }
-        
-        tbody tr:hover { 
-            background-color: #220000; 
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
-            transform: scale(1.01);
-            transition: all 0.2s ease-in-out;
-        }
-        
-        tr {
-            opacity: 0; 
-        }
-        tr.animated { 
-            animation: slideInUp 0.5s ease-out forwards; 
-        }
+        th { 
+            font-weight: bold; 
+            cursor: pointer; 
+            user-select: none; 
+            position: relative; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-right: 1px solid #ff3333;
+            text-shadow: none;
+        }
+        
+        th:first-child {
+            border-top-left-radius: 7px;
+        }
+        th:last-child {
+            border-right: none;
+            border-top-right-radius: 7px;
+        }
+            
+        th:hover,
+        th.sorted { 
+            background-color: #990000;
+        }
+        
+        .sort-icon { 
+            position: absolute; 
+            right: 20px; 
+            top: 50%;
+            transform: translateY(-50%);
+            color: inherit; 
+        }
+        
+        tbody tr:hover { 
+            background-color: #220000; 
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+            transform: scale(1.01);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        tr {
+            opacity: 0; 
+        }
+        tr.animated { 
+            animation: slideInUp 0.5s ease-out forwards; 
+        }
 
-        @media (max-width: 600px) {
-            .command-table-wrapper {
-                border: none;
-                box-shadow: none;
-                background-color: transparent;
-                border-radius: 0;
-            }
-            .command-table {
-                background-color: transparent;
-            }
-            
-            thead {
-                display: block;
-                margin-bottom: 25px;
-                border: none;
-                box-shadow: none;
-            }
-            thead tr {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                align-content: center;
-                flex-wrap: wrap;
-                animation: none;
-                opacity: 1;
-                background-color: #161616; 
-            }
-            th {
-                display: flex;
-                flex: 1;
-                text-align: center;
-                padding: 15px 10px;
-                border-bottom: none;
-                justify-content: center;
-                align-items: center;
-                border-right: 1px solid #ff3333;
-                background-color: #161616; 
-                color: #ffffff;
-            }
-            th:first-child,
-            th:last-child {
-                border-top-left-radius: 0;
-                border-top-right-radius: 0;
-            }
-            th:hover {
-                background-color: #220000; 
-            }
-            th.sorted {
-                background-color: #ff3333; 
-            }
-            th:last-child {
-                border-right: none;
-            }
-            .sort-icon {
-                position: static;
-                transform: none;
-                margin-left: 5px;
-            }
+        @media (max-width: 600px) {
+            .command-table-wrapper {
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
+                border-radius: 0;
+            }
+            .command-table {
+                background-color: transparent;
+            }
+            
+            thead {
+                display: block;
+                margin-bottom: 25px;
+                border: none;
+                box-shadow: none;
+            }
+            thead tr {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                align-content: center;
+                flex-wrap: wrap;
+                animation: none;
+                opacity: 1;
+                background-color: #161616; 
+            }
+            th {
+                display: flex;
+                flex: 1;
+                text-align: center;
+                padding: 15px 10px;
+                border-bottom: none;
+                justify-content: center;
+                align-items: center;
+                border-right: 1px solid #ff3333;
+                background-color: #161616; 
+                color: #ffffff;
+            }
+            th:first-child,
+            th:last-child {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+            th:hover {
+                background-color: #220000; 
+            }
+            th.sorted {
+                background-color: #ff3333; 
+            }
+            th:last-child {
+                border-right: none;
+            }
+            .sort-icon {
+                position: static;
+                transform: none;
+                margin-left: 5px;
+            }
 
-            tbody {
-                display: block;
-                border: none;
-                box-shadow: none;
-                background-color: transparent;
-            }
-            tr {
-                display: block;
-                margin-bottom: 25px;
-                border: 1px solid #ff3333;
-                border-radius: 8px;
-                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
-                background-color: #161616;
-                padding: 10px;
-                transition: none;
-                animation: slideInUp 0.5s ease-out forwards;
-            }
-            tr:hover {
-                transform: none;
-                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
-            }
-            td {
-                display: block;
-                text-align: left;
-                padding: 10px 0;
-                border-bottom: none;
-                word-break: break-word;
-            }
-            td::before {
-                content: attr(data-label);
-                display: block;
-                font-weight: bold;
-                text-transform: uppercase;
-                color: #ff3333;
-                margin-bottom: 5px;
-            }
-        }
-    </style>
+            tbody {
+                display: block;
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
+            }
+            tr {
+                display: block;
+                margin-bottom: 25px;
+                border: 1px solid #ff3333;
+                border-radius: 8px;
+                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+                background-color: #161616;
+                padding: 10px;
+                transition: none;
+                animation: slideInUp 0.5s ease-out forwards;
+            }
+            tr:hover {
+                transform: none;
+                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+            }
+            td {
+                display: block;
+                text-align: left;
+                padding: 10px 0;
+                border-bottom: none;
+                word-break: break-word;
+            }
+            td::before {
+                content: attr(data-label);
+                display: block;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #ff3333;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Canvas für den animierten Hintergrund -->
-    <canvas id="background-canvas"></canvas>
+    <!-- Canvas für den animierten Hintergrund -->
+    <canvas id="background-canvas"></canvas>
 
-    <h1>Befehle von Chaos7</h1>
-    <div class="prefix-container">
-        Bot-Prefix: !
-    </div>
-    <div class="command-table-wrapper">
-        <table class="command-table">
-            <thead>
-                <tr>
-                    <th id="sort-command" data-sort-order="asc">Befehl <span class="sort-icon"></span></th>
-                    <th id="sort-shortcut" data-sort-order="asc">Kürzel <span class="sort-icon"></span></th>
-                    <th id="sort-description" data-sort-order="asc">Beschreibung<span class="sort-icon"></span></th>
-                </tr>
-            </thead>
-            <tbody id="command-table-body">
-    
-                <tr>
-                    <td data-label="Befehl">beleidigung</td>
-                    <td data-label="Kürzel">beleidigen</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man jemanden Beleidigen kann. (Es gibt mehrere Szenarien, die auftreten können als Beleidigung)</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">biddää</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man.... Joa gute Frage eigentlich... xDD</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">bug</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man mein Bot ein Statement zu seinen Bugs gibt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">cheater</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man jemanden als Cheater enttarnt und dem auf entsprechende Plattform canceln sollte.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">command</td>
-                    <td data-label="Kürzel">command</td>
-                    <td data-label="Beschreibung">Ein Befehl, der alle verfügbaren Befehle auflistet.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">dc</td>
-                    <td data-label="Kürzel">dc</td>
-                    <td data-label="Beschreibung">Ein Befehl mit dem man den Link zum Discord-Server von Flo bekommt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">dtest</td>
-                    <td data-label="Kürzel">dtest</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, ob man schlauer oder dümmer als Flo ist.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">dämlichkeitstest</td>
-                    <td data-label="Kürzel">dätest</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie dähhmlich jemand ist. (bewusst mit H geschrieben)</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">fc</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Befehl mit dem man den Freundescode von Flo bekommt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">flotator</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein Zeichen setzt, dass Flo seine Macht missbraucht.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">followage</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein überprüfen kann, wie lange jemand schon dem Kanal folgt, bzw. ob die Person überhaupt folgt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">geschenk</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein jemanden ein Geschenk machen kann.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">info</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Befehl, der einige Informationen bezüglich Chaos7 gibt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">itest</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl der nur existiert, weil Meisti einen itest verlangte, bzw. weil das große I schwer von einem Kleinen L unterscheidbar ist.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">jumpscare</td>
-                    <td data-label="Kürzel">js</td>
-                    <td data-label="Beschreibung">Ein Soundalert Befehl mit dem man einen Jumpscare auslösen kann. (Wichtiger Hinweis: Der Jumpscare wird bewusst mit einer zufälligen Verzögerung ausgelöst, um den Überraschungseffekt zu erhöhen)</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">keks</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man mit jemanden seinen Keks teilen würde, wenn der Keks nur echt wäre</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">liebestest</td>
-                    <td data-label="Kürzel">ltest</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie sehr jemand eine Person, bzw. sich selbst liebt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">lostheitstest</td>
-                    <td data-label="Kürzel">lotest</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie lost jemand ist.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">lurk</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Befehl mit dem man bescheid geben kann, dass man in den Lurk geht.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">onlyfans</td>
-                    <td data-label="Kürzel">of</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl für den Link zu meinem Discord-Server.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">ranking</td>
-                    <td data-label="Kürzel">rank</td>
-                    <td data-label="Beschreibung">Ein Befehl, der die fleißigsten Zuschauer der letzten 90 Tage anzeigt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">setgame</td>
-                    <td data-label="Kürzel">game</td>
-                    <td data-label="Beschreibung">Ein Befehl rein für Mods, mit dem das gestreamte Game geändert werden kann</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">settitle</td>
-                    <td data-label="Kürzel">title</td>
-                    <td data-label="Beschreibung">Ein Befehl rein für Mods, mit dem der Streamtitel geändert werden kann</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">shoutout</td>
-                    <td data-label="Kürzel">so</td>
-                    <td data-label="Beschreibung">Ein Befehl rein für Mods um jemanden einen Shoutout zu geben</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">streik</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl, der ein Zeichen setzt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">test</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Befehl mit dem man den testen kann, ob der Bot auf Befehle reagiert oder ein Fehler vorliegt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">timermessages</td>
-                    <td data-label="Kürzel">tm</td>
-                    <td data-label="Beschreibung">Ein Befehl, der alle verfügbaren Timer-Nachrichten auflistet.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">unlurk</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Befehl mit dem man mitteilen kann, dass man nun nicht mehr lurkt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">vod</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos VOD Kanal bekommt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">ytb</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos Best of Kanal bekommt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">ytlp</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos LP Kanal bekommt.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">votebann</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne bannen würde.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">voteja</td>
-                    <td data-label="Kürzel">ja</td>
-                    <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dafür ist.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">votejain</td>
-                    <td data-label="Kürzel">jain</td>
-                    <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kanns man damit den Zufall entscheiden lassen, ob man dafür oder dagegen ist.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">votenein</td>
-                    <td data-label="Kürzel">nein</td>
-                    <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dagegen ist.</td>
-                </tr>
-                <tr>
-                    <td data-label="Befehl">votetimeout</td>
-                    <td data-label="Kürzel">-</td>
-                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne timeouten würde.</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <script>
-        const canvas = document.getElementById('background-canvas');
-        const ctx = canvas.getContext('2d');
+    <h1>Befehle von Chaos7</h1>
+    <div class="prefix-container">
+        Bot-Prefix: !
+    </div>
+    <div class="command-table-wrapper">
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th id="sort-command" data-sort-order="asc">Befehl <span class="sort-icon"></span></th>
+                    <th id="sort-shortcut" data-sort-order="asc">Kürzel <span class="sort-icon"></span></th>
+                    <th id="sort-description" data-sort-order="asc">Beschreibung<span class="sort-icon"></span></th>
+                </tr>
+            </thead>
+            <tbody id="command-table-body">
+    
+                <tr>
+                    <td data-label="Befehl">beleidigung</td>
+                    <td data-label="Kürzel">beleidigen</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man jemanden Beleidigen kann. (Es gibt mehrere Szenarien, die auftreten können als Beleidigung)</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">biddää</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man.... Joa gute Frage eigentlich... xDD</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">bug</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man mein Bot ein Statement zu seinen Bugs gibt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">cheater</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man jemanden als Cheater enttarnt und dem auf entsprechende Plattform canceln sollte.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">command</td>
+                    <td data-label="Kürzel">command</td>
+                    <td data-label="Beschreibung">Ein Befehl, der alle verfügbaren Befehle auflistet.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">dc</td>
+                    <td data-label="Kürzel">dc</td>
+                    <td data-label="Beschreibung">Ein Befehl mit dem man den Link zum Discord-Server von Flo bekommt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">dtest</td>
+                    <td data-label="Kürzel">dtest</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, ob man schlauer oder dümmer als Flo ist.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">dämlichkeitstest</td>
+                    <td data-label="Kürzel">dätest</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie dähhmlich jemand ist. (bewusst mit H geschrieben)</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">fc</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Befehl mit dem man den Freundescode von Flo bekommt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">flotator</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein Zeichen setzt, dass Flo seine Macht missbraucht.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">followage</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein überprüfen kann, wie lange jemand schon dem Kanal folgt, bzw. ob die Person überhaupt folgt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">geschenk</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem ein jemanden ein Geschenk machen kann.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">info</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Befehl, der einige Informationen bezüglich Chaos7 gibt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">itest</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl der nur existiert, weil Meisti einen itest verlangte, bzw. weil das große I schwer von einem Kleinen L unterscheidbar ist.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">jumpscare</td>
+                    <td data-label="Kürzel">js</td>
+                    <td data-label="Beschreibung">Ein Soundalert Befehl mit dem man einen Jumpscare auslösen kann. (Wichtiger Hinweis: Der Jumpscare wird bewusst mit einer zufälligen Verzögerung ausgelöst, um den Überraschungseffekt zu erhöhen)</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">keks</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man mit jemanden seinen Keks teilen würde, wenn der Keks nur echt wäre</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">liebestest</td>
+                    <td data-label="Kürzel">ltest</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie sehr jemand eine Person, bzw. sich selbst liebt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">lostheitstest</td>
+                    <td data-label="Kürzel">lotest</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man testen kann, wie lost jemand ist.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">lurk</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Befehl mit dem man bescheid geben kann, dass man in den Lurk geht.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">onlyfans</td>
+                    <td data-label="Kürzel">of</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl für den Link zu meinem Discord-Server.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">ranking</td>
+                    <td data-label="Kürzel">rank</td>
+                    <td data-label="Beschreibung">Ein Befehl, der die fleißigsten Zuschauer der letzten 90 Tage anzeigt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">setgame</td>
+                    <td data-label="Kürzel">game</td>
+                    <td data-label="Beschreibung">Ein Befehl rein für Mods, mit dem das gestreamte Game geändert werden kann</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">settitle</td>
+                    <td data-label="Kürzel">title</td>
+                    <td data-label="Beschreibung">Ein Befehl rein für Mods, mit dem der Streamtitel geändert werden kann</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">shoutout</td>
+                    <td data-label="Kürzel">so</td>
+                    <td data-label="Beschreibung">Ein Befehl rein für Mods um jemanden einen Shoutout zu geben</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">streik</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl, der ein Zeichen setzt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">test</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Befehl mit dem man den testen kann, ob der Bot auf Befehle reagiert oder ein Fehler vorliegt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">timermessages</td>
+                    <td data-label="Kürzel">tm</td>
+                    <td data-label="Beschreibung">Ein Befehl, der alle verfügbaren Timer-Nachrichten auflistet.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">unlurk</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Befehl mit dem man mitteilen kann, dass man nun nicht mehr lurkt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">vod</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos VOD Kanal bekommt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">ytb</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos Best of Kanal bekommt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">ytlp</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Befehl mit dem man den Link direkt zu Flos LP Kanal bekommt.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">votebann</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne bannen würde.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">voteja</td>
+                    <td data-label="Kürzel">ja</td>
+                    <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dafür ist.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">votejain</td>
+                    <td data-label="Kürzel">jain</td>
+                    <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kanns man damit den Zufall entscheiden lassen, ob man dafür oder dagegen ist.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">votenein</td>
+                    <td data-label="Kürzel">nein</td>
+                    <td data-label="Beschreibung">Wenn ein Voting aktiv ist, kann man damit abstimmen, dass man dagegen ist.</td>
+                </tr>
+                <tr>
+                    <td data-label="Befehl">votetimeout</td>
+                    <td data-label="Kürzel">-</td>
+                    <td data-label="Beschreibung">Ein Spaßbefehl mit dem man zeigen kann, dass man jemanden gerne timeouten würde.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
 
-        let particles = [];
-        let mouse = { x: undefined, y: undefined };
-        const maxRadius = 5;
+        let particles = [];
+        let mouse = { x: undefined, y: undefined };
+        const maxRadius = 5;
 
-        // Funktion zur Erstellung und Aktualisierung der Partikel
-        function Particle(x, y, dx, dy, radius) {
-            this.x = x;
-            this.y = y;
-            this.dx = dx;
-            this.dy = dy;
-            this.radius = radius;
-            this.baseRadius = radius;
-            this.color = '#ff3333';
-            this.isNearMouse = false;
+        // Funktion zur Erstellung und Aktualisierung der Partikel
+        function Particle(x, y, dx, dy, radius) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.radius = radius;
+            this.baseRadius = radius;
+            this.color = '#ff3333';
+            this.isNearMouse = false;
 
-            this.draw = function() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.shadowColor = this.color;
-                ctx.shadowBlur = this.isNearMouse ? 15 : 5;
-                ctx.fill();
-            };
+            this.draw = function() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = this.isNearMouse ? 15 : 5;
+                ctx.fill();
+            };
 
-            this.update = function() {
-                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-                    this.dx = -this.dx;
-                }
-                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-                    this.dy = -this.dy;
-                }
-                this.x += this.dx;
-                this.y += this.dy;
+            this.update = function() {
+                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                    this.dx = -this.dx;
+                }
+                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                    this.dy = -this.dy;
+                }
+                this.x += this.dx;
+                this.y += this.dy;
 
-                const distance = Math.sqrt(
-                    Math.pow(mouse.x - this.x, 2) + Math.pow(mouse.y - this.y, 2)
-                );
+                const distance = Math.sqrt(
+                    Math.pow(mouse.x - this.x, 2) + Math.pow(mouse.y - this.y, 2)
+                );
 
-                if (distance < 100 && this.radius < maxRadius) {
-                    this.radius += 0.5;
-                    this.isNearMouse = true;
-                } else if (this.radius > this.baseRadius) {
-                    this.radius -= 0.1;
-                    this.isNearMouse = false;
-                }
-            };
-        }
+                if (distance < 100 && this.radius < maxRadius) {
+                    this.radius += 0.5;
+                    this.isNearMouse = true;
+                } else if (this.radius > this.baseRadius) {
+                    this.radius -= 0.1;
+                    this.isNearMouse = false;
+                }
+            };
+        }
 
-        // Initialisierung der Partikel
-        function initParticles() {
-            particles = [];
-            const numParticles = Math.floor((canvas.width * canvas.height) / 10000);
-            for (let i = 0; i < numParticles; i++) {
-                const radius = Math.random() * 2 + 1;
-                const x = Math.random() * (canvas.width - radius * 2) + radius;
-                const y = Math.random() * (canvas.height - radius * 2) + radius;
-                const dx = (Math.random() - 0.5) * 0.5;
-                const dy = (Math.random() - 0.5) * 0.5;
-                particles.push(new Particle(x, y, dx, dy, radius));
-            }
-        }
+        // Initialisierung der Partikel
+        function initParticles() {
+            particles = [];
+            const numParticles = Math.floor((canvas.width * canvas.height) / 10000);
+            for (let i = 0; i < numParticles; i++) {
+                const radius = Math.random() * 2 + 1;
+                const x = Math.random() * (canvas.width - radius * 2) + radius;
+                const y = Math.random() * (canvas.height - radius * 2) + radius;
+                const dx = (Math.random() - 0.5) * 0.5;
+                const dy = (Math.random() - 0.5) * 0.5;
+                particles.push(new Particle(x, y, dx, dy, radius));
+            }
+        }
 
-        // Animationsschleife für den Hintergrund
-        function animateCanvas() {
-            requestAnimationFrame(animateCanvas);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-        }
+        // Animationsschleife für den Hintergrund
+        function animateCanvas() {
+            requestAnimationFrame(animateCanvas);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+        }
 
-        // Event-Listener für Größenänderung und Mausbewegung
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
-        });
+        // Event-Listener für Größenänderung und Mausbewegung
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
 
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
 
-        // Startet die Animation und die Initialisierung der Nachrichten
-        window.onload = function() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
-            animateCanvas();
-            // Startet die Reihen-Animation, nachdem alles geladen ist
-            applyRowAnimation(0.8);
-        };
+        // Startet die Animation und die Initialisierung der Nachrichten
+        window.onload = function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+            animateCanvas();
+            // Startet die Reihen-Animation, nachdem alles geladen ist
+            applyRowAnimation(0.8);
+        };
 
-        // Funktion für die Animation der Zeilen
-        function applyRowAnimation(delay = 0.8) {
-            const rows = document.querySelectorAll('#command-table-body tr');
-            rows.forEach((row, index) => {
-                // Entfernt und fügt die Klasse hinzu, um die Animation neu zu starten
-                row.classList.remove('animated');
-                // Dieser Trick erzwingt ein "Reflow" im Browser, was die Animation neu auslöst
-                void row.offsetWidth; 
-                row.classList.add('animated');
-                // WICHTIG: Korrigierte Syntax für die Animation-Delay
-                row.style.animationDelay = (delay + index * 0.05) + 's';
-            });
-        }
+        // Funktion für die Animation der Zeilen
+        function applyRowAnimation(delay = 0.8) {
+            const rows = document.querySelectorAll('#command-table-body tr');
+            rows.forEach((row, index) => {
+                // Entfernt und fügt die Klasse hinzu, um die Animation neu zu starten
+                row.classList.remove('animated');
+                // Dieser Trick erzwingt ein "Reflow" im Browser, was die Animation neu auslöst
+                void row.offsetWidth; 
+                row.classList.add('animated');
+                // WICHTIG: Korrigierte Syntax für die Animation-Delay
+                row.style.animationDelay = (delay + index * 0.05) + 's';
+            });
+        }
 
-        // JavaScript für die Sortierfunktion
-        const tableBody = document.getElementById('command-table-body');
-        const headers = document.querySelectorAll('th[id^="sort-"]');
-        let sortedColumnId = null;
-        let sortOrder = 'asc';
+        // JavaScript für die Sortierfunktion
+        const tableBody = document.getElementById('command-table-body');
+        const headers = document.querySelectorAll('th[id^="sort-"]');
+        let sortedColumnId = null;
+        let sortOrder = 'asc';
 
-        headers.forEach(header => {
-            header.addEventListener('click', () => {
-                const columnId = header.id;
-                
-                // Sortierreihenfolge umkehren, wenn die gleiche Spalte geklickt wird
-                if (sortedColumnId === columnId) {
-                    sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-                } else {
-                    // Neue Spalte, mit aufsteigender Sortierung beginnen
-                    sortOrder = 'asc';
-                    if (sortedColumnId) {
-                        document.getElementById(sortedColumnId).classList.remove('sorted');
-                    }
-                }
-                
-                sortedColumnId = columnId;
-                header.classList.add('sorted');
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const columnId = header.id;
+                
+                // Sortierreihenfolge umkehren, wenn die gleiche Spalte geklickt wird
+                if (sortedColumnId === columnId) {
+                    sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // Neue Spalte, mit aufsteigender Sortierung beginnen
+                    sortOrder = 'asc';
+                    if (sortedColumnId) {
+                        document.getElementById(sortedColumnId).classList.remove('sorted');
+                    }
+                }
+                
+                sortedColumnId = columnId;
+                header.classList.add('sorted');
 
-                const columnIndex = header.cellIndex;
-                const rows = Array.from(tableBody.rows);
+                const columnIndex = header.cellIndex;
+                const rows = Array.from(tableBody.rows);
 
-                const sortedRows = rows.sort((a, b) => {
-                    const aText = a.cells[columnIndex].textContent.trim().toLowerCase();
-                    const bText = b.cells[columnIndex].textContent.trim().toLowerCase();
+                const sortedRows = rows.sort((a, b) => {
+                    const aText = a.cells[columnIndex].textContent.trim().toLowerCase();
+                    const bText = b.cells[columnIndex].textContent.trim().toLowerCase();
 
-                    let comparison = 0;
-                    if (columnId === 'sort-shortcut') {
-                        // Sonderzeichen vor Buchstaben sortieren
-                        const aIsSpecial = !/^[a-z0-9]/.test(aText);
-                        const bIsSpecial = !/^[a-z0-9]/.test(bText);
+                    let comparison = 0;
+                    if (columnId === 'sort-shortcut') {
+                        // Sonderzeichen vor Buchstaben sortieren
+                        const aIsSpecial = !/^[a-z0-9]/.test(aText);
+                        const bIsSpecial = !/^[a-z0-9]/.test(bText);
 
-                        if (aIsSpecial && !bIsSpecial) {
-                            comparison = -1;
-                        } else if (!aIsSpecial && bIsSpecial) {
-                            comparison = 1;
-                        } else {
-                            comparison = aText.localeCompare(bText);
-                        }
-                    } else {
-                        comparison = aText.localeCompare(bText);
-                    }
+                        if (aIsSpecial && !bIsSpecial) {
+                            comparison = -1;
+                        } else if (!aIsSpecial && bIsSpecial) {
+                            comparison = 1;
+                        } else {
+                            comparison = aText.localeCompare(bText);
+                        }
+                    } else {
+                        comparison = aText.localeCompare(bText);
+                    }
 
-                    return sortOrder === 'asc' ? comparison : -comparison;
-                });
+                    return sortOrder === 'asc' ? comparison : -comparison;
+                });
 
-                // Alle Zeilen aus dem Body entfernen und neu hinzufügen
-                while (tableBody.firstChild) {
-                    tableBody.removeChild(tableBody.firstChild);
-                }
-                sortedRows.forEach(row => tableBody.appendChild(row));
-                
-                // Animation erneut anwenden
-                applyRowAnimation(0);
+                // Alle Zeilen aus dem Body entfernen und neu hinzufügen
+                while (tableBody.firstChild) {
+                    tableBody.removeChild(tableBody.firstChild);
+                }
+                sortedRows.forEach(row => tableBody.appendChild(row));
+                
+                // Animation erneut anwenden
+                applyRowAnimation(0);
 
-                // Sortierpfeile aktualisieren
-                document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
-                if (header.querySelector('.sort-icon')) {
-                    header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
-                }
-            });
-        });
+                // Sortierpfeile aktualisieren
+                document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
+                if (header.querySelector('.sort-icon')) {
+                    header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
+                }
+            });
+        });
 
-    </script>
+    </script>
 </body>
 </html>
