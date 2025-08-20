@@ -20,10 +20,20 @@
             padding: 2rem 1rem;
             box-sizing: border-box;
             background-color: #000000;
-            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
-            background-size: 15px 15px;
+            position: relative;
+            overflow: hidden; /* Verhindert Scrollleisten durch das Canvas */
         }
         
+        /* Hinzugefügte Styles für den Hintergrund */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
         h1, h2 {
             font-family: 'Orbitron', sans-serif;
         }
@@ -37,6 +47,8 @@
             border-radius: 2rem;
             padding: 2.5rem;
             animation: fadeIn 1s ease-out forwards;
+            position: relative; /* Stellt sicher, dass der Container über dem Canvas liegt */
+            z-index: 1;
         }
         .glow-text {
             text-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333; /* Roter Glüheffekt */
@@ -65,9 +77,12 @@
     </style>
 </head>
 <body>
+    <!-- Canvas für den animierten Hintergrund -->
+    <canvas id="background-canvas"></canvas>
+
     <div class="container mx-auto">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-center mb-6 glow-text">VIPs & Moderatoren</h1>
-        <p class="text-center text-gray-400 mb-8">Stand: 20.8.2025 um 16:19:36</p>
+        <p class="text-center text-gray-400 mb-8">Stand: 20.8.2025 um 16:25:00</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 list-container">
             <!-- Mods Liste ist jetzt links und hat die roten Farben -->
@@ -117,5 +132,106 @@
             </div>
         </div>
     </div>
+
+    <!-- Skript für den animierten Hintergrund -->
+    <script>
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let mouse = { x: undefined, y: undefined };
+        const maxRadius = 5;
+
+        // Partikel-Konstruktor
+        function Particle(x, y, dx, dy, radius) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.radius = radius;
+            this.baseRadius = radius;
+            this.color = '#ff3333';
+            this.isNearMouse = false;
+
+            this.draw = function() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = this.isNearMouse ? 15 : 5;
+                ctx.fill();
+            };
+
+            this.update = function() {
+                // Kollision mit den Rändern
+                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                    this.dx = -this.dx;
+                }
+                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                    this.dy = -this.dy;
+                }
+                this.x += this.dx;
+                this.y += this.dy;
+
+                // Interaktion mit der Maus
+                const distance = Math.sqrt(
+                    Math.pow(mouse.x - this.x, 2) + Math.pow(mouse.y - this.y, 2)
+                );
+
+                if (distance < 100 && this.radius < maxRadius) {
+                    this.radius += 0.5;
+                    this.isNearMouse = true;
+                } else if (this.radius > this.baseRadius) {
+                    this.radius -= 0.1;
+                    this.isNearMouse = false;
+                }
+            };
+        }
+
+        // Initialisiert die Partikel
+        function initParticles() {
+            particles = [];
+            const numParticles = Math.floor((canvas.width * canvas.height) / 10000);
+            for (let i = 0; i < numParticles; i++) {
+                const radius = Math.random() * 2 + 1;
+                const x = Math.random() * (canvas.width - radius * 2) + radius;
+                const y = Math.random() * (canvas.height - radius * 2) + radius;
+                const dx = (Math.random() - 0.5) * 0.5;
+                const dy = (Math.random() - 0.5) * 0.5;
+                particles.push(new Particle(x, y, dx, dy, radius));
+            }
+        }
+
+        // Animationsschleife
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+        }
+
+        // Responsivität bei Fensteränderung
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        // Mausbewegung verfolgen
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Initialisierung, wenn die Seite geladen ist
+        window.onload = function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+            animate();
+        };
+    </script>
 </body>
 </html>
