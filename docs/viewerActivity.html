@@ -7,19 +7,58 @@
     <title>Zuschauer-Aktivitätsranking</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
-        @keyframes fadeInFromTop { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes growIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif; background-color: #000000; color: #d0d0d0;
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; 
-            position: relative; overflow-x: hidden;
+
+        @keyframes fadeInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes growIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #000000;
+            color: #d0d0d0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
             box-sizing: border-box;
         }
 
-        /* Hinzugefügte Styles für den Hintergrund */
+        /* Styles für den Hintergrund */
         #background-canvas {
             position: fixed;
             top: 0;
@@ -29,10 +68,17 @@
             z-index: -1;
         }
 
-        h1 { 
-            font-family: 'Orbitron', sans-serif; color: #ff3333; text-shadow: none; margin: 0 0 20px 0;
-            opacity: 0; animation: fadeInFromTop 0.6s ease-out forwards; z-index: 2; text-align: center;
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff3333;
+            text-shadow: none;
+            margin: 0 0 20px 0;
+            opacity: 0;
+            animation: fadeInFromTop 0.6s ease-out forwards;
+            z-index: 2;
+            text-align: center;
         }
+
         .info-box-container {
             width: 100%;
             max-width: 800px;
@@ -44,11 +90,13 @@
             animation: fadeInFromTop 0.6s ease-out 0.2s forwards;
             z-index: 2;
         }
+
         .info-box {
             font-size: 1.1em;
             font-weight: bold;
             color: #d0d0d0;
-            background-color: rgba(22, 22, 22, 0.7); /* Slightly transparent background */
+            background-color: rgba(22, 22, 22, 0.7);
+            /* Slightly transparent background */
             border: 1px solid #ff3333;
             box-shadow: 0 0 15px rgba(255, 51, 51, 0.8), 0 0 5px rgba(255, 51, 51, 0.6);
             border-radius: 12px;
@@ -56,123 +104,307 @@
             text-align: center;
             text-shadow: 1px 1px 2px #000;
             backdrop-filter: blur(5px);
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
+
         .info-box h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.2em;
             color: #ff3333;
             margin: 0 0 10px 0;
         }
+
         .command-table-wrapper {
-            width: 100%; max-width: 800px; border-radius: 8px; border: 1px solid #ff3333;
-            opacity: 0; animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards;
-            z-index: 2; background-color: #161616; box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            border: 1px solid #ff3333;
+            opacity: 0;
+            animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards;
+            z-index: 2;
+            background-color: #161616;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
             box-sizing: border-box;
         }
-        .command-table { width: 100%; border-collapse: collapse; background-color: transparent; }
-        thead, tbody { border: none; box-shadow: none; background-color: transparent; }
-        thead { z-index: 10; }
-        thead tr { background-color: #800000; opacity: 0; animation: fadeInFromTop 0.5s ease-out 0.8s forwards; display: table-row; }
-        th, td { padding: 18px 20px; text-align: left; color: #ffffff; border-bottom: 1px solid #ff3333; }
-        th { 
-            font-weight: bold; cursor: pointer; user-select: none; text-transform: uppercase;
-            letter-spacing: 1px; border-right: 1px solid #ff3333; text-shadow: none;
-            display: table-cell; /* Default display for desktop */
+
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: transparent;
+        }
+
+        thead,
+        tbody {
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
+
+        thead {
+            z-index: 10;
+        }
+
+        thead tr {
+            background-color: #800000;
+            opacity: 0;
+            animation: fadeInFromTop 0.5s ease-out 0.8s forwards;
+            display: table-row;
+        }
+
+        th,
+        td {
+            padding: 18px 20px;
+            text-align: left;
+            color: #ffffff;
+            border-bottom: 1px solid #ff3333;
+        }
+
+        th {
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-right: 1px solid #ff3333;
+            text-shadow: none;
+            display: table-cell;
+            /* Default display for desktop */
             position: relative;
         }
-        th:first-child { border-top-left-radius: 7px; }
-        th:last-child { border-right: none; border-top-right-radius: 7px; }
-        th:hover { background-color: #990000; }
-        th.sorted { background-color: #990000; }
-        .sort-icon { color: inherit; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
-        tbody tr:hover { background-color: #220000; box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
-            transform: scale(1.01); transition: all 0.2s ease-in-out;
+
+        th:first-child {
+            border-top-left-radius: 7px;
         }
-        tr { opacity: 0; }
-        tr.animated { animation: slideInUp 0.3s ease-out forwards; }
-        
+
+        th:last-child {
+            border-right: none;
+            border-top-right-radius: 7px;
+        }
+
+        th:hover {
+            background-color: #990000;
+        }
+
+        th.sorted {
+            background-color: #990000;
+        }
+
+        .sort-icon {
+            color: inherit;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        tbody tr:hover {
+            background-color: #220000;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+            transform: scale(1.01);
+            transition: all 0.2s ease-in-out;
+        }
+
+        tr {
+            opacity: 0;
+        }
+
+        tr.animated {
+            animation: slideInUp 0.3s ease-out forwards;
+        }
+
         /* Mobile styles */
         @media (max-width: 660px) {
-            body { padding: 10px; }
+            body {
+                padding: 10px;
+            }
+
             .info-box-container {
                 gap: 10px;
                 margin-bottom: 15px;
             }
+
             .info-box {
                 padding: 10px;
                 font-size: 0.9em;
             }
-            .command-table-wrapper { 
-                border: none; 
-                box-shadow: none; 
-                background-color: transparent; 
-                border-radius: 0; 
-                padding: 0;
-            }
-            .command-table { 
-                background-color: transparent;
-                display: block; 
-            }
-            thead { 
-                display: block; 
-                margin-bottom: 15px; 
-                border: none; 
-                box-shadow: none; 
-            }
-            thead tr { 
-                display: flex; 
-                flex-direction: column; /* Stack headers vertically */
-                animation: none; 
-                opacity: 1; 
-                background-color: #161616; 
-                width: 100%; 
-                box-sizing: border-box; 
-                border-radius: 8px;
-                padding: 0;
-            }
-            th { 
-                display: flex; /* Use flexbox for the header content */
-                flex: 1; 
-                text-align: center; 
-                padding: 10px; 
+
+            .command-table-wrapper {
                 border: none;
-                border-bottom: 1px solid #ff3333;
-                justify-content: space-between; /* Space between text and icon */
-                align-items: center; 
-                background-color: #161616; 
+                box-shadow: none;
+                background-color: transparent;
+                border-radius: 0;
+                padding: 0;
+            }
+
+            .command-table {
+                background-color: transparent;
+                display: block;
+            }
+
+            thead {
+                display: block;
+                margin-bottom: 15px;
+                border: none;
+                background-color: transparent;
+            }
+
+            thead tr {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                animation: none;
+                opacity: 1;
+                background-color: rgba(22, 22, 22, 0.7);
+            }
+
+            th {
+                display: block;
+                /* Each th is a separate button */
+                text-align: center;
+                /* Centers the text */
+                padding: 12px 0px;
+                border: 1px solid #ff3333;
+                /* Border for the block */
+                border-radius: 8px;
+                /* Rounded corners for the buttons */
+                background-color: #161616;
                 color: #ffffff;
-                font-size: 0.8em; 
+                font-size: 0.8em;
+                box-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
+                border-right: 1px solid #ff3333;
+                box-sizing: border-box;
+                width: 100%;
             }
-            th:first-child { border-top-left-radius: 8px; border-top-right-radius: 8px; }
-            th:last-child { border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; border-right: none; }
-            th:hover { background-color: #220000; }
-            th.sorted { background-color: #ff3333; }
-            .sort-icon { 
+
+            th:first-child {
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+            }
+
+            th:last-child {
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+            }
+
+            th:hover {
+                background-color: #220000;
+            }
+
+            th.sorted {
+                background-color: #ff3333;
+            }
+
+            .sort-icon {
                 position: static;
-                margin-left: 5px; 
+                margin-left: 5px;
             }
-            tbody { display: block; border: none; box-shadow: none; background-color: transparent; }
-            tr { display: block; margin-bottom: 15px; border: 1px solid #ff3333; border-radius: 8px;
-                box-shadow: 0 0 10px rgba(255, 51, 51, 0.6); background-color: #161616; padding: 10px;
-                transition: none; animation: slideInUp 0.3s ease-out forwards;
+
+            tbody {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                /* Added gap for spacing between rows */
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
+                padding: 20px;
+            }
+
+            tr {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto auto;
+                gap: 10px;
+                margin-bottom: 0;
+                border: 1px solid #ff3333;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(255, 51, 51, 0.6), inset 0 0 10px rgba(255, 51, 51, 0.6);
+                background-color: #161616;
+                padding: 20px;
+                transition: none;
+                animation: slideInUp 0.3s ease-out forwards;
                 box-sizing: border-box;
             }
-            tr:hover { transform: none; box-shadow: 0 0 10px rgba(255, 51, 51, 0.8); }
-            td { display: block; text-align: left; padding: 5px 0; border-bottom: none; word-break: break-word; }
-            td::before { content: attr(data-label); display: block; font-weight: bold; text-transform: uppercase; color: #ff3333; margin-bottom: 2px; font-size: 0.8em;}
+
+            tr:hover {
+                transform: none;
+                box-shadow: 0 0 10px rgba(255, 51, 51, 0.8), inset 0 0 10px rgba(255, 51, 51, 0.8);
+            }
+
+            .rank-td {
+                grid-area: 1 / 1 / 2 / 2;
+                font-weight: bold;
+                font-size: 1.1em;
+                /* Reduced font size as requested */
+                color: #ff3333;
+            }
+
+            .username-td {
+                grid-area: 1 / 2 / 2 / 3;
+                font-weight: bold;
+                font-size: 1.1em;
+                /* Reduced font size as requested */
+                color: #ffffff;
+            }
+
+            .activity-td {
+                grid-area: 2 / 1 / 3 / 2;
+            }
+
+            .time-td {
+                grid-area: 2 / 2 / 3 / 3;
+            }
+
+            td {
+                display: block;
+                text-align: center;
+                padding: 0;
+                border-bottom: none;
+                word-break: break-word;
+            }
+
+            td::before {
+                content: attr(data-label);
+                display: block;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #ff3333;
+                margin-bottom: 2px;
+                font-size: 0.8em;
+            }
+
+            tbody tr {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+            }
+
+            .rank-td,
+            .username-td {
+                flex-basis: 100%;
+            }
+
+            .username-td {
+                margin-bottom: 5px;
+            }
+
+            .username-td::before,
+            .rank-td::before {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Das Canvas für den animierten Hintergrund -->
+    <!-- The canvas for the animated background -->
     <canvas id="background-canvas"></canvas>
 
     <h1>Zuschauer-Aktivitätsranking von Flo_Ced_CoB</h1>
     <div class="info-box-container">
         <div class="info-box">
             <h2>Stream-Statistiken</h2>
-            <p>Zuletzt aktualisiert: 20.08.2025, 18:02<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
+            <p>Zuletzt aktualisiert: 20.08.2025, 21:31<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
             <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>2h 9m 0s</strong></p>
         </div>
     </div>
@@ -189,52 +421,52 @@
             <tbody id="command-table-body">
                 
                 <tr>
-                    <td data-label="Rang">#1</td>
-                    <td data-label="Benutzername">chaos7_bot</td>
-                    <td data-label="Aktivität">100.00%</td>
-                    <td data-label="Gesamtzeit">2h 9m 0s</td>
+                    <td class="rank-td" data-label="Rang">#1</td>
+                    <td class="username-td" data-label="Benutzername">chaos7_bot</td>
+                    <td class="activity-td" data-label="Aktivität">100.00%</td>
+                    <td class="time-td" data-label="Gesamtzeit">2h 9m 0s</td>
                 </tr>
                 <tr>
-                    <td data-label="Rang">#1</td>
-                    <td data-label="Benutzername">Sery_Bot</td>
-                    <td data-label="Aktivität">100.00%</td>
-                    <td data-label="Gesamtzeit">2h 9m 0s</td>
+                    <td class="rank-td" data-label="Rang">#1</td>
+                    <td class="username-td" data-label="Benutzername">Sery_Bot</td>
+                    <td class="activity-td" data-label="Aktivität">100.00%</td>
+                    <td class="time-td" data-label="Gesamtzeit">2h 9m 0s</td>
                 </tr>
                 <tr>
-                    <td data-label="Rang">#3</td>
-                    <td data-label="Benutzername">kall_me_Kat_</td>
-                    <td data-label="Aktivität">97.67%</td>
-                    <td data-label="Gesamtzeit">2h 6m 0s</td>
+                    <td class="rank-td" data-label="Rang">#3</td>
+                    <td class="username-td" data-label="Benutzername">kall_me_Kat_</td>
+                    <td class="activity-td" data-label="Aktivität">97.67%</td>
+                    <td class="time-td" data-label="Gesamtzeit">2h 6m 0s</td>
                 </tr>
                 <tr>
-                    <td data-label="Rang">#4</td>
-                    <td data-label="Benutzername">Nintentony</td>
-                    <td data-label="Aktivität">93.02%</td>
-                    <td data-label="Gesamtzeit">2h 0s</td>
+                    <td class="rank-td" data-label="Rang">#4</td>
+                    <td class="username-td" data-label="Benutzername">Nintentony</td>
+                    <td class="activity-td" data-label="Aktivität">93.02%</td>
+                    <td class="time-td" data-label="Gesamtzeit">2h 0s</td>
                 </tr>
                 <tr>
-                    <td data-label="Rang">#5</td>
-                    <td data-label="Benutzername">yuavaleska</td>
-                    <td data-label="Aktivität">90.70%</td>
-                    <td data-label="Gesamtzeit">1h 57m 0s</td>
+                    <td class="rank-td" data-label="Rang">#5</td>
+                    <td class="username-td" data-label="Benutzername">yuavaleska</td>
+                    <td class="activity-td" data-label="Aktivität">90.70%</td>
+                    <td class="time-td" data-label="Gesamtzeit">1h 57m 0s</td>
                 </tr>
                 <tr>
-                    <td data-label="Rang">#6</td>
-                    <td data-label="Benutzername">Hades_Anokata</td>
-                    <td data-label="Aktivität">88.37%</td>
-                    <td data-label="Gesamtzeit">1h 54m 0s</td>
+                    <td class="rank-td" data-label="Rang">#6</td>
+                    <td class="username-td" data-label="Benutzername">Hades_Anokata</td>
+                    <td class="activity-td" data-label="Aktivität">88.37%</td>
+                    <td class="time-td" data-label="Gesamtzeit">1h 54m 0s</td>
                 </tr>
                 <tr>
-                    <td data-label="Rang">#7</td>
-                    <td data-label="Benutzername">Brand_Marc</td>
-                    <td data-label="Aktivität">77.91%</td>
-                    <td data-label="Gesamtzeit">1h 40m 30s</td>
+                    <td class="rank-td" data-label="Rang">#7</td>
+                    <td class="username-td" data-label="Benutzername">Brand_Marc</td>
+                    <td class="activity-td" data-label="Aktivität">77.91%</td>
+                    <td class="time-td" data-label="Gesamtzeit">1h 40m 30s</td>
                 </tr>
                 <tr>
-                    <td data-label="Rang">#8</td>
-                    <td data-label="Benutzername">DerGametendo</td>
-                    <td data-label="Aktivität">2.33%</td>
-                    <td data-label="Gesamtzeit">3m 0s</td>
+                    <td class="rank-td" data-label="Rang">#8</td>
+                    <td class="username-td" data-label="Benutzername">DerGametendo</td>
+                    <td class="activity-td" data-label="Aktivität">2.33%</td>
+                    <td class="time-td" data-label="Gesamtzeit">3m 0s</td>
                 </tr>
             </tbody>
         </table>
@@ -245,7 +477,7 @@
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
                 row.classList.remove('animated');
-                void row.offsetWidth;
+                void row.offsetWidth; // Trigger reflow to restart animation
                 row.classList.add('animated');
                 const delay = 0.3 + index * 0.02;
                 row.style.animationDelay = `${delay}s`;
@@ -261,7 +493,7 @@
             const header = document.getElementById(columnId);
             
             if (currentSortColumn !== columnId) {
-                // When the column changes, reset the sort order
+                // Wenn sich die Spalte ändert, wird die Sortierreihenfolge zurückgesetzt
                 sortOrder = (columnId === 'sort-rank' || columnId === 'sort-activity' || columnId === 'sort-time') ? 'desc' : 'asc';
                 const prevHeader = document.getElementById(currentSortColumn);
                 if (prevHeader) {
@@ -306,7 +538,7 @@
                     const bValue = parseDuration(bText);
                     comparison = aValue - bValue;
                 }
-                 else {
+                else {
                     comparison = aText.localeCompare(bText);
                 }
                 return sortOrder === 'asc' ? comparison : -comparison;
@@ -327,7 +559,7 @@
             sortTableByColumn('sort-rank'); // Default sort on page load
         });
 
-        // Hinzugefügter Code für den animierten Hintergrund
+        // Code für den animierten Hintergrund
         const canvas = document.getElementById('background-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -405,20 +637,20 @@
             });
         }
 
-        // Responsivität bei Fensteränderung
+        // Reagiert auf die Größenänderung des Fensters
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             initParticles();
         });
 
-        // Mausbewegung verfolgen
+        // Verfolgt die Mausbewegung
         window.addEventListener('mousemove', (event) => {
             mouse.x = event.x;
             mouse.y = event.y;
         });
 
-        // Initialisierung, wenn die Seite geladen ist
+        // Initialisierung beim Laden der Seite
         window.onload = function() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;

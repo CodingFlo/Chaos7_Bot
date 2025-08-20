@@ -115,8 +115,9 @@
             border-bottom: 1px solid #ff3333;
         }
 
-        /* **GEÄNDERT**: Desktop-Design mit Flexbox für die Spaltenüberschriften */
         th { 
+            width: fit-content;
+            padding-right: 40px;
             font-weight: bold; 
             cursor: pointer; 
             user-select: none; 
@@ -125,9 +126,6 @@
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
         
         th:first-child {
@@ -138,11 +136,13 @@
             border-top-right-radius: 7px;
         }
             
-        /* **GEÄNDERT**: Sortier-Icon-Stil für Flexbox */
         .sort-icon { 
-            margin-left: 10px; /* Kleiner Abstand zum Text */
+            position: absolute;
+            right: 15px; 
+            top: 50%; 
+            transform: translateY(-50%); 
             color: inherit; 
-            /* Positionierungsregeln entfernt, da Flexbox sie nicht benötigt */
+            margin-left: 10px;
         }
         
         tbody tr:hover { 
@@ -159,6 +159,7 @@
             animation: slideInUp 0.5s ease-out forwards; 
         }
 
+        /* Mobile-Ansicht: Anpassung bei Zeilenumbruch */
         @media (max-width: 600px) {
             .command-table-wrapper {
                 border: none;
@@ -185,32 +186,43 @@
                 animation: none;
                 opacity: 1;
                 background-color: #161616; 
+                border: 1px solid #ff3333;
+                border-radius: 8px;
+                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
             }
             th {
                 display: flex;
-                flex: 1;
                 text-align: center;
                 padding: 15px 10px;
                 border-bottom: none;
                 justify-content: center;
                 align-items: center;
-                border-right: 1px solid #ff3333;
+                border-right: none;
                 background-color: #161616; 
                 color: #ffffff;
             }
-            th:first-child,
-            th:last-child {
+            th:not(:first-child) {
+                border-left: 1px solid #ff3333;
+            }
+            th:first-child {
+                flex-grow: 1.5;
                 border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            th:nth-child(2) {
+                flex-grow: 1;
+            }
+            th:last-child {
+                flex-grow: 2.5;
+                border-right: none;
                 border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
             }
             th:hover {
                 background-color: #220000; 
             }
             th.sorted {
                 background-color: #ff3333; 
-            }
-            th:last-child {
-                border-right: none;
             }
             .sort-icon {
                 position: static;
@@ -253,6 +265,49 @@
                 text-transform: uppercase;
                 color: #ff3333;
                 margin-bottom: 5px;
+            }
+        }
+
+        /* Mobile-Ansicht: Anpassung bei Zeilenumbruch */
+        @media (max-width: 428px) {
+            th:first-child {
+                flex-grow: 1.5;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            th:nth-child(2) {
+                flex-grow: 1;
+            }
+            th:last-child {
+                flex-grow: 2.5;
+                border-top: 1px solid #ff3333;;
+                border-left: none;
+                border-right: none;
+                width: 100%;
+            }
+        }
+            
+        /* Mobile-Ansicht: Anpassung bei Zeilenumbruch */
+        @media (max-width: 268px) {
+            th{
+                width: 100%;
+            }
+
+            th:first-child {
+                flex-grow: 1.5;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            th:nth-child(2) {
+                flex-grow: 1;
+                border-top: 1px solid #ff3333;
+                border-left: none;
+            }
+            th:last-child {
+                flex-grow: 2.5;
+                border-top: 1px solid #ff3333;;
+                border-left: none;
+                border-right: none;
             }
         }
     </style>
@@ -561,12 +616,9 @@
         function applyRowAnimation(delay = 0.8) {
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
-                // Entfernt und fügt die Klasse hinzu, um die Animation neu zu starten
                 row.classList.remove('animated');
-                // Dieser Trick erzwingt ein "Reflow" im Browser, was die Animation neu auslöst
                 void row.offsetWidth; 
                 row.classList.add('animated');
-                // WICHTIG: Korrigierte Syntax für die Animation-Delay
                 row.style.animationDelay = (delay + index * 0.05) + 's';
             });
         }
@@ -581,11 +633,9 @@
             header.addEventListener('click', () => {
                 const columnId = header.id;
                 
-                // Sortierreihenfolge umkehren, wenn die gleiche Spalte geklickt wird
                 if (sortedColumnId === columnId) {
                     sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
                 } else {
-                    // Neue Spalte, mit aufsteigender Sortierung beginnen
                     sortOrder = 'asc';
                     if (sortedColumnId) {
                         document.getElementById(sortedColumnId).classList.remove('sorted');
@@ -604,7 +654,6 @@
 
                     let comparison = 0;
                     if (columnId === 'sort-shortcut') {
-                        // Sonderzeichen vor Buchstaben sortieren
                         const aIsSpecial = !/^[a-z0-9]/.test(aText);
                         const bIsSpecial = !/^[a-z0-9]/.test(bText);
 
@@ -622,16 +671,13 @@
                     return sortOrder === 'asc' ? comparison : -comparison;
                 });
 
-                // Alle Zeilen aus dem Body entfernen und neu hinzufügen
                 while (tableBody.firstChild) {
                     tableBody.removeChild(tableBody.firstChild);
                 }
                 sortedRows.forEach(row => tableBody.appendChild(row));
                 
-                // Animation erneut anwenden
                 applyRowAnimation(0);
 
-                // Sortierpfeile aktualisieren
                 document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
                 if (header.querySelector('.sort-icon')) {
                     header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
