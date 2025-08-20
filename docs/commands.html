@@ -125,7 +125,9 @@
             border-right: 1px solid #ff3333;
             text-shadow: none;
             
-            /* Schlüsseländerung: Flexbox für die Ausrichtung des Icons */
+            /* ** Desktop-Layout: Flexbox für die Spaltenüberschriften **
+             * Richtet den Text und das Icon horizontal aus und platziert sie an den Enden.
+             * Dies stellt sicher, dass das Sortier-Icon immer am rechten Rand der Zelle ist. */
             display: flex;
             justify-content: space-between;
             align-items: center; 
@@ -193,16 +195,16 @@
                 background-color: #161616;
             }
             th {
-                display: flex; /* Korrigiert: Flexbox für die Mobile Ansicht */
+                /* ** Mobile-Layout: Die Buttons sind bereits in einer Reihe **
+                 * Die Flexbox-Eigenschaften bleiben erhalten, um die korrekte Ausrichtung
+                 * von Text und Icon zu gewährleisten, auch wenn die Spalten umbrechen. */
+                display: flex;
                 flex: 1;
                 text-align: center;
                 padding: 15px 10px;
                 border-bottom: none;
-                
-                /* Wichtige Korrektur: Behält die Icon-Platzierung bei */
                 justify-content: space-between;
                 align-items: center;
-                
                 border-right: 1px solid #ff3333;
                 background-color: #161616;
                 color: #ffffff;
@@ -222,7 +224,6 @@
                 border-right: none;
             }
             .sort-icon {
-                /* Beibehaltung der Icon-Positionierung, da Flexbox dies nun handhabt */
                 position: static;
                 transform: none;
                 margin-left: 5px;
