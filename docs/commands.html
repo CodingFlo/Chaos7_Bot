@@ -105,16 +105,18 @@
             background-color: #800000;
             opacity: 0; 
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards; 
-            display: table-row;
+            display: flex; /* Sicherstellen, dass die Header-Zellen immer nebeneinander sind */
+            width: 100%;
         }
-
+        
         th, td { 
             padding: 18px 20px; 
             text-align: left; 
             color: #ffffff;
             border-bottom: 1px solid #ff3333;
+            display: table-cell; /* Standard für Tabellenzellen */
         }
-
+        
         th { 
             font-weight: bold; 
             cursor: pointer; 
@@ -123,10 +125,11 @@
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
-            display: flex;
+            display: flex; /* Immer Flexbox für den Inhalt verwenden */
             justify-content: space-between;
             align-items: center;
             gap: 10px; 
+            flex: 1; /* Gleiche Größe für alle Spalten auf mobilen Geräten */
         }
         
         th:first-child {
@@ -137,12 +140,6 @@
             border-top-right-radius: 7px;
         }
         
-        /* Flex-Basis für die Spaltenbreite verwenden, um Überlappungen zu verhindern */
-        th:nth-child(1) { flex-basis: 30%; } /* Befehl */
-        th:nth-child(2) { flex-basis: 25%; } /* Kürzel - etwas breiter */
-        th:nth-child(3) { flex-basis: 45%; } /* Beschreibung */
-
-
         th:hover {
             background-color: #990000;
         }
@@ -175,35 +172,12 @@
         }
 
         @media (max-width: 600px) {
-            /* Das Layout nicht mehr stapeln, sondern als flexible Tabelle beibehalten */
-            .command-table-wrapper {
-                border-radius: 0;
-            }
-            .command-table,
-            thead,
-            tbody,
-            tr {
-                display: table;
-                width: 100%;
-                border-collapse: collapse;
-            }
+            /* Die Spaltenbreiten so anpassen, dass sie auf Mobilgeräten gut aussehen */
+            th:nth-child(1) { flex-basis: 35%; } /* Befehl */
+            th:nth-child(2) { flex-basis: 25%; } /* Kürzel - etwas breiter */
+            th:nth-child(3) { flex-basis: 40%; } /* Beschreibung */
 
-            thead,
-            tbody {
-                border: none;
-            }
-
-            tr {
-                display: table-row;
-                margin-bottom: 0;
-                border: none;
-                animation: none;
-                opacity: 1;
-            }
-            
             th, td {
-                display: table-cell;
-                border-bottom: 1px solid #ff3333;
                 padding: 10px 5px;
             }
 
@@ -213,27 +187,8 @@
                 border-top-right-radius: 0;
             }
 
-            th {
-                display: table-cell;
-                text-align: center;
-                border-right: 1px solid #ff3333;
-                background-color: #161616;
-                color: #ffffff;
-                padding: 15px 10px;
-            }
-            
-            th:nth-child(1) { width: 30%; } /* Befehl */
-            th:nth-child(2) { width: 25%; } /* Kürzel - etwas breiter */
-            th:nth-child(3) { width: 45%; } /* Beschreibung */
-
-
             th:last-child {
                 border-right: none;
-            }
-
-            th .sort-icon {
-                font-size: 0.8em;
-                margin-left: 2px;
             }
 
             td::before {
