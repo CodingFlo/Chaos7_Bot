@@ -33,7 +33,6 @@
             flex-direction: column; 
             align-items: center; 
             position: relative;
-            /* GEÄNDERT: Scrollen wieder ermöglichen */
             overflow-y: auto;
             overflow-x: hidden;
         }
@@ -556,6 +555,7 @@
             canvas.height = window.innerHeight;
             initParticles();
             animateCanvas();
+            // Startet die Reihen-Animation, nachdem alles geladen ist
             applyRowAnimation(0.8);
         };
 
@@ -563,10 +563,13 @@
         function applyRowAnimation(delay = 0.8) {
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
+                // Entfernt und fügt die Klasse hinzu, um die Animation neu zu starten
                 row.classList.remove('animated');
-                void row.offsetWidth; // Reflow erzwingen, um Animation zurückzusetzen
+                // Dieser Trick erzwingt ein "Reflow" im Browser, was die Animation neu auslöst
+                void row.offsetWidth; 
                 row.classList.add('animated');
-                row.style.animationDelay = `${ delay + index * 0.05 } s`;
+                // WICHTIG: Korrigierte Syntax für die Animation-Delay
+                row.style.animationDelay = (delay + index * 0.05) + 's';
             });
         }
 
