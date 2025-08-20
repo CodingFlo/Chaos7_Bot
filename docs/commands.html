@@ -115,15 +115,19 @@
             border-bottom: 1px solid #ff3333;
         }
 
+        /* VERBESSERT: Flexbox für die Kopfzeile verwenden, um Überlappung zu verhindern */
         th { 
             font-weight: bold; 
             cursor: pointer; 
             user-select: none; 
-            position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px; /* VERBESSERT: Fügt einen garantierten Abstand zwischen Text und Icon hinzu */
         }
         
         th:first-child {
@@ -142,11 +146,14 @@
             background-color: #990000;
         }
         
+        .sort-text {
+            /* Das Textelement, um es vom Icon zu trennen */
+            white-space: nowrap;
+        }
+
         .sort-icon { 
-            position: absolute; 
-            right: 20px; 
-            top: 50%;
-            transform: translateY(-50%);
+            /* Das Icon-Element, um es vom Text zu trennen */
+            position: static;
             color: inherit; 
         }
         
@@ -271,9 +278,9 @@
         <table class="command-table">
             <thead>
                 <tr>
-                    <th id="sort-command" data-sort-order="asc">Befehl <span class="sort-icon"></span></th>
-                    <th id="sort-shortcut" data-sort-order="asc">Kürzel <span class="sort-icon"></span></th>
-                    <th id="sort-description" data-sort-order="asc">Beschreibung<span class="sort-icon"></span></th>
+                    <th id="sort-command" data-sort-order="asc"><span>Befehl</span><span class="sort-icon"></span></th>
+                    <th id="sort-shortcut" data-sort-order="asc"><span>Kürzel</span><span class="sort-icon"></span></th>
+                    <th id="sort-description" data-sort-order="asc"><span>Beschreibung</span><span class="sort-icon"></span></th>
                 </tr>
             </thead>
             <tbody id="command-table-body">
@@ -568,7 +575,6 @@
                 // Dieser Trick erzwingt ein "Reflow" im Browser, was die Animation neu auslöst
                 void row.offsetWidth; 
                 row.classList.add('animated');
-                // WICHTIG: Korrigierte Syntax für die Animation-Delay
                 row.style.animationDelay = (delay + index * 0.05) + 's';
             });
         }
@@ -597,7 +603,7 @@
                 sortedColumnId = columnId;
                 header.classList.add('sorted');
 
-                const columnIndex = header.cellIndex;
+                const columnIndex = Array.from(headers).findIndex(h => h.id === columnId);
                 const rows = Array.from(tableBody.rows);
 
                 const sortedRows = rows.sort((a, b) => {
