@@ -115,18 +115,15 @@
             border-bottom: 1px solid #ff3333;
         }
 
-        /* GEÄNDERT: Flexbox für die Kopfzeile verwenden, um Überlappung zu verhindern */
         th { 
             font-weight: bold; 
             cursor: pointer; 
             user-select: none; 
+            position: relative; 
             text-transform: uppercase;
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
         
         th:first-child {
@@ -146,9 +143,10 @@
         }
         
         .sort-icon { 
-            /* GEÄNDERT: Keine absolute Positionierung mehr, wird durch Flexbox geregelt */
-            position: static;
-            margin-left: 10px;
+            position: absolute; 
+            right: 20px; 
+            top: 50%;
+            transform: translateY(-50%);
             color: inherit; 
         }
         
@@ -570,6 +568,7 @@
                 // Dieser Trick erzwingt ein "Reflow" im Browser, was die Animation neu auslöst
                 void row.offsetWidth; 
                 row.classList.add('animated');
+                // WICHTIG: Korrigierte Syntax für die Animation-Delay
                 row.style.animationDelay = (delay + index * 0.05) + 's';
             });
         }
@@ -598,7 +597,7 @@
                 sortedColumnId = columnId;
                 header.classList.add('sorted');
 
-                const columnIndex = Array.from(headers).findIndex(h => h.id === columnId);
+                const columnIndex = header.cellIndex;
                 const rows = Array.from(tableBody.rows);
 
                 const sortedRows = rows.sort((a, b) => {
