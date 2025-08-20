@@ -124,9 +124,6 @@
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center; 
         }
         
         th:first-child {
@@ -143,9 +140,11 @@
         }
         
         .sort-icon { 
+            position: absolute; 
+            right: 20px; 
+            top: 50%;
+            transform: translateY(-50%);
             color: inherit; 
-            font-size: 0.8em;
-            margin-left: 10px;
         }
         
         tbody tr:hover { 
@@ -162,7 +161,6 @@
             animation: slideInUp 0.5s ease-out forwards; 
         }
 
-        /* Mobile-Ansicht: Nur die Datenzeilen anpassen, damit die Überschriften in einer Reihe bleiben. */
         @media (max-width: 600px) {
             .command-table-wrapper {
                 border: none;
@@ -174,9 +172,54 @@
                 background-color: transparent;
             }
             
-            /* ** Wichtige Änderung: Kein Flexbox mehr für die Kopfzeile, damit sie nicht umbricht! ** */
-            /* Die Kopfzeile bleibt nun immer in einer horizontalen Reihe. */
-            
+            thead {
+                display: block;
+                margin-bottom: 25px;
+                border: none;
+                box-shadow: none;
+            }
+            thead tr {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                align-content: center;
+                flex-wrap: wrap;
+                animation: none;
+                opacity: 1;
+                background-color: #161616; 
+            }
+            th {
+                display: flex;
+                flex: 1;
+                text-align: center;
+                padding: 15px 10px;
+                border-bottom: none;
+                justify-content: center;
+                align-items: center;
+                border-right: 1px solid #ff3333;
+                background-color: #161616; 
+                color: #ffffff;
+            }
+            th:first-child,
+            th:last-child {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+            th:hover {
+                background-color: #220000; 
+            }
+            th.sorted {
+                background-color: #ff3333; 
+            }
+            th:last-child {
+                border-right: none;
+            }
+            .sort-icon {
+                position: static;
+                transform: none;
+                margin-left: 5px;
+            }
+
             tbody {
                 display: block;
                 border: none;
