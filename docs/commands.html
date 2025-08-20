@@ -33,9 +33,16 @@
             flex-direction: column; 
             align-items: center; 
             position: relative;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
-            background-size: 15px 15px;
+            overflow: hidden; /* Verhindert Scrollleisten durch das Canvas */
+        }
+
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
         
         h1 { 
@@ -64,7 +71,6 @@
             z-index: 2;
         }
         
-        /* Neuer Container, um die abgerundete Border korrekt anzuzeigen */
         .command-table-wrapper {
             width: 100%;
             max-width: 800px;
@@ -75,9 +81,9 @@
             z-index: 2;
             background-color: #161616;
             box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+            position: relative;
         }
 
-        /* Desktop-Design: Eine einzige, große Box für die ganze Tabelle */
         .command-table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -127,7 +133,6 @@
             border-top-right-radius: 7px;
         }
 
-        /* Hover-Effekt für die einzelnen THs */
         th:hover {
             background-color: #990000;
         }
@@ -144,7 +149,6 @@
             color: inherit; 
         }
         
-        /* Hover-Effekt nur für die Zeilen des Tabellenkörpers */
         tbody tr:hover { 
             background-color: #220000; 
             box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
@@ -166,7 +170,6 @@
             animation: slideInUp 0.5s ease-out forwards; 
         }
 
-        /* ----- Responsive Anpassungen für Handys ----- */
         @media (max-width: 600px) {
             .command-table-wrapper {
                 border: none;
@@ -189,7 +192,6 @@
                 justify-content: space-around;
                 animation: none;
                 opacity: 1;
-                /* Hintergrundfarbe für thead tr in der mobilen Ansicht */
                 background-color: #161616; 
             }
             th {
@@ -201,7 +203,7 @@
                 justify-content: center;
                 align-items: center;
                 border-right: 1px solid #ff3333;
-                background-color: #161616; /* Standard-Farbe der Buttons */
+                background-color: #161616; 
                 color: #ffffff;
             }
             th:first-child,
@@ -264,6 +266,9 @@
     </style>
 </head>
 <body>
+    <!-- Canvas für den animierten Hintergrund -->
+    <canvas id="background-canvas"></canvas>
+
     <h1>Befehle von Chaos7</h1>
     <div class="prefix-container">
         Bot-Prefix: !
@@ -278,7 +283,7 @@
                 </tr>
             </thead>
             <tbody id="command-table-body">
-
+    
                 <tr>
                     <td data-label="Befehl">beleidigung</td>
                     <td data-label="Kürzel">beleidigen</td>
@@ -463,6 +468,97 @@
         </table>
     </div>
     <script>
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let mouse = { x: undefined, y: undefined };
+        const maxRadius = 5;
+
+        function Particle(x, y, dx, dy, radius) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.radius = radius;
+            this.baseRadius = radius;
+            this.color = '#ff3333';
+            this.isNearMouse = false;
+
+            this.draw = function() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = this.isNearMouse ? 15 : 5;
+                ctx.fill();
+            };
+
+            this.update = function() {
+                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                    this.dx = -this.dx;
+                }
+                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                    this.dy = -this.dy;
+                }
+                this.x += this.dx;
+                this.y += this.dy;
+
+                const distance = Math.sqrt(
+                    Math.pow(mouse.x - this.x, 2) + Math.pow(mouse.y - this.y, 2)
+                );
+
+                if (distance < 100 && this.radius < maxRadius) {
+                    this.radius += 0.5;
+                    this.isNearMouse = true;
+                } else if (this.radius > this.baseRadius) {
+                    this.radius -= 0.1;
+                    this.isNearMouse = false;
+                }
+            };
+        }
+
+        function initParticles() {
+            particles = [];
+            const numParticles = Math.floor((canvas.width * canvas.height) / 10000);
+            for (let i = 0; i < numParticles; i++) {
+                const radius = Math.random() * 2 + 1;
+                const x = Math.random() * (canvas.width - radius * 2) + radius;
+                const y = Math.random() * (canvas.height - radius * 2) + radius;
+                const dx = (Math.random() - 0.5) * 0.5;
+                const dy = (Math.random() - 0.5) * 0.5;
+                particles.push(new Particle(x, y, dx, dy, radius));
+            }
+        }
+
+        function animateCanvas() {
+            requestAnimationFrame(animateCanvas);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        window.onload = function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+            animateCanvas();
+            applyRowAnimation(0.8);
+        };
+
         function applyRowAnimation(delay = 0.8) {
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
@@ -472,8 +568,6 @@
                 row.style.animationDelay = `${delay + index * 0.05}s`;
             });
         }
-        
-        document.addEventListener('DOMContentLoaded', () => applyRowAnimation(0.8));
 
         let currentSortColumn = null;
         let sortOrder = 'asc';
