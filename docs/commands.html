@@ -115,6 +115,7 @@
             border-bottom: 1px solid #ff3333;
         }
 
+        /* **GEÄNDERT**: Desktop-Design mit Flexbox für die Spaltenüberschriften */
         th { 
             font-weight: bold; 
             cursor: pointer; 
@@ -124,6 +125,9 @@
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         th:first-child {
@@ -134,13 +138,11 @@
             border-top-right-radius: 7px;
         }
             
-        /* **GEÄNDERT**: Positionierung des Icons im Nicht-Mobil-Design */
+        /* **GEÄNDERT**: Sortier-Icon-Stil für Flexbox */
         .sort-icon { 
-            position: absolute; 
-            right: 15px; /* **NEU**: Abstand zum rechten Rand */
-            top: 50%;
-            transform: translateY(-50%);
+            margin-left: 10px; /* Kleiner Abstand zum Text */
             color: inherit; 
+            /* Positionierungsregeln entfernt, da Flexbox sie nicht benötigt */
         }
         
         tbody tr:hover { 
