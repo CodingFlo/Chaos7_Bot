@@ -124,6 +124,10 @@
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
+            /* Flexbox-Anpassung, um Text und Icon auszurichten */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         th:first-child {
@@ -140,11 +144,11 @@
         }
         
         .sort-icon { 
-            position: absolute; 
-            right: 20px; 
-            top: 50%;
-            transform: translateY(-50%);
+            /* Absolute Positionierung entfernt, da Flexbox dies nun handhabt */
+            position: static;
+            margin-left: 10px; /* Kleiner Abstand zum Text */
             color: inherit; 
+            font-size: 0.8em;
         }
         
         tbody tr:hover { 
@@ -215,6 +219,7 @@
                 border-right: none;
             }
             .sort-icon {
+                /* Beibehaltung der mobilen Positionierung, aber mit Flexbox-Kontext */
                 position: static;
                 transform: none;
                 margin-left: 5px;
