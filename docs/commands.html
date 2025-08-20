@@ -124,6 +124,8 @@
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
+            display: flex; /* **NEU** Flexbox für die Ausrichtung von Text und Icon */
+            align-items: center; /* **NEU** Zentriert die Elemente vertikal */
         }
         
         th:first-child {
@@ -140,11 +142,10 @@
         }
         
         .sort-icon { 
-            position: absolute; 
-            right: 20px; 
-            top: 50%;
-            transform: translateY(-50%);
+            /* **GEÄNDERT**: Entfernte Positionierung */
+            margin-left: 10px; /* **NEU**: Abstand zum Text */
             color: inherit; 
+            font-size: 0.8em;
         }
         
         tbody tr:hover { 
