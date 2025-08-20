@@ -124,10 +124,11 @@
             letter-spacing: 1px;
             border-right: 1px solid #ff3333;
             text-shadow: none;
-            /* Flexbox-Anpassung, um Text und Icon auszurichten */
+            
+            /* Schlüsseländerung: Flexbox für die Ausrichtung des Icons */
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: center; 
         }
         
         th:first-child {
@@ -144,11 +145,9 @@
         }
         
         .sort-icon { 
-            /* Absolute Positionierung entfernt, da Flexbox dies nun handhabt */
-            position: static;
-            margin-left: 10px; /* Kleiner Abstand zum Text */
             color: inherit; 
             font-size: 0.8em;
+            margin-left: 10px;
         }
         
         tbody tr:hover { 
@@ -165,6 +164,7 @@
             animation: slideInUp 0.5s ease-out forwards; 
         }
 
+        /* Mobile-Ansicht */
         @media (max-width: 600px) {
             .command-table-wrapper {
                 border: none;
@@ -190,18 +190,21 @@
                 flex-wrap: wrap;
                 animation: none;
                 opacity: 1;
-                background-color: #161616; 
+                background-color: #161616;
             }
             th {
-                display: flex;
+                display: flex; /* Korrigiert: Flexbox für die Mobile Ansicht */
                 flex: 1;
                 text-align: center;
                 padding: 15px 10px;
                 border-bottom: none;
-                justify-content: center;
+                
+                /* Wichtige Korrektur: Behält die Icon-Platzierung bei */
+                justify-content: space-between;
                 align-items: center;
+                
                 border-right: 1px solid #ff3333;
-                background-color: #161616; 
+                background-color: #161616;
                 color: #ffffff;
             }
             th:first-child,
@@ -219,7 +222,7 @@
                 border-right: none;
             }
             .sort-icon {
-                /* Beibehaltung der mobilen Positionierung, aber mit Flexbox-Kontext */
+                /* Beibehaltung der Icon-Positionierung, da Flexbox dies nun handhabt */
                 position: static;
                 transform: none;
                 margin-left: 5px;
