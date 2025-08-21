@@ -1,6 +1,6 @@
+
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,38 +9,24 @@
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
         @keyframes fadeInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #000000;
-            color: #d0d0d0;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #000000; 
+            color: #d0d0d0; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
             position: relative;
             /* BEHOBEN: Scrollen wieder aktivieren */
             overflow-y: auto;
@@ -86,7 +72,7 @@
             justify-content: center;
             align-items: center;
         }
-
+        
         .info-container span {
             white-space: nowrap;
         }
@@ -107,7 +93,7 @@
             flex-direction: column;
             gap: 25px;
         }
-
+        
         .header-card {
             background-color: #1a1a1a;
             border-radius: 8px;
@@ -139,8 +125,7 @@
             box-shadow: 0 5px 25px rgba(255, 51, 51, 0.7);
         }
 
-        .info-card h2,
-        .info-card h3 {
+        .info-card h2, .info-card h3 {
             font-family: 'Orbitron', sans-serif;
             color: #ff3333;
             border-bottom: 1px solid #ff3333;
@@ -155,7 +140,7 @@
             line-height: 1.7;
             color: #d0d0d0;
         }
-
+        
         a {
             color: #ff6666;
             text-decoration: none;
@@ -172,14 +157,12 @@
                 flex-direction: column;
                 align-items: center;
             }
-
             .info-container span::after {
                 content: none;
             }
         }
     </style>
 </head>
-
 <body>
     <!-- Canvas für den animierten Hintergrund -->
     <canvas id="background-canvas"></canvas>
@@ -191,11 +174,10 @@
     </div>
     <div class="messages-container">
         <div class="header-card" style="animation-delay: 0.6s;">Nachrichten</div>
-
+        
         <div class="info-card" style="animation-delay: 0.8s;">
             <h2>Befehle</h2>
-            <p>Du willst einen geistigen Keks teilen, jemanden beleidigen, einen IQ-Test oder einen Dämlichkeits-Test
-                durchführen? Dann probiere doch mal !keks, !beleidigung, !dtest und !dätest im Chat aus! :D</p>
+            <p>Du willst einen geistigen Keks teilen, jemanden beleidigen, einen IQ-Test oder einen Dämlichkeits-Test durchführen? Dann probiere doch mal !keks, !beleidigung, !dtest und !dätest im Chat aus! :D</p>
         </div>
         <div class="info-card" style="animation-delay: 0.9500000000000001s;">
             <h2>Folge dem Stream</h2>
@@ -203,8 +185,7 @@
         </div>
         <div class="info-card" style="animation-delay: 1.1s;">
             <h2>Soziale Medien</h2>
-            <p>Du willst wissen wo Flo noch überall unterwegs ist? Ja dann nutz doch mal !ytb, !ytlp, !yto oder !dc :D
-            </p>
+            <p>Du willst wissen wo Flo noch überall unterwegs ist? Ja dann nutz doch mal !ytb, !ytlp, !yto oder !dc :D</p>
         </div>
         <div class="info-card" style="animation-delay: 1.25s;">
             <h2>Alert-Commands</h2>
@@ -216,20 +197,18 @@
         </div>
         <div class="info-card" style="animation-delay: 1.55s;">
             <h2>Alle infos zum Bot</h2>
-            <p>Du willst wissen wie viel ich Wert bin? Dann nutze doch mal !infos aus um alle wichtigen Informationen zu
-                mir zu erhalten! :P</p>
+            <p>Du willst wissen wie viel ich Wert bin? Dann nutze doch mal !infos aus um alle wichtigen Informationen zu mir zu erhalten! :P</p>
         </div>
         <div class="info-card" style="animation-delay: 1.7s;">
             <h2>Alle Timer-Nachrichten</h2>
-            <p>Du wunderst dich welche Nachrichten ich in regelmäßigen Zeitabständen sende? Dann nutze doch mal !tm im
-                Chat ;)</p>
+            <p>Du wunderst dich welche Nachrichten ich in regelmäßigen Zeitabständen sende? Dann nutze doch mal !tm im Chat ;)</p>
         </div>
         <div class="info-card" style="animation-delay: 1.85s;">
             <h2>Fleißigsten Zuschauer</h2>
             <p>Du willst wissen wer am wenigsten ein Hobby hat neben Flo? Dann nutze doch mal !ranking im Chat! ;)</p>
         </div>
     </div>
-    <script>
+   <script>
         // JavaScript für den animierten Hintergrund und die dynamischen Inhalte
         const canvas = document.getElementById('background-canvas');
         const ctx = canvas.getContext('2d');
@@ -301,7 +280,7 @@
 
                     if (distance < 120) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(255, 51, 51, ${1 - distance / 120})`;
+                        ctx.strokeStyle = `rgba(255, 51, 51, ${1-distance /120})`;
                         ctx.lineWidth = 1;
                         ctx.moveTo(particles[a].x, particles[a].y);
                         ctx.lineTo(particles[b].x, particles[b].y);
@@ -341,5 +320,4 @@
         });
     </script>
 </body>
-
 </html>
