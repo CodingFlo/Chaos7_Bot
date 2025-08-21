@@ -187,7 +187,8 @@
         .social-links img {
             width: 24px;
             height: 24px;
-            /* Stellt sicher, dass das Bild die richtige Größe hat */
+            /* Wichtig: Verhindert Streckung, indem das Seitenverhältnis beibehalten wird */
+            object-fit: contain;
         }
 
         .schedule-entry {
@@ -210,6 +211,10 @@
         .schedule-game {
             color: #d0d0d0;
             font-style: italic;
+        }
+
+        #xIcon {
+
         }
 
         @media (max-width: 600px) {
@@ -271,29 +276,26 @@
                 </a>
 
                 <!-- TikTok -->
-                <a href="https://www.tiktok.com/@youraccount" target="_blank" class="social-link">
-                    <!-- Fügen Sie hier die URL des offiziellen TikTok-Logos ein -->
+                <a href="https://www.tiktok.com/@flo_ced_cob" target="_blank" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/15713/15713399.png" alt="TikTok-Logo">
                     <span>TikTok</span>
                 </a>
 
                 <!-- Discord -->
-                <a href="https://discord.gg/yourserver" target="_blank" class="social-link">
-                    <!-- Fügen Sie hier die URL des offiziellen Discord-Logos ein -->
+                <a href="https://discord.com/invite/8Yc6yZx" target="_blank" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord-Logo">
                     <span>Discord</span>
                 </a>
 
                 <!-- Instagram -->
-                <a href="https://www.instagram.com/youraccount" target="_blank" class="social-link">
-                    <!-- Fügen Sie hier die URL des offiziellen Instagram-Logos ein -->
+                <a href="https://www.instagram.com/flo_ced_cob/" target="_blank" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram-Logo">
                     <span>Instagram</span>
                 </a>
-                <!-- Instagram -->
+                <!-- X/Twitter -->
                 <a href="https://x.com/flo_ced_cob" target="_blank" class="social-link">
-                    <!-- Fügen Sie hier die URL des offiziellen Instagram-Logos ein -->
-                    <img src="https://img.icons8.com/?size=256&id=phOKFKYpe00C&format=png" alt="Instagram-Logo">
+                    <div id="xIcon"><img src="https://img.icons8.com/?size=256&id=phOKFKYpe00C&format=png"
+                            alt="X/Twitter-Logo"></div>
                     <span>X/Twitter</span>
                 </a>
             </div>
