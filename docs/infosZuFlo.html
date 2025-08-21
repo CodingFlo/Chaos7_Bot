@@ -162,7 +162,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 20px;
         }
 
@@ -172,22 +172,51 @@
             gap: 8px;
             color: #d0d0d0;
             background-color: #2a2a2a;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 12px 24px;
+            /* Vergrößertes Padding */
+            border-radius: 30px;
+            /* Stärker abgerundete Ecken */
             border: 1px solid #ff3333;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             white-space: nowrap;
+            text-shadow: none;
+            /* Entfernt den Textschatten, damit er bei Hover schöner wirkt */
         }
 
         .social-links a:hover {
             background-color: #3d3d3d;
-            transform: scale(1.05);
+            transform: translateY(-2px) scale(1.05);
+            /* Leichter Schwebe-Effekt */
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.4);
         }
 
         .social-links img {
-            width: 24px;
-            height: 24px;
-            /* Wichtig: Verhindert Streckung, indem das Seitenverhältnis beibehalten wird */
+            width: 28px;
+            /* Vergrößerte Icons */
+            height: 28px;
+            object-fit: contain;
+        }
+
+        /* Spezifische Styling-Anpassungen für das X/Twitter-Icon */
+        .social-links .x-icon-container {
+            width: 28px;
+            /* Passt die Größe an das neue Icon-Styling an */
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            background-image: radial-gradient(circle, white, white);
+            background-size: 80% 80%;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 50%;
+            /* Runde Form für das Icon */
+        }
+
+        .social-links .x-icon-container img {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
         }
 
@@ -213,23 +242,19 @@
             font-style: italic;
         }
 
-        #xIcon {
-            background-image: radial-gradient(circle, white, white);
-            background-size: 80%;
-            background-repeat: no-repeat;
-            background-position: center;
-
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-        }
-
         @media (max-width: 600px) {
             .header-container {
                 flex-direction: column;
                 gap: 10px;
+            }
+
+            .social-links a {
+                padding: 10px 18px;
+            }
+
+            .social-links img {
+                width: 24px;
+                height: 24px;
             }
         }
     </style>
@@ -278,10 +303,28 @@
             <h2>Meine Social-Media-Kanäle</h2>
             <div class="social-links">
                 <!-- YouTube -->
-                <a href="https://www.youtube.com/yourchannel" target="_blank" class="social-link">
+                <a href="https://www.youtube.com/@chaosofbestofcob" target="_blank" class="social-link">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png"
                         alt="YouTube-Logo">
-                    <span>YouTube</span>
+                    <span>Chaos of Bestof [CoB]</span>
+                </a>
+
+                <a href="https://www.youtube.com/@chaosengelsdamonced" target="_blank" class="social-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png"
+                        alt="YouTube-Logo">
+                    <span>Chaosengelsdämon [Ced]</span>
+                </a>
+
+                <a href="https://www.youtube.com/@chaosengelsdamonced" target="_blank" class="social-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png"
+                        alt="YouTube-Logo">
+                    <span>Flo_Ced_CoB (Stream Archiv)</span>
+                </a>
+
+                <a href="https://www.youtube.com/@chaosmemeknightcmk6798" target="_blank" class="social-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png"
+                        alt="YouTube-Logo">
+                    <span>Chaosmemeknight [Cmk]</span>
                 </a>
 
                 <!-- TikTok -->
@@ -303,8 +346,9 @@
                 </a>
                 <!-- X/Twitter -->
                 <a href="https://x.com/flo_ced_cob" target="_blank" class="social-link">
-                    <div id="xIcon"><img src="https://img.icons8.com/?size=256&id=phOKFKYpe00C&format=png"
-                            alt="X/Twitter-Logo"></div>
+                    <div class="x-icon-container">
+                        <img src="https://img.icons8.com/?size=256&id=phOKFKYpe00C&format=png" alt="X/Twitter-Logo">
+                    </div>
                     <span>X/Twitter</span>
                 </a>
             </div>
@@ -332,15 +376,7 @@
             y: undefined
         };
 
-        // Passt die Canvas-Größe an die Fenstergröße an
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            createParticles(); // Partikel bei jeder Größenänderung neu erstellen
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
+        // **KORREKTUR DER FEHLERMELDUNG: DIE PARTICLE-KLASSE MUSS VOR DER VERWENDUNG DEFINIERT WERDEN**
         // Partikel-Klasse für die Animation
         class Particle {
             constructor() {
@@ -373,6 +409,14 @@
                 ctx.fill();
             }
         }
+
+        // Passt die Canvas-Größe an die Fenstergröße an
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            createParticles(); // Partikel bei jeder Größenänderung neu erstellen
+        }
+        window.addEventListener('resize', resizeCanvas);
 
         // Erstellt die Partikel
         function createParticles() {
@@ -415,7 +459,7 @@
 
         // Startet die Animation, wenn die Seite geladen ist
         window.onload = function () {
-            createParticles();
+            resizeCanvas(); // Ruft die Größenanpassung auf, die wiederum die Partikel erstellt
             animate();
         };
     </script>
