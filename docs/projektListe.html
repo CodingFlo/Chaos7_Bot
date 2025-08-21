@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flos Projektliste</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ---------- Base ---------- */
+        :root {
+            --accent: #ff4d4d;
+            --accent-2: #ff6666;
+            --card-bg: rgba(30, 30, 30, 0.9);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        canvas#background-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* ---------- Appear Animations ---------- */
+        @keyframes fadeInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInFromTop .6s ease-out forwards;
+            animation-delay: var(--delay, .1s);
+        }
+
+        .slide-up {
+            opacity: 0;
+            animation: slideInUp .6s ease-out forwards;
+            animation-delay: var(--delay, .2s);
+        }
+
+        /* Staggered list item entrance */
+        .stagger li {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideInUp .5s ease-out forwards;
+        }
+
+        .stagger li:nth-child(1) {
+            animation-delay: calc(var(--list-delay, .25s) + .00s);
+        }
+
+        .stagger li:nth-child(2) {
+            animation-delay: calc(var(--list-delay, .25s) + .06s);
+        }
+
+        .stagger li:nth-child(3) {
+            animation-delay: calc(var(--list-delay, .25s) + .12s);
+        }
+
+        .stagger li:nth-child(4) {
+            animation-delay: calc(var(--list-delay, .25s) + .18s);
+        }
+
+        .stagger li:nth-child(5) {
+            animation-delay: calc(var(--list-delay, .25s) + .24s);
+        }
+
+        .stagger li:nth-child(6) {
+            animation-delay: calc(var(--list-delay, .25s) + .30s);
+        }
+
+        .stagger li:nth-child(7) {
+            animation-delay: calc(var(--list-delay, .25s) + .36s);
+        }
+
+        .stagger li:nth-child(8) {
+            animation-delay: calc(var(--list-delay, .25s) + .42s);
+        }
+
+        .stagger li:nth-child(9) {
+            animation-delay: calc(var(--list-delay, .25s) + .48s);
+        }
+
+        .stagger li:nth-child(10) {
+            animation-delay: calc(var(--list-delay, .25s) + .54s);
+        }
+
+        .stagger li:nth-child(11) {
+            animation-delay: calc(var(--list-delay, .25s) + .60s);
+        }
+
+        .stagger li:nth-child(12) {
+            animation-delay: calc(var(--list-delay, .25s) + .66s);
+        }
+
+        /* ---------- Typography & Layout ---------- */
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            color: var(--accent);
+            margin: 30px 20px 10px;
+        }
+
+        section {
+            margin: 30px auto;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-2);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 6px;
+            margin: 0 0 18px 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        li {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .5);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(255, 77, 77, .4);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="background-canvas"></canvas>
+
+    <h1 class="fade-in" style="--delay:.1s">Flos Projektliste</h1>
+
+    <section class="slide-up" style="--delay:.2s">
+        <h2 class="fade-in" style="--delay:.25s">Fix-Kommende Projekte</h2>
+        <ul class="stagger" style="--list-delay:.3s">
+            <li>Mario &amp; Luigi Brothership</li>
+            <li>Mario Bros 2 (New verison/3DS)</li>
+            <li>Mario Bros DS</li>
+            <li>Mario Bros U Deluxe</li>
+            <li>Mario Land</li>
+            <li>Mario Land 2</li>
+            <li>Mario World 2</li>
+            <li>Plants Vs Zombies Remake</li>
+            <li>Pokemon Karmesin</li>
+            <li>Pokemon Legenden Z-A</li>
+            <li>TOTK</li>
+            <li>Wario Land 3</li>
+        </ul>
+    </section>
+
+    <section class="slide-up" style="--delay:.35s">
+        <h2 class="fade-in" style="--delay:.4s">Geplante Projekte</h2>
+        <ul class="stagger" style="--list-delay:.45s">
+            <li>Mario und Rabbits Kingdom battle</li>
+            <li>Mario und Rabbits Sparks of Hope</li>
+            <li>Paper Mario 2</li>
+            <li>Paper Mario Origami King</li>
+        </ul>
+    </section>
+
+    <section class="slide-up" style="--delay:.5s">
+        <h2 class="fade-in" style="--delay:.55s">Erledigte Projekte</h2>
+        <ul class="stagger" style="--list-delay:.6s">
+            <li>BOTW</li>
+            <li>Bowsers Fury</li>
+            <li>Links awekening</li>
+            <li>Luigis Mansion 1</li>
+        </ul>
+    </section>
+
+    <section class="slide-up" style="--delay:.65s">
+        <h2 class="fade-in" style="--delay:.7s">Als Video erledigt</h2>
+        <ul class="stagger" style="--list-delay:.75s">
+            <li>-</li>
+        </ul>
+    </section>
+
+    <section class="slide-up" style="--delay:.8s">
+        <h2 class="fade-in" style="--delay:.85s">Stream only Projekte</h2>
+        <ul class="stagger" style="--list-delay:.9s">
+            <li>BOTW</li>
+            <li>Links awekening</li>
+            <li>Luigis Mansion 1</li>
+            <li>Mario 64 DS</li>
+            <li>Mario World</li>
+        </ul>
+    </section>
+
+    <script>
+        /* ----- Animated background (matches your other pages) ----- */
+        const canvas = document.getElementById('background-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = '#ff3333';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            createParticles();
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        function createParticles() {
+            particles = [];
+            const numberOfParticles = Math.max(30, (canvas.width * canvas.height) / 9000);
+            for (let i = 0; i < numberOfParticles; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Connection lines
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a + 1; b < particles.length; b++) {
+                    const dx = particles[a].x - particles[b].x;
+                    const dy = particles[a].y - particles[b].y;
+                    const distance = Math.hypot(dx, dy);
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 51, 51, ${1 - distance / 120})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = function () {
+            resizeCanvas();
+            animate();
+        };
+    </script>
+</body>
+
+</html>
