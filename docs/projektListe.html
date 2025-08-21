@@ -13,10 +13,16 @@
             --accent: #ff4d4d;
             --accent-2: #ff6666;
             --card-bg: rgba(30, 30, 30, 0.9);
+            --animation-speed: 0.05s;
         }
 
         * {
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            /* Sanfter Bildlauf zu den Ankern */
         }
 
         body {
@@ -73,59 +79,12 @@
             animation-delay: var(--delay, .2s);
         }
 
-        /* Staggered list item entrance */
+        /* Dynamisches Staggering für die Liste */
         .stagger li {
             opacity: 0;
             transform: translateY(10px);
             animation: slideInUp .5s ease-out forwards;
-        }
-
-        .stagger li:nth-child(1) {
-            animation-delay: calc(var(--list-delay, .25s) + .00s);
-        }
-
-        .stagger li:nth-child(2) {
-            animation-delay: calc(var(--list-delay, .25s) + .06s);
-        }
-
-        .stagger li:nth-child(3) {
-            animation-delay: calc(var(--list-delay, .25s) + .12s);
-        }
-
-        .stagger li:nth-child(4) {
-            animation-delay: calc(var(--list-delay, .25s) + .18s);
-        }
-
-        .stagger li:nth-child(5) {
-            animation-delay: calc(var(--list-delay, .25s) + .24s);
-        }
-
-        .stagger li:nth-child(6) {
-            animation-delay: calc(var(--list-delay, .25s) + .30s);
-        }
-
-        .stagger li:nth-child(7) {
-            animation-delay: calc(var(--list-delay, .25s) + .36s);
-        }
-
-        .stagger li:nth-child(8) {
-            animation-delay: calc(var(--list-delay, .25s) + .42s);
-        }
-
-        .stagger li:nth-child(9) {
-            animation-delay: calc(var(--list-delay, .25s) + .48s);
-        }
-
-        .stagger li:nth-child(10) {
-            animation-delay: calc(var(--list-delay, .25s) + .54s);
-        }
-
-        .stagger li:nth-child(11) {
-            animation-delay: calc(var(--list-delay, .25s) + .60s);
-        }
-
-        .stagger li:nth-child(12) {
-            animation-delay: calc(var(--list-delay, .25s) + .66s);
+            animation-delay: calc(var(--list-delay, .25s) + var(--index, 0) * var(--animation-speed));
         }
 
         /* ---------- Typography & Layout ---------- */
@@ -142,12 +101,49 @@
             padding: 0 20px;
         }
 
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--accent);
+            margin: 0 0 18px 0;
+            padding-bottom: 6px;
+        }
+
         h2 {
             font-family: 'Orbitron', sans-serif;
             color: var(--accent-2);
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 6px;
-            margin: 0 0 18px 0;
+            margin: 0;
+        }
+
+        .sort-button {
+            background: var(--card-bg);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s ease, transform .1s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sort-button:hover {
+            background: rgba(255, 77, 77, 0.1);
+        }
+
+        .sort-button:active {
+            transform: scale(0.98);
+        }
+
+        .sort-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
         }
 
         ul {
@@ -172,6 +168,70 @@
             transform: translateY(-5px);
             box-shadow: 0 6px 15px rgba(255, 77, 77, .4);
         }
+
+        /* Neues Inhaltsverzeichnis-Design */
+        .toc {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 10px 20px;
+            border-bottom: 1px solid #333;
+            /* Dezente Trennlinie */
+            text-align: center;
+        }
+
+        .toc h3 {
+            display: none;
+            /* Überschrift verstecken */
+        }
+
+        .toc-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            .toc-links {
+                justify-content: flex-start;
+                overflow-x: auto;
+                /* Horizontal scrollbar for mobile */
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        .toc-links a {
+            text-decoration: none;
+            color: #ccc;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .toc-links a:hover {
+            color: var(--accent);
+        }
+
+        .toc-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease-out;
+        }
+
+        .toc-links a:hover::after {
+            transform: scaleX(1);
+        }
     </style>
 </head>
 
@@ -180,9 +240,28 @@
 
     <h1 class="fade-in" style="--delay:.1s">Flos Projektliste</h1>
 
-    <section class="slide-up" style="--delay:.2s">
-        <h2 class="fade-in" style="--delay:.25s">Fix-Kommende Projekte</h2>
-        <ul class="stagger" style="--list-delay:.3s">
+    <!-- Inhaltsverzeichnis mit neuem Design -->
+    <nav class="toc fade-in" style="--delay:.2s">
+        <ul class="toc-links">
+            <li><a href="#fix-kommende-projekte">Fix-Kommende Projekte</a></li>
+            <li><a href="#geplante-projekte">Geplante Projekte</a></li>
+            <li><a href="#erledigte-projekte">Erledigte Projekte</a></li>
+            <li><a href="#stream-only-projekte">Stream only Projekte</a></li>
+            <li><a href="#als-video-erledigt">Als Video erledigt</a></li>
+        </ul>
+    </nav>
+
+    <section id="fix-kommende-projekte" class="slide-up" style="--delay:.35s">
+        <div class="section-header fade-in" style="--delay:.4s">
+            <h2>Fix-Kommende Projekte</h2>
+            <button class="sort-button" onclick="sortList(this)">
+                Sortieren
+                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
+                </svg>
+            </button>
+        </div>
+        <ul class="stagger">
             <li>Mario &amp; Luigi Brothership</li>
             <li>Mario Bros 2 (New verison/3DS)</li>
             <li>Mario Bros DS</li>
@@ -198,46 +277,122 @@
         </ul>
     </section>
 
-    <section class="slide-up" style="--delay:.35s">
-        <h2 class="fade-in" style="--delay:.4s">Geplante Projekte</h2>
-        <ul class="stagger" style="--list-delay:.45s">
+    <section id="geplante-projekte" class="slide-up" style="--delay:.5s">
+        <div class="section-header fade-in" style="--delay:.55s">
+            <h2>Geplante Projekte</h2>
+            <button class="sort-button" onclick="sortList(this)">
+                Sortieren
+                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
+                </svg>
+            </button>
+        </div>
+        <ul class="stagger">
             <li>Mario und Rabbits Kingdom battle</li>
             <li>Mario und Rabbits Sparks of Hope</li>
             <li>Paper Mario 2</li>
             <li>Paper Mario Origami King</li>
+            <li>Pokemon Legenden Arceus</li>
+            <li>Pokemon Lets Go Pikachu</li>
+            <li>Rayman 3</li>
+            <li>Rayman Origin</li>
+            <li>Wario Land 1</li>
+            <li>Wario Land 2</li>
+            <li>Yoshis Crafted World</li>
+            <li>Zelda Skyward sword</li>
         </ul>
     </section>
 
-    <section class="slide-up" style="--delay:.5s">
-        <h2 class="fade-in" style="--delay:.55s">Erledigte Projekte</h2>
-        <ul class="stagger" style="--list-delay:.6s">
-            <li>BOTW</li>
-            <li>Bowsers Fury</li>
-            <li>Links awekening</li>
-            <li>Luigis Mansion 1</li>
+    <section id="erledigte-projekte" class="slide-up" style="--delay:.65s">
+        <div class="section-header fade-in" style="--delay:.7s">
+            <h2>Erledigte Projekte</h2>
+            <button class="sort-button" onclick="sortList(this)">
+                Sortieren
+                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
+                </svg>
+            </button>
+        </div>
+        <ul class="stagger">
+            <li>The Legend of Zelda: Breath of the Wild</li>
+            <li>Bowser's Fury</li>
+            <li>Link's Awakening</li>
+            <li>Luigi's Mansion 1</li>
+            <li>Luigi's Mansion 2</li>
+            <li>Luigi's Mansion 3</li>
+            <li>Super Mario 3D Land</li>
+            <li>Super Mario 3D World</li>
+            <li>Super Mario 64</li>
+            <li>Super Mario 64 DS</li>
+            <li>Super Mario All-Stars</li>
+            <li>New Super Mario Bros. Wii</li>
+            <li>Super Mario Bros. Wonder</li>
+            <li>Super Mario Galaxy</li>
+            <li>Super Mario Galaxy 2</li>
+            <li>Mario Kart</li>
+            <li>Super Mario Odyssey</li>
+            <li>Super Mario Sunshine</li>
+            <li>Mario &amp; Luigi: Partners in Time</li>
+            <li>Super Mario World</li>
+            <li>Mincraftario Season 1</li> <!-- Korrigiert -->
+            <li>Minecraft Server Staffel 2</li>
+            <li>Pikmin 1</li>
+            <li>Pikmin 2</li>
+            <li>Pikmin 3</li>
+            <li>Pikmin 4</li>
+            <li>Pokémon Schild</li>
+            <li>Terraria</li>
+            <li>The Legend of Zelda: Echoes of Wisdom</li>
+            <li>Wonder Boy: The Dragon's Trap</li>
         </ul>
     </section>
 
-    <section class="slide-up" style="--delay:.65s">
-        <h2 class="fade-in" style="--delay:.7s">Als Video erledigt</h2>
-        <ul class="stagger" style="--list-delay:.75s">
+    <section id="stream-only-projekte" class="slide-up" style="--delay:.8s">
+        <div class="section-header fade-in" style="--delay:.85s">
+            <h2>Stream only Projekte</h2>
+            <button class="sort-button" onclick="sortList(this)">
+                Sortieren
+                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
+                </svg>
+            </button>
+        </div>
+        <ul class="stagger">
+            <li>The Legend of Zelda: Breath of the Wild</li>
+            <li>Link's Awakening</li>
+            <li>Luigi's Mansion 1</li>
+            <li>Super Mario 64 DS</li>
+            <li>New Super Mario Bros. Wii</li>
+            <li>Minecraft Server Staffel 2</li>
+            <li>Mincraftario Season 1</li> <!-- Korrigiert -->
+            <li>Pikmin 1</li>
+            <li>Pikmin 2</li>
+            <li>Pikmin 3</li>
+            <li>Pikmin 4</li>
+            <li>Pokémon Schild</li>
+            <li>Terraria</li>
+            <li>The Legend of Zelda: Echoes of Wisdom</li>
+            <li>Wonder Boy: The Dragon's Trap</li>
+        </ul>
+    </section>
+
+    <section id="als-video-erledigt" class="slide-up" style="--delay:.95s">
+        <div class="section-header fade-in" style="--delay:1s">
+            <h2>Als Video erledigt</h2>
+            <button class="sort-button" onclick="sortList(this)">
+                Sortieren
+                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
+                </svg>
+            </button>
+        </div>
+        <ul class="stagger">
             <li>-</li>
         </ul>
     </section>
 
-    <section class="slide-up" style="--delay:.8s">
-        <h2 class="fade-in" style="--delay:.85s">Stream only Projekte</h2>
-        <ul class="stagger" style="--list-delay:.9s">
-            <li>BOTW</li>
-            <li>Links awekening</li>
-            <li>Luigis Mansion 1</li>
-            <li>Mario 64 DS</li>
-            <li>Mario World</li>
-        </ul>
-    </section>
-
     <script>
-        /* ----- Animated background (matches your other pages) ----- */
+        /* ----- Animated background ----- */
         const canvas = document.getElementById('background-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -300,13 +455,78 @@
                 }
             }
 
-            particles.forEach(p => { p.update(); p.draw(); });
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
             requestAnimationFrame(animate);
+        }
+
+        /* ----- Sortierfunktion und Animation ----- */
+
+        /**
+         * Sortiert eine Liste basierend auf den Listenelementen.
+         * Der Sortierbutton toggelt zwischen aufsteigender und absteigender Reihenfolge.
+         * @param {HTMLElement} button - Der geklickte Sortier-Button.
+         */
+        function sortList(button) {
+            const list = button.closest('section').querySelector('ul');
+            const items = Array.from(list.children);
+            const sortDirection = button.dataset.sortDirection === 'desc' ? 'asc' : 'desc';
+
+            // SVG Icon an Sortierrichtung anpassen
+            const icon = button.querySelector('.sort-icon');
+            if (sortDirection === 'asc') {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+
+            // Elemente sortieren
+            items.sort((a, b) => {
+                const textA = a.textContent.trim().toUpperCase();
+                const textB = b.textContent.trim().toUpperCase();
+                if (textA < textB) return sortDirection === 'asc' ? -1 : 1;
+                if (textA > textB) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // Vorhandene Listenelemente entfernen
+            while (list.firstChild) {
+                list.removeChild(list.firstChild);
+            }
+
+            // Sortierte Elemente wieder hinzufügen
+            items.forEach(item => {
+                list.appendChild(item);
+            });
+
+            // Den --index für die Stagger-Animation neu setzen
+            updateStaggerIndex(list);
+
+            // Sortierrichtung aktualisieren
+            button.dataset.sortDirection = sortDirection;
+        }
+
+        /**
+         * Aktualisiert die CSS-Variable --index für jedes Listenelement,
+         * um sicherzustellen, dass die Stagger-Animation auch nach dem Sortieren korrekt funktioniert.
+         * @param {HTMLElement} list - Das UL-Element, dessen Kinder aktualisiert werden sollen.
+         */
+        function updateStaggerIndex(list) {
+            Array.from(list.children).forEach((item, index) => {
+                item.style.setProperty('--index', index);
+            });
         }
 
         window.onload = function () {
             resizeCanvas();
             animate();
+
+            // Initiales Setzen des Index für alle Listen, um die Animation beim ersten Laden zu aktivieren
+            document.querySelectorAll('ul.stagger').forEach(list => {
+                updateStaggerIndex(list);
+            });
         };
     </script>
 </body>
