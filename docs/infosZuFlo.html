@@ -358,56 +358,47 @@
         }
 
         .header-wrapper {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 50px 0;
+            text-align: center;
+            margin: 25px 0;
         }
 
         .header-wrapper h1 {
             font-family: 'Orbitron', sans-serif;
             color: #ff3333;
-            text-align: center;
             font-size: 3rem;
-            position: relative;
-            z-index: 1;
+            margin-top: 20px;
+            width: 100%;
         }
 
-        /* Orbit-Kreis */
-        .header-wrapper {
-            --radius: 150px;
-            /* Abstand der Profilbilder von der Überschrift */
-            --count: 6;
-            /* Anzahl der Profilbilder */
+        /* Bilder halbkreisförmig über der Überschrift */
+        .profile-pics {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto 10px auto;
         }
 
-        /* Orbitierende Profilbilder */
-        .orbit {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80px;
-            height: 80px;
+        .profile-pic {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             border: 3px solid #ff3333;
             box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
-            transform: translate(-50%, -50%) rotate(calc(var(--i) * (360deg / var(--count)))) translateX(var(--radius));
-            animation: orbit-rotate 20s linear infinite;
+            object-fit: cover;
+            flex-shrink: 0;
         }
 
-        /* Gegenrotation, damit die Bilder nicht gekippt aussehen */
-        .orbit img {
-            transform: rotate(calc(var(--i) * -(360deg / var(--count))));
-        }
-
-        @keyframes orbit-rotate {
-            from {
-                transform: rotate(0deg);
+        /* Responsive */
+        @media (max-width: 600px) {
+            .profile-pic {
+                width: 50px;
+                height: 50px;
             }
 
-            to {
-                transform: rotate(360deg);
+            .header-wrapper h1 {
+                font-size: 2rem;
             }
         }
     </style>
@@ -418,25 +409,21 @@
     <canvas id="background-canvas"></canvas>
 
     <div class="header-wrapper">
-        <h1>Das ist Flo</h1>
+        <div class="profile-pics">
+            <h1>Das ist Flo</h1>
 
-        <!-- Lokales Instagram-Bild -->
-        <img src="insta.png" alt="Instagram Profilbild" class="profile-pic orbit" style="--i:0;">
-
-        <img src="https://yt3.googleusercontent.com/ytc/AIdro_mD98X5Bgql-aRjPb44GmGimaD0qgKB9vALFDSkSIcVPg=s160-c-k-c0x00ffffff-no-rj"
-            alt="Chaosmemeknight Profilbild" class="profile-pic orbit" style="--i:1;">
-
-        <img src="https://yt3.googleusercontent.com/bTFNMquDPhFP1pPPplg7JWloGd55qg40bSbZdfR_KzQdT7RhpqkNLy8FuMSiXe97dBvt8fB0=s160-c-k-c0x00ffffff-no-rj"
-            alt="CoB Profilbild" class="profile-pic orbit" style="--i:2;">
-
-        <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7863ec31-8858-47fe-a77e-354bd4535f44-profile_image-70x70.png"
-            alt="Flo_Ced_CoB Profilbild" class="profile-pic orbit" style="--i:3;">
-
-        <img src="https://yt3.googleusercontent.com/ytc/AIdro_nCj4D8u5adsJRGNv-jPl9LyDvFoUwHtCZGTEtLYHfezQ=s160-c-k-c0x00ffffff-no-rj"
-            alt="Chaosengelsdämon Profilbild" class="profile-pic orbit" style="--i:4;">
-
-        <img src="https://pbs.twimg.com/profile_images/1874614677126193152/Wt0K_APx_200x200.jpg" alt="X Profilbild"
-            class="profile-pic orbit" style="--i:5;">
+            <img src="insta.png" alt="Instagram Profilbild" class="profile-pic">
+            <img src="https://yt3.googleusercontent.com/ytc/AIdro_mD98X5Bgql-aRjPb44GmGimaD0qgKB9vALFDSkSIcVPg=s160-c-k-c0x00ffffff-no-rj"
+                alt="Chaosmemeknight Profilbild" class="profile-pic">
+            <img src="https://yt3.googleusercontent.com/bTFNMquDPhFP1pPPplg7JWloGd55qg40bSbZdfR_KzQdT7RhpqkNLy8FuMSiXe97dBvt8fB0=s160-c-k-c0x00ffffff-no-rj"
+                alt="CoB Profilbild" class="profile-pic">
+            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7863ec31-8858-47fe-a77e-354bd4535f44-profile_image-70x70.png"
+                alt="Flo_Ced_CoB Profilbild" class="profile-pic">
+            <img src="https://yt3.googleusercontent.com/ytc/AIdro_nCj4D8u5adsJRGNv-jPl9LyDvFoUwHtCZGTEtLYHfezQ=s160-c-k-c0x00ffffff-no-rj"
+                alt="Chaosengelsdämon Profilbild" class="profile-pic">
+            <img src="https://pbs.twimg.com/profile_images/1874614677126193152/Wt0K_APx_200x200.jpg" alt="X Profilbild"
+                class="profile-pic">
+        </div>
     </div>
 
     <div class="content-container">
@@ -671,7 +658,7 @@
             "Pokemon Schild shiny hunt",
             "Minecraft",
             "Mario Kart World",
-            "Mario Party Brothership",
+            "Mario Party Jomboreee",
             "Eines der Games aus den Fixen Streamtagen"
         ];
 
