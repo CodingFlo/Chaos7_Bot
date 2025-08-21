@@ -235,7 +235,6 @@
         .schedule-day {
             font-weight: bold;
             color: #ff6666;
-            white-space: nowrap;
         }
 
         .schedule-game {
@@ -315,7 +314,7 @@
         }
 
         /* Responsive Anpassungen */
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
             .header-container {
                 flex-direction: column;
                 gap: 10px;
@@ -339,6 +338,9 @@
             .schedule-game {
                 width: 100%;
                 text-align: left;
+                word-break: break-word;
+                inline-size: fit-content;
+                overflow-wrap: break-word;
             }
         }
 
@@ -499,7 +501,7 @@
             <h2>Bisherige und Zukünftige Streamprojekte</h2>
             <p>Du magst wissen, was alles schon einmal kam, bzw. was noch kommen wird? Dann schau dir die vollständige
                 Liste meiner abgeschlossenen und geplanten Projekte an!</p>
-            <p></p> <a href="projektListe.html" class="project-link">Zu den Projekten</a></p>
+            <p style="text-align: center;"><a href="projektListe.html" class="project-link">Zu den Projekten</a></p>
         </div>
 
         <!-- Trennlinie vor FAQ  -->
