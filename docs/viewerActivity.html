@@ -141,8 +141,6 @@
         }
 
         thead {
-            z-index: 10;
-            background-color: #800000;
             border-top-left-radius: 7px;
             border-top-right-radius: 7px;
         }
@@ -151,6 +149,16 @@
             opacity: 0;
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards;
             display: table-row;
+        }
+
+        thead tr th {
+            background-color: #800000;
+            transition: 250ms;
+        }
+
+        thead tr th:hover {
+            background-color: #ff3333;
+            transition: 250ms;
         }
 
         th,
@@ -257,16 +265,10 @@
                 gap: 10px;
                 animation: none;
                 opacity: 1;
-                background-color: rgba(22, 22, 22, 0.7);
             }
 
             thead tr th {
-                background-color: #800000;
-                transition: 250ms;
-            }
-
-            thead tr th:hover {
-                background-color: #ff3333;
+                background-color: rgba(22, 22, 22, 0.7);
                 transition: 250ms;
             }
 
