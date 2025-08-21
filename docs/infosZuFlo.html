@@ -70,15 +70,6 @@
             z-index: 2;
         }
 
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
         .profile-pic {
             width: 80px;
             height: 80px;
@@ -365,6 +356,60 @@
                 text-align: left;
             }
         }
+
+        .header-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 50px 0;
+        }
+
+        .header-wrapper h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff3333;
+            text-align: center;
+            font-size: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Orbit-Kreis */
+        .header-wrapper {
+            --radius: 150px;
+            /* Abstand der Profilbilder von der Überschrift */
+            --count: 6;
+            /* Anzahl der Profilbilder */
+        }
+
+        /* Orbitierende Profilbilder */
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #ff3333;
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+            transform: translate(-50%, -50%) rotate(calc(var(--i) * (360deg / var(--count)))) translateX(var(--radius));
+            animation: orbit-rotate 20s linear infinite;
+        }
+
+        /* Gegenrotation, damit die Bilder nicht gekippt aussehen */
+        .orbit img {
+            transform: rotate(calc(var(--i) * -(360deg / var(--count))));
+        }
+
+        @keyframes orbit-rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -372,20 +417,26 @@
     <!-- Das Canvas-Element für den animierten Hintergrund -->
     <canvas id="background-canvas"></canvas>
 
-    <div class="header-container">
+    <div class="header-wrapper">
+        <h1>Das ist Flo</h1>
+
+        <!-- Lokales Instagram-Bild -->
+        <img src="insta.png" alt="Instagram Profilbild" class="profile-pic orbit" style="--i:0;">
+
         <img src="https://yt3.googleusercontent.com/ytc/AIdro_mD98X5Bgql-aRjPb44GmGimaD0qgKB9vALFDSkSIcVPg=s160-c-k-c0x00ffffff-no-rj"
-            alt="Chaosmemeknight Profilbild" class="profile-pic" style="animation-delay: 0.2s;">
+            alt="Chaosmemeknight Profilbild" class="profile-pic orbit" style="--i:1;">
 
         <img src="https://yt3.googleusercontent.com/bTFNMquDPhFP1pPPplg7JWloGd55qg40bSbZdfR_KzQdT7RhpqkNLy8FuMSiXe97dBvt8fB0=s160-c-k-c0x00ffffff-no-rj"
-            alt="CoB Profilbild" class="profile-pic" style="animation-delay: 0.2s;">
-
-        <h1 style="animation-delay: 0.2s;">Das ist Flo</h1>
+            alt="CoB Profilbild" class="profile-pic orbit" style="--i:2;">
 
         <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7863ec31-8858-47fe-a77e-354bd4535f44-profile_image-70x70.png"
-            alt="Flo_Ced_CoB Profilbild" class="profile-pic" style="animation-delay: 0.2s;">
+            alt="Flo_Ced_CoB Profilbild" class="profile-pic orbit" style="--i:3;">
 
         <img src="https://yt3.googleusercontent.com/ytc/AIdro_nCj4D8u5adsJRGNv-jPl9LyDvFoUwHtCZGTEtLYHfezQ=s160-c-k-c0x00ffffff-no-rj"
-            alt="Chaosengelsdämon Profilbild" class="profile-pic" style="animation-delay: 0.2s;">
+            alt="Chaosengelsdämon Profilbild" class="profile-pic orbit" style="--i:4;">
+
+        <img src="https://pbs.twimg.com/profile_images/1874614677126193152/Wt0K_APx_200x200.jpg" alt="X Profilbild"
+            class="profile-pic orbit" style="--i:5;">
     </div>
 
     <div class="content-container">
