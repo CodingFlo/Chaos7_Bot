@@ -514,100 +514,102 @@
             </tbody>
         </table>
     </div>
-    <script>
+     <script>
+        // JavaScript für den animierten Hintergrund und die dynamischen Inhalte
         const canvas = document.getElementById('background-canvas');
         const ctx = canvas.getContext('2d');
-
         let particles = [];
-        let mouse = { x: undefined, y: undefined };
-        const maxRadius = 5;
+        let mouse = {
+            x: undefined,
+            y: undefined
+        };
 
-        // Funktion zur Erstellung und Aktualisierung der Partikel
-        function Particle(x, y, dx, dy, radius) {
-            this.x = x;
-            this.y = y;
-            this.dx = dx;
-            this.dy = dy;
-            this.radius = radius;
-            this.baseRadius = radius;
-            this.color = '#ff3333';
-            this.isNearMouse = false;
+        // Partikel-Klasse für die Animation
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1; // Größe der Partikel
+                this.speedX = Math.random() * 1 - 0.5; // Geschwindigkeit in X-Richtung
+                this.speedY = Math.random() * 1 - 0.5; // Geschwindigkeit in Y-Richtung
+            }
 
-            this.draw = function() {
+            // Methode zum Bewegen der Partikel
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Partikel am Rand umkehren
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.y < 0 || this.y > canvas.height) {
+                    this.speedY = -this.speedY;
+                }
+            }
+
+            // Methode zum Zeichnen der Partikel
+            draw() {
+                ctx.fillStyle = '#ff3333';
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.shadowColor = this.color;
-                ctx.shadowBlur = this.isNearMouse ? 15 : 5;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
-            };
-
-            this.update = function() {
-                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-                    this.dx = -this.dx;
-                }
-                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-                    this.dy = -this.dy;
-                }
-                this.x += this.dx;
-                this.y += this.dy;
-
-                const distance = Math.sqrt(
-                    Math.pow(mouse.x - this.x, 2) + Math.pow(mouse.y - this.y, 2)
-                );
-
-                if (distance < 100 && this.radius < maxRadius) {
-                    this.radius += 0.5;
-                    this.isNearMouse = true;
-                } else if (this.radius > this.baseRadius) {
-                    this.radius -= 0.1;
-                    this.isNearMouse = false;
-                }
-            };
-        }
-
-        // Initialisierung der Partikel
-        function initParticles() {
-            particles = [];
-            const numParticles = Math.floor((canvas.width * canvas.height) / 10000);
-            for (let i = 0; i < numParticles; i++) {
-                const radius = Math.random() * 2 + 1;
-                const x = Math.random() * (canvas.width - radius * 2) + radius;
-                const y = Math.random() * (canvas.height - radius * 2) + radius;
-                const dx = (Math.random() - 0.5) * 0.5;
-                const dy = (Math.random() - 0.5) * 0.5;
-                particles.push(new Particle(x, y, dx, dy, radius));
             }
         }
 
-        // Animationsschleife für den Hintergrund
-        function animateCanvas() {
-            requestAnimationFrame(animateCanvas);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
+        // Passt die Canvas-Größe an die Fenstergröße an
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            createParticles(); // Partikel bei jeder Größenänderung neu erstellen
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // Erstellt die Partikel
+        function createParticles() {
+            particles = [];
+            const numberOfParticles = (canvas.width * canvas.height) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particles.push(new Particle());
+            }
         }
 
-        // Event-Listener für Größenänderung und Mausbewegung
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
-        });
+        // Haupt-Animations-Loop
+        function backgroundAnimation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Linien zwischen nahen Partikeln zeichnen
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    const dx = particles[a].x - particles[b].x;
+                    const dy = particles[a].y - particles[b].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
 
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = rgba(255, 51, 51, ${ 1 - distance / 120 });
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Partikel aktualisieren und zeichnen
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(backgroundAnimation);
+        }
 
         // Startet die Animation und die Initialisierung der Nachrichten
-        window.onload = function() {
+        window.onload = function () {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            initParticles();
-            animateCanvas();
+            resizeCanvas(); // Ruft die Größenanpassung auf
+            backgroundAnimation(); // Startet die Hintergrundanimation
             // Startet die Reihen-Animation, nachdem alles geladen ist
             applyRowAnimation(0.8);
         };
@@ -617,7 +619,7 @@
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
                 row.classList.remove('animated');
-                void row.offsetWidth; 
+                void row.offsetWidth;
                 row.classList.add('animated');
                 row.style.animationDelay = (delay + index * 0.05) + 's';
             });
@@ -632,7 +634,7 @@
         headers.forEach(header => {
             header.addEventListener('click', () => {
                 const columnId = header.id;
-                
+
                 if (sortedColumnId === columnId) {
                     sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
                 } else {
@@ -641,7 +643,7 @@
                         document.getElementById(sortedColumnId).classList.remove('sorted');
                     }
                 }
-                
+
                 sortedColumnId = columnId;
                 header.classList.add('sorted');
 
@@ -675,7 +677,7 @@
                     tableBody.removeChild(tableBody.firstChild);
                 }
                 sortedRows.forEach(row => tableBody.appendChild(row));
-                
+
                 applyRowAnimation(0);
 
                 document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
@@ -684,7 +686,6 @@
                 }
             });
         });
-
     </script>
 </body>
 </html>
