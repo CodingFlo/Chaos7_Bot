@@ -120,8 +120,6 @@
         }
 
         thead {
-            z-index: 10;
-            background-color: #800000;
             border-top-left-radius: 7px;
             border-top-right-radius: 7px;
         }
@@ -132,7 +130,14 @@
             display: table-row;
         }
 
-        thead tr:not() {}
+        thead tr th {
+            background-color: #800000;
+        }
+
+        .sorted,
+        thead tr th:hover {
+            background-color: #ff3333;
+        }
 
         th,
         td {
@@ -257,10 +262,6 @@
 
             th:hover {
                 background-color: #220000;
-            }
-
-            th.sorted {
-                background-color: #ff3333;
             }
 
             .sort-icon {
