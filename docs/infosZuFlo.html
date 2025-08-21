@@ -164,6 +164,7 @@
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
+            flex-direction: column-reverse;
         }
 
         .social-links a {
@@ -199,15 +200,14 @@
 
         /* Spezifische Styling-Anpassungen für das X/Twitter-Icon */
         .social-links .x-icon-container {
-            width: 28px;
-            /* Passt die Größe an das neue Icon-Styling an */
-            height: 28px;
+            width: 30px;
+            aspect-ratio: 1/1;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
             background-image: radial-gradient(circle, white, white);
-            background-size: 80% 80%;
+            background-size: 75% 75%;
             background-repeat: no-repeat;
             background-position: center;
             border-radius: 50%;
@@ -265,36 +265,45 @@
     <canvas id="background-canvas"></canvas>
 
     <div class="header-container">
-        <!-- Platzhalter für Ihr Profilbild. Ersetzen Sie die URL. -->
-        <img src="https://placehold.co/80x80/282c34/ff3333?text=Profil" alt="Streamer Profilbild" class="profile-pic"
-            style="animation-delay: 0.2s;">
-        <h1 style="animation-delay: 0.4s;">Mein Streamplan</h1>
+        <h1 style="animation-delay: 0.4s;">Das ist Flo</h1>
     </div>
 
     <div class="content-container">
 
         <!-- Streamplan-Sektion -->
         <div class="info-card" style="animation-delay: 0.8s;">
-            <h2>Wann streame ich?</h2>
+            <h2>Mein Streamplan</h2>
             <div class="schedule-entry">
-                <span class="schedule-day">Montag</span>
-                <span class="schedule-game">Placeholder-Spiel 1</span>
+                <span class="schedule-day">Montag (Spontan)</span>
+                <span class="schedule-game">?</span>
             </div>
             <div class="schedule-entry">
-                <span class="schedule-day">Dienstag</span>
-                <span class="schedule-game">Placeholder-Spiel 2</span>
+                <span class="schedule-day">Dienstag (Spontan)</span>
+                <span class="schedule-game">?</span>
             </div>
             <div class="schedule-entry">
-                <span class="schedule-day">Mittwoch</span>
-                <span class="schedule-game">Just Chatting</span>
+                <span class="schedule-day">Mittwoch (Spontan)</span>
+                <span class="schedule-game">?</span>
             </div>
             <div class="schedule-entry">
-                <span class="schedule-day">Donnerstag</span>
-                <span class="schedule-game">Placeholder-Spiel 3</span>
+                <span class="schedule-day">Donnerstag (Spontan)</span>
+                <span class="schedule-game">?</span>
             </div>
             <div class="schedule-entry">
-                <span class="schedule-day">Freitag</span>
-                <span class="schedule-game">Community Games</span>
+                <span class="schedule-day">Freitag (Start zwischen 20 und 22Uhr)</span>
+                <span class="schedule-game">Pokemon Karmesin DLC</span>
+            </div>
+            <div class="schedule-entry">
+                <span class="schedule-day">Samstag (Start zwischen 20 und 22Uhr)</span>
+                <span class="schedule-game">Mario und Luigi: Brothership</span>
+            </div>
+            <div class="schedule-entry">
+                <span class="schedule-day">Sonntag (Start zwischen 20 und 22Uhr)</span>
+                <span class="schedule-game">TOTK</span>
+            </div>
+
+            <div>
+
             </div>
         </div>
 
