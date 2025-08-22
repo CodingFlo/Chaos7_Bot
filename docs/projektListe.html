@@ -187,7 +187,6 @@
             background: rgba(30, 30, 30, 0.95);
             /* oder jede gewünschte Farbe */
             backdrop-filter: blur(5px);
-            /* optional, schöner Effekt */
             transition: 0.3s ease;
         }
 
@@ -406,6 +405,17 @@
     </section>
 
     <script>
+        const toc = document.querySelector('.toc');
+        const tocOffset = toc.offsetTop;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY >= tocOffset) {
+                toc.classList.add('sticky-active');
+            } else {
+                toc.classList.remove('sticky-active');
+            }
+        });
+
         /* ----- Animated background ----- */
         const canvas = document.getElementById('background-canvas');
         const ctx = canvas.getContext('2d');
