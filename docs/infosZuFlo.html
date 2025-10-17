@@ -203,7 +203,7 @@
             justify-content: center;
             padding: 0;
             background-image: radial-gradient(circle, white, white);
-           background-size: 68% 68%;
+            background-size: 68% 68%;
             background-repeat: no-repeat;
             background-position: center;
             border-radius: 50%;
@@ -274,6 +274,11 @@
             object-fit: cover;
         }
 
+        .profile-pic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--infoCardBorderHover);
+        }
+
         @media (max-width: 600px) {
             .profile-pic {
                 width: 50px;
@@ -320,6 +325,14 @@
                 verschiedene Spiele. Hier findest du alle wichtigen Infos zu meinem Streamplan, meinen
                 Social-Media-Kanälen und mehr. Ich freue mich darauf, dich in meinem Stream zu sehen!
             </p>
+        </div>
+
+        <div class="info-card" style="animation-delay: 0.4s;">
+            <h2>Mein Twitch bot</h2>
+            <p>
+                Du interessiertst dich für meinen selbst erstellten Twitch-Bot? Hier erhälst du alle wichtigen Details.
+            </p>
+            <p style="text-align: center;"><a href="index.html" class="project-link">Alle Infos zum Bot</a></p>
         </div>
 
         <!-- Social-Media-Sektion  -->
