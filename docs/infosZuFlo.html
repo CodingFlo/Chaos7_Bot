@@ -5,15 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streamplan & Social Media</title>
+
+    <link rel="stylesheet" href="colors.css" />
     <style>
-        /* Import der Orbitron-Schriftart für Überschriften */
+        /* Import der Orbitron- und Inter-Schriftarten */
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
         body {
             font-family: 'Inter', Arial, sans-serif;
-            background-color: #000000;
-            color: #d0d0d0;
+            background-color: var(--color-background);
+            color: var(--color-text);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -24,7 +26,7 @@
             box-sizing: border-box;
         }
 
-        /* Das Canvas-Element für die Animation */
+        /* Canvas-Hintergrund */
         #background-canvas {
             position: fixed;
             top: 0;
@@ -34,7 +36,7 @@
             z-index: -1;
         }
 
-        /* VERKÜRZTE ANIMATIONSZEITEN */
+        /* Animationen */
         @keyframes fadeInFromTop {
             from {
                 opacity: 0;
@@ -61,11 +63,11 @@
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            color: #ff3333;
-            margin: 0;
+            color: var(--infoCardBorder);
             text-align: center;
+            margin: 0;
             opacity: 0;
-            /* Animation angepasst */
+            width: 100%;
             animation: fadeInFromTop 0.5s ease-out forwards;
             z-index: 2;
         }
@@ -74,9 +76,8 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 3px solid #ff3333;
-            box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
-            /* Animation angepasst */
+            border: 3px solid var(--infoCardBorder);
+            box-shadow: 0 0 10px var(--shadow-color);
             animation: fadeInFromTop 0.5s ease-out forwards;
             opacity: 0;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -84,7 +85,7 @@
 
         .profile-pic:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.8);
+            box-shadow: 0 0 15px var(--shadow-color-strong);
         }
 
         .content-container {
@@ -96,27 +97,26 @@
         }
 
         .info-card {
-            background-color: #161616;
+            background-color: var(--infoCardBackground);
             border-radius: 8px;
             padding: 30px;
-            border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            border: 1px solid var(--infoCardBorder);
+            box-shadow: 0 0 15px var(--shadow-color);
             opacity: 0;
-            /* Animation angepasst */
             animation: slideInUp 0.6s ease-out forwards;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .info-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 25px rgba(255, 51, 51, 0.7);
+            box-shadow: 0 5px 25px var(--shadow-color-strong);
         }
 
         .info-card h2,
         .info-card h3 {
             font-family: 'Orbitron', sans-serif;
-            color: #ff3333;
-            border-bottom: 1px solid #ff3333;
+            color: var(--infoCardBorder);
+            border-bottom: 1px solid var(--infoCardBorder);
             padding-bottom: 8px;
             margin-top: 0;
             margin-bottom: 15px;
@@ -124,7 +124,7 @@
 
         .faq-question {
             font-weight: bold;
-            color: #ff3333;
+            color: var(--infoCardBorder);
             margin-top: 20px;
         }
 
@@ -133,16 +133,13 @@
             margin: 0;
             font-size: 1.15em;
             line-height: 1.7;
-            color: #d0d0d0;
+            color: var(--color-text);
         }
 
-        .info-card a {
-            color: #ff6666;
-            text-decoration: none;
-            transition: color 0.4s ease, text-shadow 0.4s ease;
-
+        .info-card a,
+        .project-link {
             display: inline-block;
-            background-color: #ff3333;
+            background-color: var(--infoCardBorder);
             color: #fff;
             padding: 10px 20px;
             border-radius: 20px;
@@ -153,9 +150,15 @@
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
+        .info-card a:hover,
+        .project-link:hover {
+            background-color: var(--infoCardBorderHover);
+            transform: scale(1.05);
+        }
+
         a:hover {
-            color: #ff9999;
-            text-shadow: 0 0 5px #ff6666;
+            color: var(--link-hover-color);
+            text-shadow: 0 0 5px var(--link-hover-shadow);
         }
 
         .social-links {
@@ -171,20 +174,19 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #d0d0d0;
-            background-color: #2a2a2a;
+            color: var(--color-text);
+            background-color: var(--social-bg);
             padding: 12px 24px;
             border-radius: 30px;
-            border: 1px solid #ff3333;
+            border: 1px solid var(--infoCardBorder);
             transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             white-space: nowrap;
-            text-shadow: none;
         }
 
         .social-links a:hover {
-            background-color: #3d3d3d;
+            background-color: var(--social-bg-hover);
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.4);
+            box-shadow: 0 4px 15px var(--shadow-color);
         }
 
         .social-links img {
@@ -201,16 +203,10 @@
             justify-content: center;
             padding: 0;
             background-image: radial-gradient(circle, white, white);
-            background-size: 75% 75%;
+           background-size: 68% 68%;
             background-repeat: no-repeat;
             background-position: center;
             border-radius: 50%;
-        }
-
-        .social-links .x-icon-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
         }
 
         .schedule-entry {
@@ -218,130 +214,34 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 51, 51, 0.2);
+            border-bottom: 1px solid var(--shadow-divider);
             transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .schedule-entry:last-child {
-            border-bottom: none;
         }
 
         .schedule-entry:hover {
             transform: scale(1.02);
-            background-color: #202020;
+            background-color: var(--schedule-hover-bg);
             border-radius: 4px;
         }
 
         .schedule-day {
             font-weight: bold;
-            color: #ff6666;
+            color: var(--link-color);
         }
 
         .schedule-game {
-            color: #d0d0d0;
+            color: var(--color-text);
             text-align: right;
         }
 
-        .schedule-ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .schedule-ul li {
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255, 51, 51, 0.1);
-            transition: color 0.3s ease;
-        }
-
-        .schedule-ul li:hover {
-            color: #ff3333;
-        }
-
-        .schedule-ul li:last-child {
-            border-bottom: none;
-        }
-
-        /* Neue Klasse für die Trennlinie */
         .divider {
             border: 0;
             height: 1px;
-            background-color: #ff3333;
+            background-color: var(--infoCardBorder);
             opacity: 0;
             margin: 25px 0;
-            /* Animation angepasst */
             animation: slideInUp 0.7s ease-out forwards;
-            box-shadow: 0 1px 5px rgba(255, 51, 51, 0.3);
-        }
-
-        .gameInfoText {
-            margin-top: 1em;
-            margin-bottom: 1em;
-        }
-
-        .project-link {
-            display: inline-block;
-            background-color: #ff3333;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 15px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .project-link:hover {
-            background-color: #ff6666;
-            transform: scale(1.05);
-        }
-
-        .profile-pic {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid #ff3333;
-            box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
-            /* Animation angepasst */
-            animation: fadeInFromTop 0.8s ease-out forwards;
-            opacity: 0;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .profile-pic:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.8);
-        }
-
-        /* Responsive Anpassungen */
-        @media (max-width: 650px) {
-            .header-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .social-links a {
-                padding: 10px 18px;
-            }
-
-            .social-links img {
-                width: 24px;
-                height: 24px;
-            }
-
-            .schedule-entry {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .schedule-day,
-            .schedule-game {
-                width: 100%;
-                text-align: left;
-                word-break: break-word;
-                inline-size: fit-content;
-                overflow-wrap: break-word;
-            }
+            box-shadow: 0 1px 5px var(--shadow-divider);
         }
 
         .header-wrapper {
@@ -351,13 +251,11 @@
 
         .header-wrapper h1 {
             font-family: 'Orbitron', sans-serif;
-            color: #ff3333;
+            color: var(--infoCardBorder);
             font-size: 3rem;
             margin-top: 20px;
-            width: 100%;
         }
 
-        /* Bilder halbkreisförmig über der Überschrift */
         .profile-pics {
             display: flex;
             justify-content: center;
@@ -371,13 +269,11 @@
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            border: 3px solid #ff3333;
-            box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+            border: 3px solid var(--infoCardBorder);
+            box-shadow: 0 0 10px var(--shadow-color);
             object-fit: cover;
-            flex-shrink: 0;
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
             .profile-pic {
                 width: 50px;
@@ -389,6 +285,8 @@
             }
         }
     </style>
+
+
 </head>
 
 <body>

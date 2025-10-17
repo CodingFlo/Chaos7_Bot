@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuschauer-Aktivitätsranking</title>
+
+    <link rel="stylesheet" href="colors.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -46,8 +48,8 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #000000;
-            color: #d0d0d0;
+            background-color: var(--color-background);
+            color: var(--color-text);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -58,7 +60,6 @@
             box-sizing: border-box;
         }
 
-        /* Styles für den Hintergrund */
         #background-canvas {
             position: fixed;
             top: 0;
@@ -70,7 +71,7 @@
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            color: #ff3333;
+            color: var(--accent);
             text-shadow: none;
             margin: 0 0 20px 0;
             opacity: 0;
@@ -94,11 +95,10 @@
         .info-box {
             font-size: 1.1em;
             font-weight: bold;
-            color: #d0d0d0;
-            background-color: rgba(22, 22, 22, 0.7);
-            /* Slightly transparent background */
-            border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.8), 0 0 5px rgba(255, 51, 51, 0.6);
+            color: var(--color-text);
+            background-color: var(--infoCardBackground);
+            border: 1px solid var(--infoCardBorder);
+            box-shadow: 0 0 15px var(--shadow-color), 0 0 5px var(--shadow-divider);
             border-radius: 12px;
             padding: 15px 25px;
             text-align: center;
@@ -110,7 +110,7 @@
         .info-box h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.2em;
-            color: #ff3333;
+            color: var(--accent);
             margin: 0 0 10px 0;
         }
 
@@ -118,12 +118,12 @@
             width: 100%;
             max-width: 800px;
             border-radius: 8px;
-            border: 1px solid #ff3333;
+            border: 1px solid var(--infoCardBorder);
             opacity: 0;
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards;
             z-index: 2;
-            background-color: #161616;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+            background-color: var(--infoCardBackground);
+            box-shadow: 0 0 20px var(--shadow-color);
             box-sizing: border-box;
         }
 
@@ -152,12 +152,12 @@
         }
 
         thead tr th {
-            background-color: #800000;
+            background-color: var(--infoCardBorder);
             transition: 250ms;
         }
 
         thead tr th:hover {
-            background-color: #ff3333;
+            background-color: var(--infoCardBorderHover);
             transition: 250ms;
         }
 
@@ -166,7 +166,7 @@
             padding: 18px 20px;
             text-align: left;
             color: #ffffff;
-            border-bottom: 1px solid #ff3333;
+            border-bottom: 1px solid var(--infoCardBorder);
         }
 
         th {
@@ -175,10 +175,9 @@
             user-select: none;
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-right: 1px solid #ff3333;
+            border-right: 1px solid var(--infoCardBorder);
             text-shadow: none;
             display: table-cell;
-            /* Default display for desktop */
             position: relative;
         }
 
@@ -192,11 +191,11 @@
         }
 
         th:hover {
-            background-color: #990000;
+            background-color: var(--infoCardBorderHover);
         }
 
         th.sorted {
-            background-color: #990000;
+            background-color: var(--infoCardBorderHover);
         }
 
         .sort-icon {
@@ -208,8 +207,8 @@
         }
 
         tbody tr:hover {
-            background-color: #220000;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+            background-color: rgba(0, 0, 50, 0.3);
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.6);
             transform: scale(1.01);
             transition: all 0.2s ease-in-out;
         }
@@ -247,15 +246,12 @@
             }
 
             .command-table {
-                background-color: transparent;
                 display: block;
             }
 
             thead {
                 display: block;
                 margin-bottom: 15px;
-                border: none;
-                background-color: transparent;
             }
 
             thead tr {
@@ -268,45 +264,33 @@
             }
 
             thead tr th {
-                background-color: rgba(22, 22, 22, 0.7);
+                background-color: var(--infoCardBackground);
                 transition: 250ms;
-            }
-
-            th {
                 display: block;
-                /* Each th is a separate button */
                 text-align: center;
-                /* Centers the text */
-                padding: 12px 0px;
-                border: 1px solid #ff3333;
-                /* Border for the block */
+                padding: 12px 0;
+                border: 1px solid var(--infoCardBorder);
                 border-radius: 8px;
-                /* Rounded corners for the buttons */
-                background-color: #161616;
                 color: #ffffff;
                 font-size: 0.8em;
-                box-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
-                border-right: 1px solid #ff3333;
-                box-sizing: border-box;
+                box-shadow: 0 0 10px var(--shadow-color);
                 width: 100%;
             }
 
             th:first-child {
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
+                border-radius: 8px 8px 0 0;
             }
 
             th:last-child {
-                border-bottom-left-radius: 8px;
-                border-bottom-right-radius: 8px;
+                border-radius: 0 0 8px 8px;
             }
 
             th:hover {
-                background-color: #220000;
+                background-color: var(--infoCardBorderHover);
             }
 
             th.sorted {
-                background-color: #ff3333;
+                background-color: var(--infoCardBorderHover);
             }
 
             .sort-icon {
@@ -318,10 +302,8 @@
                 display: flex;
                 flex-direction: column;
                 gap: 15px;
-                /* Added gap for spacing between rows */
                 border: none;
                 box-shadow: none;
-                background-color: transparent;
                 padding: 20px;
             }
 
@@ -331,35 +313,33 @@
                 grid-template-rows: auto auto;
                 gap: 10px;
                 margin-bottom: 0;
-                border: 1px solid #ff3333;
+                border: 1px solid var(--infoCardBorder);
                 border-radius: 8px;
-                box-shadow: 0 0 10px rgba(255, 51, 51, 0.6), inset 0 0 10px rgba(255, 51, 51, 0.6);
-                background-color: #161616;
+                box-shadow: 0 0 10px var(--shadow-color), inset 0 0 10px var(--shadow-color);
+                background-color: var(--infoCardBackground);
                 padding: 20px;
                 transition: none;
                 animation: slideInUp 0.3s ease-out forwards;
-                box-sizing: border-box;
             }
 
             tr:hover {
+                box-shadow: 0 0 10px var(--shadow-color-strong), inset 0 0 10px var(--shadow-color-strong);
                 transform: none;
-                box-shadow: 0 0 10px rgba(255, 51, 51, 0.8), inset 0 0 10px rgba(255, 51, 51, 0.8);
             }
 
             .rank-td {
                 grid-area: 1 / 1 / 2 / 2;
                 font-weight: bold;
                 font-size: 1.1em;
-                /* Reduced font size as requested */
-                color: #ff3333;
+                color: var(--accent);
             }
 
             .username-td {
                 grid-area: 1 / 2 / 2 / 3;
                 font-weight: bold;
                 font-size: 1.1em;
-                /* Reduced font size as requested */
                 color: #ffffff;
+                margin-bottom: 5px;
             }
 
             .activity-td {
@@ -383,28 +363,13 @@
                 display: block;
                 font-weight: bold;
                 text-transform: uppercase;
-                color: #ff3333;
+                color: var(--accent);
                 margin-bottom: 2px;
                 font-size: 0.8em;
             }
 
-            tbody tr {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-evenly;
-            }
-
-            .rank-td,
-            .username-td {
-                flex-basis: 100%;
-            }
-
-            .username-td {
-                margin-bottom: 5px;
-            }
-
-            .username-td::before,
-            .rank-td::before {
+            .rank-td::before,
+            .username-td::before {
                 display: none;
             }
         }

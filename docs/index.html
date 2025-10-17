@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Über den Twitch Bot</title>
+
+    <link rel="stylesheet" href="colors.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
         /* Wichtige Änderungen für den Hintergrund */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #000000;
-            color: #d0d0d0;
+            background-color: var(--color-background);
+            color: var(--color-text);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -30,7 +32,6 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* Stellt sicher, dass der Canvas hinter allen anderen Elementen liegt */
         }
 
         /* Vorhandene Styles */
@@ -60,11 +61,10 @@
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            color: #ff3333;
+            color: var(--infoCardBorder);
             margin: 0;
             text-align: center;
             opacity: 0;
-            /* Animation angepasst */
             animation: fadeInFromTop 0.8s ease-out forwards;
             z-index: 2;
         }
@@ -81,9 +81,8 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 3px solid #ff3333;
-            box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
-            /* Animation angepasst */
+            border: 3px solid var(--infoCardBorder);
+            box-shadow: 0 0 10px var(--shadow-color);
             animation: fadeInFromTop 0.8s ease-out forwards;
             opacity: 0;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -91,7 +90,7 @@
 
         .profile-pic:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.8);
+            box-shadow: 0 0 15px var(--infoCardBorderHover);
         }
 
         .content-container {
@@ -103,27 +102,26 @@
         }
 
         .info-card {
-            background-color: #161616;
+            background-color: var(--infoCardBackground);
             border-radius: 8px;
             padding: 30px;
-            border: 1px solid #ff3333;
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            border: 1px solid var(--infoCardBorder);
+            box-shadow: 0 0 15px var(--shadow-color);
             opacity: 0;
-            /* Animation angepasst */
             animation: slideInUp 0.7s ease-out forwards;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .info-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 25px rgba(255, 51, 51, 0.7);
+            box-shadow: 0 5px 25px var(--shadow-color-strong);
         }
 
         .info-card h2,
         .info-card h3 {
             font-family: 'Orbitron', sans-serif;
-            color: #ff3333;
-            border-bottom: 1px solid #ff3333;
+            color: var(--infoCardBorder);
+            border-bottom: 1px solid var(--infoCardBorder);
             padding-bottom: 8px;
             margin-top: 0;
             margin-bottom: 15px;
@@ -131,7 +129,7 @@
 
         .faq-question {
             font-weight: bold;
-            color: #ff3333;
+            color: var(--infoCardBorder);
             margin-top: 20px;
         }
 
@@ -139,27 +137,25 @@
             margin: 0;
             font-size: 1.15em;
             line-height: 1.7;
-            color: #d0d0d0;
+            color: var(--color-text);
         }
 
         hr.divider {
             border: 0;
             height: 1px;
-            background-color: #ff3333;
+            background-color: var(--infoCardBorder);
             opacity: 0;
             margin: 25px 0;
-            /* Animation angepasst */
             animation: slideInUp 0.7s ease-out forwards;
-            box-shadow: 0 1px 5px rgba(255, 51, 51, 0.3);
+            box-shadow: 0 1px 5px var(--shadow-divider);
         }
 
         .info-card a {
-            color: #ff6666;
+            color: var(--link-color);
             text-decoration: none;
             transition: color 0.4s ease, text-shadow 0.4s ease;
-
             display: inline-block;
-            background-color: #ff3333;
+            background-color: var(--infoCardBorder);
             color: #fff;
             padding: 10px 20px;
             border-radius: 20px;
@@ -171,12 +167,13 @@
         }
 
         .info-card a:hover {
-            color: #ff9999;
-            text-shadow: 0 0 5px #ff6666;
+            color: var(--link-hover-color);
+            text-shadow: 0 0 5px var(--link-hover-shadow);
             transform: scale(1.05);
             transition: 250ms;
         }
     </style>
+
 </head>
 
 <body>

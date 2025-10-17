@@ -5,32 +5,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flos Projektliste</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;600&display=swap"
         rel="stylesheet" />
-    <style>
-        /* ---------- Base ---------- */
-        :root {
-            --accent: #ff4d4d;
-            --accent-2: #ff6666;
-            --card-bg: rgba(30, 30, 30, 0.9);
-            --animation-speed: 0.05s;
-        }
 
+    <link rel="stylesheet" href="colors.css" />
+    <style>
         * {
             box-sizing: border-box;
         }
 
         html {
             scroll-behavior: smooth;
-            /* Sanfter Bildlauf zu den Ankern */
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background: #000;
-            color: #fff;
+            background: var(--color-background);
+            color: var(--color-text);
             overflow-x: hidden;
         }
 
@@ -79,7 +73,6 @@
             animation-delay: var(--delay, .2s);
         }
 
-        /* Dynamisches Staggering für die Liste */
         .stagger li {
             opacity: 0;
             transform: translateY(10px);
@@ -132,7 +125,8 @@
         }
 
         .sort-button:hover {
-            background: rgba(255, 77, 77, 0.1);
+            background: rgba(255, 51, 51, 0.1);
+            /* optional: kann auf var(--accent) angepasst werden */
         }
 
         .sort-button:active {
@@ -157,16 +151,16 @@
 
         li {
             background: var(--card-bg);
-            border: 1px solid #333;
+            border: 1px solid var(--infoCardBorder);
             border-radius: 10px;
             padding: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .5);
+            box-shadow: 0 4px 10px var(--shadow-color);
             transition: transform .2s ease, box-shadow .2s ease;
         }
 
         li:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(255, 77, 77, .4);
+            box-shadow: 0 6px 15px var(--shadow-color-strong);
         }
 
         /* Inhaltsverzeichnis-Design */
@@ -174,8 +168,7 @@
             max-width: 900px;
             margin: 30px auto;
             padding: 10px 20px;
-            border-bottom: 1px solid #333;
-            /* Dezente Trennlinie */
+            border-bottom: 1px solid var(--shadow-divider);
             text-align: center;
             position: sticky;
             top: 0;
@@ -184,15 +177,13 @@
         }
 
         .toc.sticky-active {
-            background: rgba(30, 30, 30, 0.95);
-            /* oder jede gewünschte Farbe */
+            background: var(--card-bg);
             backdrop-filter: blur(5px);
             transition: 0.3s ease;
         }
 
         .toc h3 {
             display: none;
-            /* Überschrift verstecken */
         }
 
         .toc-links {
@@ -209,14 +200,13 @@
             .toc-links {
                 justify-content: flex-start;
                 overflow-x: auto;
-                /* Horizontal scrollbar for mobile */
                 -webkit-overflow-scrolling: touch;
             }
         }
 
         .toc-links a {
             text-decoration: none;
-            color: #ccc;
+            color: var(--color-text);
             font-weight: 600;
             position: relative;
             padding-bottom: 5px;
@@ -244,6 +234,7 @@
             transform: scaleX(1);
         }
     </style>
+
 </head>
 
 <body>
@@ -405,6 +396,50 @@
     </section>
 
     <script>
+        /**
+         * Sortiert eine Liste basierend auf den Listenelementen.
+         * Der Sortierbutton toggelt zwischen aufsteigender und absteigender Reihenfolge.
+         * @param {HTMLElement} button - Der geklickte Sortier-Button.
+         */
+        function sortList(button) {
+            const list = button.closest('section').querySelector('ul');
+            const items = Array.from(list.children);
+            const sortDirection = button.dataset.sortDirection === 'desc' ? 'asc' : 'desc';
+
+            // SVG Icon an Sortierrichtung anpassen
+            const icon = button.querySelector('.sort-icon');
+            if (sortDirection === 'asc') {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+
+            // Elemente sortieren
+            items.sort((a, b) => {
+                const textA = a.textContent.trim().toUpperCase();
+                const textB = b.textContent.trim().toUpperCase();
+                if (textA < textB) return sortDirection === 'asc' ? -1 : 1;
+                if (textA > textB) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // Vorhandene Listenelemente entfernen
+            while (list.firstChild) {
+                list.removeChild(list.firstChild);
+            }
+
+            // Sortierte Elemente wieder hinzufügen
+            items.forEach(item => {
+                list.appendChild(item);
+            });
+
+            // Den --index für die Stagger-Animation neu setzen
+            updateStaggerIndex(list);
+
+            // Sortierrichtung aktualisieren
+            button.dataset.sortDirection = sortDirection;
+        }
+
         /**
          * Aktualisiert die CSS-Variable --index für jedes Listenelement,
          * um sicherzustellen, dass die Stagger-Animation auch nach dem Sortieren korrekt funktioniert.

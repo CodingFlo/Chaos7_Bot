@@ -1,53 +1,49 @@
-// JavaScript für den animierten Hintergrund und die dynamischen Inhalte
+// JavaScript für den animierten Hintergrund
 const canvas = document.getElementById('background-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
-let mouse = {
-    x: undefined,
-    y: undefined
-};
 
-// Partikel-Klasse für die Animation
+// CSS-Variablen aus dem :root holen
+function getCSSVariable(varName) {
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+}
+
+// Farben aus CSS-Variablen lesen
+const particleColor = getCSSVariable('--canvas-color');
+
 class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2.5 + 1; // Größe der Partikel
-        this.speedX = Math.random() * 1 - 0.5; // Geschwindigkeit in X-Richtung
-        this.speedY = Math.random() * 1 - 0.5; // Geschwindigkeit in Y-Richtung
+        this.size = Math.random() * 2.5 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+
+        // Farbe aus CSS-Variable verwenden
+        this.color = particleColor;
     }
 
-    // Methode zum Bewegen der Partikel
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
-
-        // Partikel am Rand umkehren
-        if (this.x < 0 || this.x > canvas.width) {
-            this.speedX = -this.speedX;
-        }
-        if (this.y < 0 || this.y > canvas.height) {
-            this.speedY = -this.speedY;
-        }
+        if (this.x < 0 || this.x > canvas.width) this.speedX = -this.speedX;
+        if (this.y < 0 || this.y > canvas.height) this.speedY = -this.speedY;
     }
 
-    // Methode zum Zeichnen der Partikel
     draw() {
-        ctx.fillStyle = '#ff3333';
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
     }
 }
 
-// Passt die Canvas-Größe an die Fenstergröße an
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    createParticles(); // Partikel bei jeder Größenänderung neu erstellen
+    createParticles();
 }
 
-// Erstellt die Partikel
 function createParticles() {
     particles = [];
     const numberOfParticles = (canvas.width * canvas.height) / 9000;
@@ -56,19 +52,25 @@ function createParticles() {
     }
 }
 
-// Haupt-Animations-Loop
 function backgroundAnimation() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Linien zwischen nahen Partikeln zeichnen
+
     for (let a = 0; a < particles.length; a++) {
-        for (let b = a; b < particles.length; b++) {
+        for (let b = a + 1; b < particles.length; b++) {
             const dx = particles[a].x - particles[b].x;
             const dy = particles[a].y - particles[b].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < 120) {
+                const colorA = hexToRgb(particles[a].color);
+                const colorB = hexToRgb(particles[b].color);
+                const r = Math.round((colorA.r + colorB.r) / 2);
+                const g = Math.round((colorA.g + colorB.g) / 2);
+                const bColor = Math.round((colorA.b + colorB.b) / 2);
+                const alpha = 1 - distance / 120;
+
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(255, 51, 51, ${1 - distance / 120})`;
+                ctx.strokeStyle = `rgba(${r}, ${g}, ${bColor}, ${alpha})`;
                 ctx.lineWidth = 1;
                 ctx.moveTo(particles[a].x, particles[a].y);
                 ctx.lineTo(particles[b].x, particles[b].y);
@@ -77,7 +79,6 @@ function backgroundAnimation() {
         }
     }
 
-    // Partikel aktualisieren und zeichnen
     particles.forEach(p => {
         p.update();
         p.draw();
@@ -86,4 +87,17 @@ function backgroundAnimation() {
     requestAnimationFrame(backgroundAnimation);
 }
 
+function hexToRgb(hex) {
+    hex = hex.replace('#', '');
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r, g, b };
+}
+
 window.addEventListener('resize', resizeCanvas);
+
+// Start
+resizeCanvas();
+backgroundAnimation();

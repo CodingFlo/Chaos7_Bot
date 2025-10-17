@@ -6,22 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIPs & Moderatoren</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Übernehme die Schriftart aus der index.html -->
+
+    <!-- Dein Farb-Root -->
+    <link rel="stylesheet" href="colors.css" />
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            color: #ffffff;
+            color: var(--color-text);
             padding: 2rem 1rem;
             box-sizing: border-box;
-            background-color: #000000;
+            background-color: var(--color-background);
             position: relative;
-            /* Entfernt overflow: hidden, um das Scrollen zu ermöglichen */
-            /* overflow: hidden; */
         }
 
-        /* Hinzugefügte Styles für den Hintergrund */
+        /* Hintergrund-Canvas */
         #background-canvas {
             position: fixed;
             top: 0;
@@ -36,25 +37,22 @@
             font-family: 'Orbitron', sans-serif;
         }
 
+        /* Container für beide Karten */
         .container {
             max-width: 700px;
             width: 100%;
-            background: rgba(24, 24, 27, 0.6);
-            border: 2px solid #ff3333;
-            /* Roter Rand */
-            box-shadow: 0 0 40px rgba(255, 51, 51, 0.4);
-            /* Roter Schatten */
-            border-radius: 2rem;
             padding: 2.5rem;
+            border-radius: 2rem;
+            background-color: var(--infoCardBackground);
+            border: 2px solid var(--infoCardBorder);
+            box-shadow: 0 0 40px var(--shadow-color);
             animation: fadeIn 1s ease-out forwards;
             position: relative;
-            /* Stellt sicher, dass der Container über dem Canvas liegt */
             z-index: 1;
         }
 
         .glow-text {
-            text-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333;
-            /* Roter Glüheffekt */
+            text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent-2);
         }
 
         @keyframes fadeIn {
@@ -69,134 +67,103 @@
             }
         }
 
-        @keyframes slide-in {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
+        .card {
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 1px solid var(--infoCardBorder);
+            background-color: var(--infoCardBackground);
+            box-shadow: 0 0 15px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px var(--shadow-color-strong);
+        }
+
+        .card-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--infoCardBorder);
+            padding-bottom: 0.5rem;
+            color: var(--accent);
         }
 
         ul li {
-            animation-delay: var(--delay);
-            animation-fill-mode: both;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            background: var(--card-bg);
+            box-shadow: 0 0 8px var(--shadow-color);
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
         }
 
-        .list-container li:nth-child(1) {
-            --delay: 0.1s;
+        ul li:hover {
+            background: var(--infoCardBorderHover);
+            box-shadow: 0 0 15px var(--shadow-color-strong);
+            color: var(--link-hover-color);
         }
 
-        .list-container li:nth-child(2) {
-            --delay: 0.2s;
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .list-container li:nth-child(3) {
-            --delay: 0.3s;
-        }
-
-        .list-container li:nth-child(4) {
-            --delay: 0.4s;
-        }
-
-        .list-container li:nth-child(5) {
-            --delay: 0.5s;
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
         }
     </style>
 </head>
 
 <body>
-    <!-- Canvas für den animierten Hintergrund -->
     <canvas id="background-canvas"></canvas>
 
     <div class="container mx-auto">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-center mb-6 glow-text">VIPs & Moderatoren</h1>
-        <p class="text-center text-gray-400 mb-8">Stand: 16.10.2025 um 13:41:25</p>
+        <p class="text-center mb-8">Stand: 16.10.2025 um 13:41:25</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 list-container">
-            <!-- Mods Liste ist jetzt links und hat die roten Farben -->
-            <div class="p-4 bg-gray-900/40 rounded-xl border border-red-600 shadow-inner shadow-red-900">
-                <h2 class="text-2xl font-bold text-center text-red-400 mb-4 border-b-2 border-red-500 pb-2">
-                    Moderatoren
-                </h2>
-                <ul class="space-y-3">
-                    <li
-                        class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">10meisterbaelle</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">chaos7_bot</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">kall_me_kat_</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">nintentony</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">sery_bot</span>
-                    </li>
+        <div class="cards-grid">
+            <!-- Moderatoren-Karte -->
+            <div class="card">
+                <h2 class="card-header">Moderatoren</h2>
+                <ul>
+                    <li>10meisterbaelle</li>
+                    <li>chaos7_bot</li>
+                    <li>kall_me_kat_</li>
+                    <li>nintentony</li>
+                    <li>sery_bot</li>
                 </ul>
             </div>
 
-            <!-- VIPs Liste ist jetzt rechts und hat die rosa-farbenen Farben -->
-            <div class="p-4 bg-gray-900/40 rounded-xl border border-rose-600 shadow-inner shadow-rose-900">
-                <h2 class="text-2xl font-bold text-center text-rose-400 mb-4 border-b-2 border-rose-500 pb-2">
-                    VIPs
-                </h2>
-                <ul class="space-y-3">
-                    <li
-                        class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">Brand_Marc</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">Christario</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">ElTobito99</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">Hades_Anokata</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">lili_pichu_mythra</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">Malcador1993</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">ohaos7_bot</span>
-                    </li>
-                    <li
-                        class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
-                        <span class="font-semibold text-lg text-white">UndeadCollector</span>
-                    </li>
+            <!-- VIP-Karte -->
+            <div class="card">
+                <h2 class="card-header">VIPs</h2>
+                <ul>
+                    <li>Brand_Marc</li>
+                    <li>Christario</li>
+                    <li>ElTobito99</li>
+                    <li>Hades_Anokata</li>
+                    <li>lili_pichu_mythra</li>
+                    <li>Malcador1993</li>
+                    <li>ohaos7_bot</li>
+                    <li>UndeadCollector</li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- Skript für den animierten Hintergrund -->
     <script>
-        // Initialisierung, wenn die Seite geladen ist
         window.onload = function () {
+            const canvas = document.getElementById('background-canvas');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            resizeCanvas(); // Ruft die Größenanpassung auf
-            backgroundAnimation(); // Startet die Hintergrundanimation
+            // backgroundAnimation(); // Funktion aus backgroundScript.js
         };
     </script>
 

@@ -5,9 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Befehle von Chaos7</title>
+
+    <link rel="stylesheet" href="colors.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
+        /* 
+        ===========================
+                Animation
+        =========================== 
+        */
         @keyframes fadeInFromTop {
             from {
                 opacity: 0;
@@ -44,10 +51,15 @@
             }
         }
 
+        /* 
+        ===========================
+                Grundfeld
+        =========================== 
+        */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #000000;
-            color: #d0d0d0;
+            background-color: var(--color-background);
+            color: var(--color-text);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -67,9 +79,14 @@
             z-index: -1;
         }
 
+        /* 
+        ===========================
+                Überschrift
+        =========================== 
+        */
         h1 {
             font-family: 'Orbitron', sans-serif;
-            color: #ff3333;
+            color: var(--canvas-color);
             text-shadow: none;
             margin: 0 0 20px 0;
             opacity: 0;
@@ -78,13 +95,18 @@
             text-align: center;
         }
 
+        /* 
+        ===========================
+            Prefix / Infofeld
+        =========================== 
+        */
         .prefix-container {
             margin-bottom: 20px;
             font-size: 1.1em;
             font-weight: bold;
-            color: #d0d0d0;
-            background-color: #1a1a1a;
-            border: 1px solid #ff3333;
+            color: var(--color-text);
+            background-color: var(--infoCardBackground);
+            border: 1px solid var(--infoCardBorder);
             border-radius: 8px;
             padding: 10px 20px;
             text-align: center;
@@ -93,16 +115,21 @@
             z-index: 2;
         }
 
+        /* 
+        ===========================
+                Table
+        =========================== 
+        */
         .command-table-wrapper {
             width: 100%;
             max-width: 800px;
             border-radius: 8px;
-            border: 1px solid #ff3333;
+            border: 1px solid var(--infoCardBorder);
             opacity: 0;
             animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards;
             z-index: 2;
-            background-color: #161616;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+            background-color: var(--infoCardBackground);
+            box-shadow: 0 0 20px var(--shadow-color);
             position: relative;
         }
 
@@ -119,11 +146,6 @@
             background-color: transparent;
         }
 
-        thead {
-            border-top-left-radius: 7px;
-            border-top-right-radius: 7px;
-        }
-
         thead tr {
             opacity: 0;
             animation: fadeInFromTop 0.5s ease-out 0.8s forwards;
@@ -131,21 +153,20 @@
         }
 
         thead tr th {
-            background-color: #800000;
-            transition: 250ms;
+            background-color: var(--infoCardBorder);
+            transition: background-color 250ms;
         }
 
         thead tr th:hover {
-            background-color: #ff3333;
-            transition: 250ms;
+            background-color: var(--infoCardBorderHover);
         }
 
         th,
         td {
             padding: 18px 20px;
             text-align: left;
-            color: #ffffff;
-            border-bottom: 1px solid #ff3333;
+            color: var(--color-text);
+            border-bottom: 1px solid var(--infoCardBorder);
         }
 
         th {
@@ -157,8 +178,7 @@
             position: relative;
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-right: 1px solid #ff3333;
-            text-shadow: none;
+            border-right: 1px solid var(--infoCardBorder);
         }
 
         th:first-child {
@@ -180,8 +200,8 @@
         }
 
         tbody tr:hover {
-            background-color: #220000;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+            background-color: color-mix(in srgb, var(--infoCardBackground) 80%, var(--infoCardBorder) 20%);
+            box-shadow: 0 0 20px var(--shadow-color-strong);
             transform: scale(1.01);
             transition: all 0.2s ease-in-out;
         }
@@ -194,7 +214,11 @@
             animation: slideInUp 0.5s ease-out forwards;
         }
 
-        /* Mobile-Ansicht: Anpassung bei Zeilenumbruch */
+        /* 
+        ===========================
+                Mobile Ansicht
+        =========================== 
+        */
         @media (max-width: 600px) {
             .command-table-wrapper {
                 border: none;
@@ -203,96 +227,47 @@
                 border-radius: 0;
             }
 
-            .command-table {
-                background-color: transparent;
-            }
-
-            thead {
-                display: block;
-                margin-bottom: 25px;
-                border: none;
-                box-shadow: none;
-            }
-
             thead tr {
                 display: flex;
                 justify-content: space-around;
-                align-items: center;
-                align-content: center;
                 flex-wrap: wrap;
                 animation: none;
                 opacity: 1;
-                background-color: #161616;
-                border: 1px solid #ff3333;
+                background-color: var(--infoCardBackground);
+                border: 1px solid var(--infoCardBorder);
                 border-radius: 8px;
-                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+                box-shadow: 0 0 20px var(--shadow-color);
             }
 
             th {
                 display: flex;
-                text-align: center;
-                padding: 15px 10px;
-                border-bottom: none;
                 justify-content: center;
                 align-items: center;
-                border-right: none;
-                background-color: #161616;
-                color: #ffffff;
+                text-align: center;
+                padding: 15px 10px;
+                border: none;
+                background-color: var(--infoCardBackground);
+                color: var(--color-text);
             }
 
             th:not(:first-child) {
-                border-left: 1px solid #ff3333;
-            }
-
-            th:first-child {
-                flex-grow: 1.5;
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-
-            th:nth-child(2) {
-                flex-grow: 1;
-            }
-
-            th:last-child {
-                flex-grow: 2.5;
-                border-right: none;
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-
-            th:hover {
-                background-color: #220000;
-            }
-
-            .sort-icon {
-                position: static;
-                transform: none;
-                margin-left: 5px;
-            }
-
-            tbody {
-                display: block;
-                border: none;
-                box-shadow: none;
-                background-color: transparent;
+                border-left: 1px solid var(--infoCardBorder);
             }
 
             tr {
                 display: block;
                 margin-bottom: 25px;
-                border: 1px solid #ff3333;
+                border: 1px solid var(--infoCardBorder);
                 border-radius: 8px;
-                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
-                background-color: #161616;
+                box-shadow: 0 0 20px var(--shadow-color);
+                background-color: var(--infoCardBackground);
                 padding: 10px;
-                transition: none;
                 animation: slideInUp 0.5s ease-out forwards;
             }
 
             tr:hover {
                 transform: none;
-                box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+                box-shadow: 0 0 20px var(--shadow-color-strong);
             }
 
             td {
@@ -308,60 +283,12 @@
                 display: block;
                 font-weight: bold;
                 text-transform: uppercase;
-                color: #ff3333;
+                color: var(--infoCardBorder);
                 margin-bottom: 5px;
             }
         }
-
-        /* Mobile-Ansicht: Anpassung bei Zeilenumbruch */
-        @media (max-width: 428px) {
-            th:first-child {
-                flex-grow: 1.5;
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-
-            th:nth-child(2) {
-                flex-grow: 1;
-            }
-
-            th:last-child {
-                flex-grow: 2.5;
-                border-top: 1px solid #ff3333;
-                ;
-                border-left: none;
-                border-right: none;
-                width: 100%;
-            }
-        }
-
-        /* Mobile-Ansicht: Anpassung bei Zeilenumbruch */
-        @media (max-width: 268px) {
-            th {
-                width: 100%;
-            }
-
-            th:first-child {
-                flex-grow: 1.5;
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-
-            th:nth-child(2) {
-                flex-grow: 1;
-                border-top: 1px solid #ff3333;
-                border-left: none;
-            }
-
-            th:last-child {
-                flex-grow: 2.5;
-                border-top: 1px solid #ff3333;
-                ;
-                border-left: none;
-                border-right: none;
-            }
-        }
     </style>
+
 </head>
 
 <body>
