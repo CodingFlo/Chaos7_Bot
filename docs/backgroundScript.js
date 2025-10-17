@@ -2,8 +2,8 @@ const canvas = document.getElementById('background-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
 
-// Optionales Maximal-Speed-Limit
-const MAX_SPEED = 0.5; // <--- leicht anpassbar für schnelle Displays
+// Maximal-Speed-Limit
+const MAX_SPEED = 0.15; // <--- leicht anpassbar für schnelle Displays
 
 // CSS-Variablen aus :root
 function getCSSVariable(varName) {
