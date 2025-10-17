@@ -3,7 +3,6 @@ const canvas = document.getElementById('background-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
 
-// ola
 // CSS-Variablen aus dem :root holen
 function getCSSVariable(varName) {
     return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
