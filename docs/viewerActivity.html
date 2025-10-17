@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -410,6 +410,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- The canvas for the animated background -->
     <canvas id="background-canvas"></canvas>
@@ -419,7 +420,8 @@
         <div class="info-box">
             <h2>Stream-Statistiken</h2>
             <p>Zuletzt aktualisiert: 16.10.2025, 16:11<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
-            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong></p>
+            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong>
+            </p>
             <p>Start der Messung ist der 21.08.2025</p>
         </div>
     </div>
@@ -434,15 +436,14 @@
                 </tr>
             </thead>
             <tbody id="command-table-body">
-                
-            <tr>
-                <td colspan="4" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
-            </tr>
+
+                <tr>
+                    <td colspan="4" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
+                </tr>
             </tbody>
         </table>
     </div>
     <script>
-        
         function applyRowAnimation() {
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
@@ -461,7 +462,7 @@
         function sortTableByColumn(columnId) {
             const tableBody = document.getElementById('command-table-body');
             const header = document.getElementById(columnId);
-            
+
             if (currentSortColumn !== columnId) {
                 // Wenn sich die Spalte ändert, wird die Sortierreihenfolge zurückgesetzt
                 sortOrder = (columnId === 'sort-rank' || columnId === 'sort-activity' || columnId === 'sort-time') ? 'desc' : 'asc';
@@ -478,7 +479,7 @@
             header.classList.add('sorted');
             const columnIndex = header.cellIndex;
             const rows = Array.from(tableBody.rows);
-            
+
             const sortedRows = rows.sort((a, b) => {
                 const aText = a.cells[columnIndex].textContent;
                 const bText = b.cells[columnIndex].textContent;
@@ -495,7 +496,7 @@
                         parts.forEach(part => {
                             const value = parseInt(part.slice(0, -1));
                             const unit = part.slice(-1);
-                            switch(unit) {
+                            switch (unit) {
                                 case 'd': totalMs += value * 24 * 60 * 60 * 1000; break;
                                 case 'h': totalMs += value * 60 * 60 * 1000; break;
                                 case 'm': totalMs += value * 60 * 1000; break;
@@ -513,7 +514,7 @@
                 }
                 return sortOrder === 'asc' ? comparison : -comparison;
             });
-            
+
             sortedRows.forEach(row => tableBody.appendChild(row));
             applyRowAnimation();
             document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
@@ -529,95 +530,6 @@
             sortTableByColumn('sort-rank'); // Default sort on page load
         });
 
-        // Code für den animierten Hintergrund
-        const canvas = document.getElementById('background-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = {
-            x: undefined,
-            y: undefined
-        };
-
-        // Partikel-Klasse für die Animation
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.5 + 1; // Größe der Partikel
-                this.speedX = Math.random() * 1 - 0.5; // Geschwindigkeit in X-Richtung
-                this.speedY = Math.random() * 1 - 0.5; // Geschwindigkeit in Y-Richtung
-            }
-
-            // Methode zum Bewegen der Partikel
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                // Partikel am Rand umkehren
-                if (this.x < 0 || this.x > canvas.width) {
-                    this.speedX = -this.speedX;
-                }
-                if (this.y < 0 || this.y > canvas.height) {
-                    this.speedY = -this.speedY;
-                }
-            }
-
-            // Methode zum Zeichnen der Partikel
-            draw() {
-                ctx.fillStyle = '#ff3333';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        // Passt die Canvas-Größe an die Fenstergröße an
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            createParticles(); // Partikel bei jeder Größenänderung neu erstellen
-        }
-        window.addEventListener('resize', resizeCanvas);
-
-        // Erstellt die Partikel
-        function createParticles() {
-            particles = [];
-            const numberOfParticles = (canvas.width * canvas.height) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        // Haupt-Animations-Loop
-        function backgroundAnimation() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Linien zwischen nahen Partikeln zeichnen
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    const dx = particles[a].x - particles[b].x;
-                    const dy = particles[a].y - particles[b].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 120) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(255, 51, 51, ${ 1 - distance / 120 })`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            // Partikel aktualisieren und zeichnen
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            requestAnimationFrame(backgroundAnimation);
-        }
-
         // Reagiert auf die Größenänderung des Fensters
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
@@ -631,13 +543,15 @@
         });
 
         // Initialisierung beim Laden der Seite
-        window.onload = function() {
+        window.onload = function () {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             resizeCanvas(); // Ruft die Größenanpassung auf
             backgroundAnimation(); // Startet die Hintergrundanimation
         };
-    
     </script>
+
+    <script src="backgroundScript.js"></script>
 </body>
+
 </html>
