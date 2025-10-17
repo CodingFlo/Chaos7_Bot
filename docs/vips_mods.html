@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIPs & Moderatoren</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Dein Farb-Root -->
+    <!-- Übernehme die Schriftart aus der index.html -->
+    
     <link rel="stylesheet" href="colors.css" />
 
     <style>
@@ -120,44 +119,64 @@
         }
     </style>
 </head>
-
 <body>
+    <!-- Canvas für den animierten Hintergrund -->
     <canvas id="background-canvas"></canvas>
 
     <div class="container mx-auto">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-center mb-6 glow-text">VIPs & Moderatoren</h1>
-        <p class="text-center mb-8">Stand: 16.10.2025 um 13:41:25</p>
-
-        <div class="cards-grid">
-            <!-- Moderatoren-Karte -->
-            <div class="card">
-                <h2 class="card-header">Moderatoren</h2>
-                <ul>
-                    <li>10meisterbaelle</li>
-                    <li>chaos7_bot</li>
-                    <li>kall_me_kat_</li>
-                    <li>nintentony</li>
-                    <li>sery_bot</li>
+        <p class="text-center text-gray-400 mb-8">Stand: 17.10.2025 um 19:42:29</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 list-container">
+            <!-- Mods Liste ist jetzt links und hat die roten Farben -->
+            <div class="p-4 bg-gray-900/40 rounded-xl border border-red-600 shadow-inner shadow-red-900">
+                <h2 class="text-2xl font-bold text-center text-red-400 mb-4 border-b-2 border-red-500 pb-2">
+                    Moderatoren
+                </h2>
+                <ul class="space-y-3">
+                    <li class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">10meisterbaelle</span>
+        </li><li class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">chaos7_bot</span>
+        </li><li class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">kall_me_kat_</span>
+        </li><li class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">nintentony</span>
+        </li><li class="p-4 bg-gradient-to-r from-red-800/30 to-red-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-red-700/50 hover:text-red-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">sery_bot</span>
+        </li>
                 </ul>
             </div>
 
-            <!-- VIP-Karte -->
-            <div class="card">
-                <h2 class="card-header">VIPs</h2>
-                <ul>
-                    <li>Brand_Marc</li>
-                    <li>Christario</li>
-                    <li>ElTobito99</li>
-                    <li>Hades_Anokata</li>
-                    <li>lili_pichu_mythra</li>
-                    <li>Malcador1993</li>
-                    <li>ohaos7_bot</li>
-                    <li>UndeadCollector</li>
+            <!-- VIPs Liste ist jetzt rechts und hat die rosa-farbenen Farben -->
+            <div class="p-4 bg-gray-900/40 rounded-xl border border-rose-600 shadow-inner shadow-rose-900">
+                <h2 class="text-2xl font-bold text-center text-rose-400 mb-4 border-b-2 border-rose-500 pb-2">
+                    VIPs
+                </h2>
+                <ul class="space-y-3">
+                    <li class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">Brand_Marc</span>
+        </li><li class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">Christario</span>
+        </li><li class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">ElTobito99</span>
+        </li><li class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">Hades_Anokata</span>
+        </li><li class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">lili_pichu_mythra</span>
+        </li><li class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">Malcador1993</span>
+        </li><li class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">ohaos7_bot</span>
+        </li><li class="p-4 bg-gradient-to-r from-rose-800/30 to-rose-800/10 rounded-lg shadow-lg backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl hover:bg-rose-700/50 hover:text-rose-100 animate-slide-in">
+            <span class="font-semibold text-lg text-white">UndeadCollector</span>
+        </li>
                 </ul>
             </div>
         </div>
     </div>
 
+    <!-- Skript für den animierten Hintergrund -->    
     <script>
         window.onload = function () {
             const canvas = document.getElementById('background-canvas');
@@ -169,5 +188,4 @@
 
     <script src="backgroundScript.js"></script>
 </body>
-
 </html>
