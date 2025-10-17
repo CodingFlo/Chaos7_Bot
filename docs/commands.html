@@ -222,14 +222,25 @@
         @media (max-width: 600px) {
             .command-table-wrapper {
                 border: none;
-                box-shadow: none;
-                background-color: transparent;
                 border-radius: 0;
+            }
+
+            .command-table {
+                background-color: transparent;
+            }
+
+            thead {
+                display: block;
+                margin-bottom: 25px;
+                border: none;
+                box-shadow: none;
             }
 
             thead tr {
                 display: flex;
                 justify-content: space-around;
+                align-items: center;
+                align-content: center;
                 flex-wrap: wrap;
                 animation: none;
                 opacity: 1;
@@ -241,17 +252,52 @@
 
             th {
                 display: flex;
-                justify-content: center;
-                align-items: center;
                 text-align: center;
                 padding: 15px 10px;
-                border: none;
+                border-bottom: none;
+                justify-content: center;
+                align-items: center;
+                border-right: none;
                 background-color: var(--infoCardBackground);
                 color: var(--color-text);
             }
 
             th:not(:first-child) {
                 border-left: 1px solid var(--infoCardBorder);
+            }
+
+            th:first-child {
+                flex-grow: 1.5;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            th:nth-child(2) {
+                flex-grow: 1;
+            }
+
+            th:last-child {
+                flex-grow: 2.5;
+                border-right: none;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            th:hover {
+                background-color: var(--list-hover-bg);
+            }
+
+            .sort-icon {
+                position: static;
+                transform: none;
+                margin-left: 5px;
+            }
+
+            tbody {
+                display: block;
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
             }
 
             tr {
@@ -262,6 +308,7 @@
                 box-shadow: 0 0 20px var(--shadow-color);
                 background-color: var(--infoCardBackground);
                 padding: 10px;
+                transition: none;
                 animation: slideInUp 0.5s ease-out forwards;
             }
 
@@ -272,10 +319,10 @@
 
             td {
                 display: block;
-                text-align: left;
-                padding: 10px 0;
-                border-bottom: none;
-                word-break: break-word;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: var(--infoCardBorder);
+                margin-bottom: 5px;
             }
 
             td::before {
@@ -285,6 +332,32 @@
                 text-transform: uppercase;
                 color: var(--infoCardBorder);
                 margin-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 268px) {
+            th {
+                width: 100%;
+            }
+
+            th:first-child {
+                flex-grow: 1.5;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            th:nth-child(2) {
+                flex-grow: 1;
+                border-top: 1px solid var(--infoCardBorder);
+                border-left: none;
+            }
+
+            th:last-child {
+                flex-grow: 2.5;
+                border-top: 1px solid var(--infoCardBorder);
+                ;
+                border-left: none;
+                border-right: none;
             }
         }
     </style>
@@ -539,6 +612,7 @@
             </tbody>
         </table>
     </div>
+
     <script>
         // Startet die Animation und die Initialisierung der Nachrichten
         window.onload = function () {
