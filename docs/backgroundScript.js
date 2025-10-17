@@ -1,14 +1,15 @@
-// JavaScript für den animierten Hintergrund
 const canvas = document.getElementById('background-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
 
-// CSS-Variablen aus dem :root holen
+// Optionales Maximal-Speed-Limit
+const MAX_SPEED = 0.5; // <--- leicht anpassbar für schnelle Displays
+
+// CSS-Variablen aus :root
 function getCSSVariable(varName) {
     return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
 }
 
-// Farben aus CSS-Variablen lesen
 const particleColor = getCSSVariable('--canvas-color');
 
 class Particle {
@@ -16,10 +17,8 @@ class Particle {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.size = Math.random() * 2.5 + 1;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
-
-        // Farbe aus CSS-Variable verwenden
+        this.speedX = (Math.random() * MAX_SPEED * 2) - MAX_SPEED;
+        this.speedY = (Math.random() * MAX_SPEED * 2) - MAX_SPEED;
         this.color = particleColor;
     }
 
@@ -41,7 +40,7 @@ class Particle {
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    createParticles();
+    createParticles(); // Partikelanzahl an neue Canvas-Größe anpassen
 }
 
 function createParticles() {
@@ -98,6 +97,6 @@ function hexToRgb(hex) {
 
 window.addEventListener('resize', resizeCanvas);
 
-// Start
-resizeCanvas();
-backgroundAnimation();
+// Initialisierung
+resizeCanvas();          // Canvas-Größe und Partikel einmalig setzen
+backgroundAnimation();   // Animation starten
