@@ -199,9 +199,13 @@
 
         @media (max-width: 600px) {
             .toc-links {
-                justify-content: flex-start;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+            }
+
+            .toc-links li {
+                flex-grow: 1;
+                flex-basis: 25%;
             }
         }
 
@@ -405,55 +409,37 @@
         function smoothScroll(event) {
             const linkElement = event.target.closest('a');
 
-            // Überprüfen, ob ein Link geklickt wurde und ob er ein data-target hat
             if (linkElement && linkElement.hasAttribute('data-target')) {
 
-                event.preventDefault(); // Standard-Aktion verhindern (z.B. Springen zu href="#" oder URL-Update)
+                event.preventDefault();
 
-                // Die Ziel-ID aus dem data-target Attribut auslesen
                 const targetId = linkElement.getAttribute('data-target');
                 const targetElement = document.querySelector(targetId);
 
-                if (targetElement) {
-                    // Führt das sanfte Scrollen mit JS durch
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                let nav_offset_height = 65; // Beispiel: 65px (Navigationshöhe)
 
-                    // WICHTIG: Die folgende Zeile wurde entfernt, um die URL nicht zu ändern:
-                    // history.pushState(null, null, targetId); 
-                }
-            }
-
-            // Überprüfen, ob es ein Link zu einem internen Anker ist (beginnt mit '#')
-            if (event.target.tagName === 'A' && event.target.getAttribute('href').startsWith('#')) {
-
-                event.preventDefault(); // Standard-Anker-Springen verhindern
-
-                const targetId = event.target.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
+                const littleGap = 10
+                const tocNav = document.querySelector('.toc');
+                if (tocNav) nav_offset_height = tocNav.clientHeight + littleGap;
+                else nav_offset_height = 65
 
                 if (targetElement) {
-                    // Führt das sanfte Scrollen mit JS durch
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center' // Scrollt zum oberen Rand des Elements
-                    });
+                    // 1. Berechne die Zielposition relativ zur Dokumentenoberkante.
+                    // targetElement.getBoundingClientRect().top gibt die Position relativ zum Viewport.
+                    // window.scrollY (oder pageYOffset) gibt an, wie weit die Seite gescrollt ist.
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
 
-                    // Optional: URL-Hash aktualisieren, ohne zu springen
-                    history.pushState(null, null, targetId);
+                    // 2. Subtrahiere den Offset für das Navigationsmenü.
+                    const adjustedPosition = targetPosition - nav_offset_height;
+
+                    // 3. Verwende window.scrollTo für das sanfte Scrollen.
+                    window.scrollTo({
+                        top: adjustedPosition,
+                        behavior: 'smooth'
+                    });
                 }
             }
         }
-
-        // Event-Listener zur Navigationsleiste hinzufügen, um alle Link-Klicks zu überwachen
-        document.addEventListener('DOMContentLoaded', () => {
-            const tocNav = document.querySelector('.toc');
-            if (tocNav) {
-                tocNav.addEventListener('click', smoothScroll);
-            }
-        });
 
         /**
          * Sortiert eine Liste basierend auf den Listenelementen.
@@ -510,6 +496,28 @@
             });
         }
 
+        /**
+         * @function handleStickyNavigation
+         * Fügt die Klasse 'sticky-active' zum Navigationsmenü hinzu, 
+         * sobald es am oberen Bildschirmrand klebt.
+         */
+        function handleStickyNavigation() {
+            const tocNav = document.querySelector('.toc');
+            if (!tocNav) return;
+
+            // Speichert die anfängliche Position (Offset Top) des Navigationsmenüs.
+            // Wir initialisieren diesen Wert einmalig beim DOM-Ready.
+            if (typeof tocNav.initialOffsetTop === 'undefined') {
+                tocNav.initialOffsetTop = tocNav.offsetTop;
+            }
+
+            // Wenn die aktuelle Scroll-Position (window.scrollY) größer ist 
+            // als die ursprüngliche Position des Menüs, ist es "sticky".
+            if (window.scrollY > tocNav.initialOffsetTop) {
+                tocNav.classList.add('sticky-active');
+            }
+        }
+
         window.onload = function () {
             resizeCanvas();
             backgroundAnimation();
@@ -519,6 +527,20 @@
                 updateStaggerIndex(list);
             });
         };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tocNav = document.querySelector('.toc');
+            if (tocNav) {
+                // 1. Sticky-Überprüfung beim DOM-Laden
+                handleStickyNavigation();
+
+                // 2. Sticky-Überprüfung bei jedem Scrollen
+                window.addEventListener('scroll', handleStickyNavigation);
+
+                // 3. Smooth-Scrolling bei Klick
+                tocNav.addEventListener('click', smoothScroll);
+            }
+        });
     </script>
 
     <script src="backgroundScript.js"></script>
