@@ -118,7 +118,7 @@
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             cursor: pointer;
-            transition: background .2s ease, transform .1s ease;
+            transition: 0.2s ease, transform .1s ease;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -168,18 +168,13 @@
             max-width: 900px;
             margin: 30px auto;
             padding: 10px 20px;
-            border-bottom: 1px solid var(--shadow-divider);
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 10;
             transition: 0.3s ease;
-        }
-
-        .toc.sticky-active {
+            border-radius: 1em;
             background-color: var(--card-bg);
-            /* Volle Deckkraft im Sticky-Zustand */
-            border-bottom: 1px solid var(--accent);
             box-shadow: 0 4px 15px var(--shadow-color-strong);
         }
 
@@ -496,28 +491,6 @@
             });
         }
 
-        /**
-         * @function handleStickyNavigation
-         * Fügt die Klasse 'sticky-active' zum Navigationsmenü hinzu, 
-         * sobald es am oberen Bildschirmrand klebt.
-         */
-        function handleStickyNavigation() {
-            const tocNav = document.querySelector('.toc');
-            if (!tocNav) return;
-
-            // Speichert die anfängliche Position (Offset Top) des Navigationsmenüs.
-            // Wir initialisieren diesen Wert einmalig beim DOM-Ready.
-            if (typeof tocNav.initialOffsetTop === 'undefined') {
-                tocNav.initialOffsetTop = tocNav.offsetTop;
-            }
-
-            // Wenn die aktuelle Scroll-Position (window.scrollY) größer ist 
-            // als die ursprüngliche Position des Menüs, ist es "sticky".
-            if (window.scrollY > tocNav.initialOffsetTop) {
-                tocNav.classList.add('sticky-active');
-            }
-        }
-
         window.onload = function () {
             resizeCanvas();
             backgroundAnimation();
@@ -531,13 +504,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const tocNav = document.querySelector('.toc');
             if (tocNav) {
-                // 1. Sticky-Überprüfung beim DOM-Laden
-                handleStickyNavigation();
-
-                // 2. Sticky-Überprüfung bei jedem Scrollen
-                window.addEventListener('scroll', handleStickyNavigation);
-
-                // 3. Smooth-Scrolling bei Klick
                 tocNav.addEventListener('click', smoothScroll);
             }
         });
