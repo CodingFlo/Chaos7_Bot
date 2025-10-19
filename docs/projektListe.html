@@ -177,9 +177,10 @@
         }
 
         .toc.sticky-active {
-            background: var(--card-bg);
-            backdrop-filter: blur(5px);
-            transition: 0.3s ease;
+            background-color: var(--card-bg);
+            /* Volle Deckkraft im Sticky-Zustand */
+            border-bottom: 1px solid var(--accent);
+            box-shadow: 0 4px 15px var(--shadow-color-strong);
         }
 
         .toc h3 {
@@ -245,11 +246,11 @@
     <!-- Inhaltsverzeichnis mit neuem Design -->
     <nav class="toc fade-in" style="--delay:.2s">
         <ul class="toc-links">
-            <li><a href="#fix-kommende-projekte">Fix-Kommende Projekte</a></li>
-            <li><a href="#geplante-projekte">Geplante Projekte</a></li>
-            <li><a href="#erledigte-projekte">Erledigte Projekte</a></li>
-            <li><a href="#stream-only-projekte">Stream only Projekte</a></li>
-            <li><a href="#als-video-erledigt">Als Video erledigt</a></li>
+            <li><a href="#" data-target="#fix-kommende-projekte">Fix-Kommende Projekte</a></li>
+            <li><a href="#" data-target="#geplante-projekte">Geplante Projekte</a></li>
+            <li><a href="#" data-target="#erledigte-projekte">Erledigte Projekte</a></li>
+            <li><a href="#" data-target="#stream-only-projekte">Stream only Projekte</a></li>
+            <li><a href="#" data-target="#als-video-erledigt">Als Video erledigt</a></li>
         </ul>
     </nav>
 
@@ -396,6 +397,64 @@
     </section>
 
     <script>
+        /**
+         * @function smoothScroll
+         * Fängt Klicks auf die Navigationslinks ab und führt sanftes Scrollen via JS aus.
+         * @param {Event} event - Das Klick-Event.
+         */
+        function smoothScroll(event) {
+            const linkElement = event.target.closest('a');
+
+            // Überprüfen, ob ein Link geklickt wurde und ob er ein data-target hat
+            if (linkElement && linkElement.hasAttribute('data-target')) {
+
+                event.preventDefault(); // Standard-Aktion verhindern (z.B. Springen zu href="#" oder URL-Update)
+
+                // Die Ziel-ID aus dem data-target Attribut auslesen
+                const targetId = linkElement.getAttribute('data-target');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    // Führt das sanfte Scrollen mit JS durch
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    // WICHTIG: Die folgende Zeile wurde entfernt, um die URL nicht zu ändern:
+                    // history.pushState(null, null, targetId); 
+                }
+            }
+
+            // Überprüfen, ob es ein Link zu einem internen Anker ist (beginnt mit '#')
+            if (event.target.tagName === 'A' && event.target.getAttribute('href').startsWith('#')) {
+
+                event.preventDefault(); // Standard-Anker-Springen verhindern
+
+                const targetId = event.target.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    // Führt das sanfte Scrollen mit JS durch
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center' // Scrollt zum oberen Rand des Elements
+                    });
+
+                    // Optional: URL-Hash aktualisieren, ohne zu springen
+                    history.pushState(null, null, targetId);
+                }
+            }
+        }
+
+        // Event-Listener zur Navigationsleiste hinzufügen, um alle Link-Klicks zu überwachen
+        document.addEventListener('DOMContentLoaded', () => {
+            const tocNav = document.querySelector('.toc');
+            if (tocNav) {
+                tocNav.addEventListener('click', smoothScroll);
+            }
+        });
+
         /**
          * Sortiert eine Liste basierend auf den Listenelementen.
          * Der Sortierbutton toggelt zwischen aufsteigender und absteigender Reihenfolge.
