@@ -2,13 +2,8 @@ const canvas = document.getElementById('background-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
 
-<<<<<<< HEAD
-// Optionales Maximal-Speed-Limit
-const MAX_SPEED = 0.5; // <--- leicht anpassbar für schnelle Displays
-=======
 // Maximal-Speed-Limit
 const MAX_SPEED = 0.15; // <--- leicht anpassbar für schnelle Displays
->>>>>>> origin/main
 
 // CSS-Variablen aus :root
 function getCSSVariable(varName) {
@@ -103,10 +98,8 @@ function hexToRgb(hex) {
 window.addEventListener('resize', resizeCanvas);
 
 // Initialisierung
-<<<<<<< HEAD
 resizeCanvas();          // Canvas-Größe und Partikel einmalig setzen
 backgroundAnimation();   // Animation starten
-=======
 function applyFadeIn() {
     // Kurze Verzögerung von 50ms, um sicherzustellen, dass das Canvas im DOM initialisiert ist.
     setTimeout(() => {
@@ -120,4 +113,3 @@ backgroundAnimation();
 
 // Rufe die Einblendungsfunktion nach dem Start der Animation auf.
 applyFadeIn();
->>>>>>> origin/main
