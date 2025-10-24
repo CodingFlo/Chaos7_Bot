@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuschauer-Aktivitätsranking</title>
-    
+
     <link rel="stylesheet" href="colors.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
@@ -373,18 +373,60 @@
                 display: none;
             }
         }
+
+        .header-button-wrapper {
+            text-align: center;
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInFromTop 0.6s ease-out forwards;
+            animation-delay: var(--delay, 0.3s);
+            z-index: 2;
+        }
+
+        .home-button {
+            display: inline-block;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+
+            /* Farben und Stil - Nutzt vorhandene Variablen */
+            background-color: var(--accent);
+            color: var(--color-background);
+            border: 1px solid var(--infoCardBorder);
+
+            padding: 8px 18px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px var(--shadow-color-strong);
+
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .home-button:hover {
+            background-color: var(--infoCardBorder);
+            transform: scale(1.02);
+            box-shadow: 0 0 12px var(--accent);
+        }
     </style>
 </head>
+
 <body>
     <!-- The canvas for the animated background -->
     <canvas id="background-canvas"></canvas>
 
     <h1>Zuschauer-Aktivitätsranking von Flo_Ced_CoB</h1>
+
+    <div class="header-button-wrapper">
+        <a href="index.html" class="home-button">
+            ← Zur Startseite
+        </a>
+    </div>
+
     <div class="info-box-container">
         <div class="info-box">
             <h2>Stream-Statistiken</h2>
             <p>Zuletzt aktualisiert: 23.10.2025, 22:07<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
-            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong></p>
+            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong>
+            </p>
             <p>Start der Messung ist der 21.08.2025</p>
         </div>
     </div>
@@ -399,15 +441,15 @@
                 </tr>
             </thead>
             <tbody id="command-table-body">
-                
-            <tr>
-                <td colspan="4" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
-            </tr>
+
+                <tr>
+                    <td colspan="4" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
+                </tr>
             </tbody>
         </table>
     </div>
     <script>
-        
+
         function applyRowAnimation() {
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
@@ -513,9 +555,10 @@
             resizeCanvas(); // Ruft die Größenanpassung auf
             backgroundAnimation(); // Startet die Hintergrundanimation
         };
-    
+
     </script>
 
     <script src="backgroundScript.js"></script>
 </body>
+
 </html>

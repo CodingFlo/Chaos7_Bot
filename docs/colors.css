@@ -148,3 +148,7 @@
 .canvas-loaded {
    opacity: 1 !important;
 }
+
+*::selection {
+   background-color: var(--shadow-color);
+}

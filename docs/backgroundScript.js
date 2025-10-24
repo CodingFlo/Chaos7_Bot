@@ -98,6 +98,8 @@ function hexToRgb(hex) {
 window.addEventListener('resize', resizeCanvas);
 
 // Initialisierung
+resizeCanvas();          // Canvas-Größe und Partikel einmalig setzen
+backgroundAnimation();   // Animation starten
 function applyFadeIn() {
     // Kurze Verzögerung von 50ms, um sicherzustellen, dass das Canvas im DOM initialisiert ist.
     setTimeout(() => {
