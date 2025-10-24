@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIPs & Moderatoren</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Übernehme die Schriftart aus der index.html -->
-    
+
     <link rel="stylesheet" href="colors.css" />
 
     <style>
@@ -117,16 +118,58 @@
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
         }
+
+        .header-button-wrapper {
+            text-align: center;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+            animation-delay: var(--delay, 0.2s);
+            z-index: 2;
+            width: 100%;
+        }
+
+        .home-button {
+            display: inline-block;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+
+            /* Farben und Stil - Nutzt vorhandene Variablen */
+            background-color: var(--accent);
+            color: var(--color-background);
+            border: 1px solid var(--infoCardBorder);
+
+            padding: 8px 18px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px var(--shadow-color-strong);
+
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .home-button:hover {
+            background-color: var(--infoCardBorder);
+            transform: scale(1.02);
+            box-shadow: 0 0 12px var(--accent);
+        }
     </style>
 </head>
+
 <body>
     <!-- Canvas für den animierten Hintergrund -->
     <canvas id="background-canvas"></canvas>
 
     <div class="container mx-auto">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-center mb-6 glow-text">VIPs & Moderatoren</h1>
+
+        <div class="header-button-wrapper" style="animation-delay: 0.2s;">
+            <a href="index.html" class="home-button">
+                ← Zur Startseite
+            </a>
+        </div>
+
         <p class="text-center mb-8">Stand: 23.10.2025 um 20:37:49</p>
-        
+
         <div class="cards-grid">
             <!-- Mods Liste ist jetzt links und hat die roten Farben -->
             <div class="card">
@@ -135,16 +178,20 @@
                 </h2>
                 <ul class="space-y-3">
                     <li>
-            <span class="font-semibold text-lg text-white">10meisterbaelle</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">chaos7_bot</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">kall_me_kat_</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">nintentony</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">sery_bot</span>
-        </li>
+                        <span class="font-semibold text-lg text-white">10meisterbaelle</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">chaos7_bot</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">kall_me_kat_</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">nintentony</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">sery_bot</span>
+                    </li>
                 </ul>
             </div>
 
@@ -155,28 +202,35 @@
                 </h2>
                 <ul class="space-y-3">
                     <li>
-            <span class="font-semibold text-lg text-white">Brand_Marc</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">Christario</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">ElTobito99</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">Hades_Anokata</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">lili_pichu_mythra</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">Malcador1993</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">ohaos7_bot</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">UndeadCollector</span>
-        </li>
+                        <span class="font-semibold text-lg text-white">Brand_Marc</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">Christario</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">ElTobito99</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">Hades_Anokata</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">lili_pichu_mythra</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">Malcador1993</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">ohaos7_bot</span>
+                    </li>
+                    <li>
+                        <span class="font-semibold text-lg text-white">UndeadCollector</span>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- Skript für den animierten Hintergrund -->    
+    <!-- Skript für den animierten Hintergrund -->
     <script>
         window.onload = function () {
             const canvas = document.getElementById('background-canvas');
@@ -188,4 +242,5 @@
 
     <script src="backgroundScript.js"></script>
 </body>
+
 </html>
