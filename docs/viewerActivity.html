@@ -1,11 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuschauer-Aktivitätsranking</title>
-
+    
     <link rel="stylesheet" href="colors.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
@@ -375,7 +375,6 @@
         }
     </style>
 </head>
-
 <body>
     <!-- The canvas for the animated background -->
     <canvas id="background-canvas"></canvas>
@@ -384,9 +383,8 @@
     <div class="info-box-container">
         <div class="info-box">
             <h2>Stream-Statistiken</h2>
-            <p>Zuletzt aktualisiert: 16.10.2025, 16:11<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
-            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong>
-            </p>
+            <p>Zuletzt aktualisiert: 23.10.2025, 22:07<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
+            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong></p>
             <p>Start der Messung ist der 21.08.2025</p>
         </div>
     </div>
@@ -401,14 +399,15 @@
                 </tr>
             </thead>
             <tbody id="command-table-body">
-
-                <tr>
-                    <td colspan="4" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
-                </tr>
+                
+            <tr>
+                <td colspan="4" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
+            </tr>
             </tbody>
         </table>
     </div>
     <script>
+        
         function applyRowAnimation() {
             const rows = document.querySelectorAll('#command-table-body tr');
             rows.forEach((row, index) => {
@@ -514,9 +513,9 @@
             resizeCanvas(); // Ruft die Größenanpassung auf
             backgroundAnimation(); // Startet die Hintergrundanimation
         };
+    
     </script>
 
     <script src="backgroundScript.js"></script>
 </body>
-
 </html>

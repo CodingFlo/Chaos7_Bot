@@ -118,7 +118,7 @@
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             cursor: pointer;
-            transition: background .2s ease, transform .1s ease;
+            transition: 0.2s ease, transform .1s ease;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -168,18 +168,14 @@
             max-width: 900px;
             margin: 30px auto;
             padding: 10px 20px;
-            border-bottom: 1px solid var(--shadow-divider);
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 10;
             transition: 0.3s ease;
-        }
-
-        .toc.sticky-active {
-            background: var(--card-bg);
-            backdrop-filter: blur(5px);
-            transition: 0.3s ease;
+            border-radius: 1em;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 15px var(--shadow-color-strong);
         }
 
         .toc h3 {
@@ -198,9 +194,13 @@
 
         @media (max-width: 600px) {
             .toc-links {
-                justify-content: flex-start;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+            }
+
+            .toc-links li {
+                flex-grow: 1;
+                flex-basis: 25%;
             }
         }
 
@@ -245,11 +245,11 @@
     <!-- Inhaltsverzeichnis mit neuem Design -->
     <nav class="toc fade-in" style="--delay:.2s">
         <ul class="toc-links">
-            <li><a href="#fix-kommende-projekte">Fix-Kommende Projekte</a></li>
-            <li><a href="#geplante-projekte">Geplante Projekte</a></li>
-            <li><a href="#erledigte-projekte">Erledigte Projekte</a></li>
-            <li><a href="#stream-only-projekte">Stream only Projekte</a></li>
-            <li><a href="#als-video-erledigt">Als Video erledigt</a></li>
+            <li><a href="#" data-target="#fix-kommende-projekte">Fix-Kommende Projekte</a></li>
+            <li><a href="#" data-target="#geplante-projekte">Geplante Projekte</a></li>
+            <li><a href="#" data-target="#erledigte-projekte">Erledigte Projekte</a></li>
+            <li><a href="#" data-target="#stream-only-projekte">Stream only Projekte</a></li>
+            <li><a href="#" data-target="#als-video-erledigt">Als Video erledigt</a></li>
         </ul>
     </nav>
 
@@ -398,6 +398,46 @@
 
     <script>
         /**
+         * @function smoothScroll
+         * Fängt Klicks auf die Navigationslinks ab und führt sanftes Scrollen via JS aus.
+         * @param {Event} event - Das Klick-Event.
+         */
+        function smoothScroll(event) {
+            const linkElement = event.target.closest('a');
+
+            if (linkElement && linkElement.hasAttribute('data-target')) {
+
+                event.preventDefault();
+
+                const targetId = linkElement.getAttribute('data-target');
+                const targetElement = document.querySelector(targetId);
+
+                let nav_offset_height = 65; // Beispiel: 65px (Navigationshöhe)
+
+                const littleGap = 10
+                const tocNav = document.querySelector('.toc');
+                if (tocNav) nav_offset_height = tocNav.clientHeight + littleGap;
+                else nav_offset_height = 65
+
+                if (targetElement) {
+                    // 1. Berechne die Zielposition relativ zur Dokumentenoberkante.
+                    // targetElement.getBoundingClientRect().top gibt die Position relativ zum Viewport.
+                    // window.scrollY (oder pageYOffset) gibt an, wie weit die Seite gescrollt ist.
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+
+                    // 2. Subtrahiere den Offset für das Navigationsmenü.
+                    const adjustedPosition = targetPosition - nav_offset_height;
+
+                    // 3. Verwende window.scrollTo für das sanfte Scrollen.
+                    window.scrollTo({
+                        top: adjustedPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+
+        /**
          * Sortiert eine Liste basierend auf den Listenelementen.
          * Der Sortierbutton toggelt zwischen aufsteigender und absteigender Reihenfolge.
          * @param {HTMLElement} button - Der geklickte Sortier-Button.
@@ -461,6 +501,13 @@
                 updateStaggerIndex(list);
             });
         };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tocNav = document.querySelector('.toc');
+            if (tocNav) {
+                tocNav.addEventListener('click', smoothScroll);
+            }
+        });
     </script>
 
     <script src="backgroundScript.js"></script>
