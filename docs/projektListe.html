@@ -233,6 +233,46 @@
         .toc-links a:hover::after {
             transform: scaleX(1);
         }
+
+        .header-button-wrapper {
+            text-align: center;
+            margin-bottom: 30px;
+            /* Abstand zur TOC */
+            opacity: 0;
+            /* Für die fade-in Animation */
+            animation: fadeInFromTop 0.6s ease-out forwards;
+            animation-delay: var(--delay, 0.15s);
+            z-index: 2;
+            /* Über Canvas */
+        }
+
+        .home-button {
+            display: inline-block;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+
+            /* Farben & Stil passend zu info-card/accent */
+            background-color: var(--accent-2);
+            /* Dunklerer Akzent */
+            color: var(--color-background);
+            /* Helle Schrift auf Akzent */
+            border: 1px solid var(--accent);
+
+            padding: 8px 18px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px var(--shadow-color-strong);
+
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .home-button:hover {
+            background-color: var(--accent);
+            /* Hellerer/stärkerer Akzent beim Hover */
+            color: #fff;
+            transform: scale(1.02);
+            box-shadow: 0 0 12px var(--accent);
+        }
     </style>
 
 </head>
@@ -241,6 +281,12 @@
     <canvas id="background-canvas"></canvas>
 
     <h1 class="fade-in" style="--delay:.1s">Flos Projektliste</h1>
+
+    <div class="header-button-wrapper fade-in" style="--delay:.15s">
+        <a href="infosZuFlo.html" class="home-button">
+            ← Zurück zur Startseite
+        </a>
+    </div>
 
     <!-- Inhaltsverzeichnis mit neuem Design -->
     <nav class="toc fade-in" style="--delay:.2s">
@@ -274,6 +320,7 @@
             <li>Plants Vs Zombies Remake</li>
             <li>Pokemon Karmesin</li>
             <li>Pokemon Legenden Z-A</li>
+            <li>Smash Bros Ultimate</li>
             <li>The Legend of Zelda: Tears of the Kingdom</li>
             <li>Wario Land 3</li>
         </ul>

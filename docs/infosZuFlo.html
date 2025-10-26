@@ -6,292 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streamplan & Social Media</title>
 
-    <link rel="stylesheet" href="colors.css" />
-    <style>
-        /* Import der Orbitron- und Inter-Schriftarten */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    <head>
+        <link rel="stylesheet" href="colors.css" />
 
-        body {
-            font-family: 'Inter', Arial, sans-serif;
-            background-color: var(--color-background);
-            color: var(--color-text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow-x: hidden;
-            box-sizing: border-box;
-        }
-
-        /* Canvas-Hintergrund */
-        #background-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        /* Animationen */
-        @keyframes fadeInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--infoCardBorder);
-            text-align: center;
-            margin: 0;
-            opacity: 0;
-            width: 100%;
-            animation: fadeInFromTop 0.5s ease-out forwards;
-            z-index: 2;
-        }
-
-        .profile-pic {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--infoCardBorder);
-            box-shadow: 0 0 10px var(--shadow-color);
-            animation: fadeInFromTop 0.5s ease-out forwards;
-            opacity: 0;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .profile-pic:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px var(--shadow-color-strong);
-        }
-
-        .content-container {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .info-card {
-            background-color: var(--infoCardBackground);
-            border-radius: 8px;
-            padding: 30px;
-            border: 1px solid var(--infoCardBorder);
-            box-shadow: 0 0 15px var(--shadow-color);
-            opacity: 0;
-            animation: slideInUp 0.6s ease-out forwards;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 25px var(--shadow-color-strong);
-        }
-
-        .info-card h2,
-        .info-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--infoCardBorder);
-            border-bottom: 1px solid var(--infoCardBorder);
-            padding-bottom: 8px;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-
-        .faq-question {
-            font-weight: bold;
-            color: var(--infoCardBorder);
-            margin-top: 20px;
-        }
-
-        p,
-        #FAQ-Box ul {
-            margin: 0;
-            font-size: 1.15em;
-            line-height: 1.7;
-            color: var(--color-text);
-        }
-
-        .info-card a,
-        .project-link {
-            display: inline-block;
-            background-color: var(--infoCardBorder);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 15px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .info-card a:hover,
-        .project-link:hover {
-            background-color: var(--infoCardBorderHover);
-            transform: scale(1.05);
-        }
-
-        a:hover {
-            color: var(--link-hover-color);
-            text-shadow: 0 0 5px var(--link-hover-shadow);
-        }
-
-        .social-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            flex-direction: column-reverse;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--color-text);
-            background-color: var(--social-bg);
-            padding: 12px 24px;
-            border-radius: 30px;
-            border: 1px solid var(--infoCardBorder);
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .social-links a:hover {
-            background-color: var(--social-bg-hover);
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 4px 15px var(--shadow-color);
-        }
-
-        .social-links img {
-            width: 28px;
-            height: 28px;
-            object-fit: contain;
-        }
-
-        .social-links .x-icon-container {
-            width: 30px;
-            aspect-ratio: 1/1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            background-image: radial-gradient(circle, white, white);
-            background-size: 68% 68%;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 50%;
-        }
-
-        .schedule-entry {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--shadow-divider);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .schedule-entry:hover {
-            transform: scale(1.02);
-            background-color: var(--schedule-hover-bg);
-            border-radius: 4px;
-        }
-
-        .schedule-day {
-            font-weight: bold;
-            color: var(--link-color);
-        }
-
-        .schedule-game {
-            color: var(--color-text);
-            text-align: right;
-        }
-
-        .divider {
-            border: 0;
-            height: 1px;
-            background-color: var(--infoCardBorder);
-            opacity: 0;
-            margin: 25px 0;
-            animation: slideInUp 0.7s ease-out forwards;
-            box-shadow: 0 1px 5px var(--shadow-divider);
-        }
-
-        .header-wrapper {
-            text-align: center;
-            margin: 25px 0;
-        }
-
-        .header-wrapper h1 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--infoCardBorder);
-            font-size: 3rem;
-            margin-top: 20px;
-        }
-
-        .profile-pics {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            max-width: 600px;
-            margin: 0 auto 10px auto;
-        }
-
-        .profile-pic {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid var(--infoCardBorder);
-            box-shadow: 0 0 10px var(--shadow-color);
-            object-fit: cover;
-        }
-
-        .profile-pic:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px var(--infoCardBorderHover);
-        }
-
-        @media (max-width: 600px) {
-            .profile-pic {
-                width: 50px;
-                height: 50px;
-            }
-
-            .header-wrapper h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
-
-
+        <link rel="stylesheet" href="infosZuFlo.css" />
+    </head>
 </head>
 
 <body>
@@ -300,25 +19,25 @@
 
     <div class="header-wrapper">
         <div class="profile-pics">
-            <h1>Das ist Flo</h1>
+            <h1>Das ist Flo_Ced_CoB</h1>
 
-            <img src="insta.png" alt="Instagram Profilbild" class="profile-pic">
+            <img src="insta.png" alt="Instagram Profilbild" class="profile-pic" loading="lazy">
             <img src="https://yt3.googleusercontent.com/ytc/AIdro_mD98X5Bgql-aRjPb44GmGimaD0qgKB9vALFDSkSIcVPg=s160-c-k-c0x00ffffff-no-rj"
-                alt="Chaosmemeknight Profilbild" class="profile-pic">
+                alt="Chaosmemeknight Profilbild" class="profile-pic" loading="lazy">
             <img src="https://yt3.googleusercontent.com/bTFNMquDPhFP1pPPplg7JWloGd55qg40bSbZdfR_KzQdT7RhpqkNLy8FuMSiXe97dBvt8fB0=s160-c-k-c0x00ffffff-no-rj"
-                alt="CoB Profilbild" class="profile-pic">
+                alt="CoB Profilbild" class="profile-pic" loading="lazy">
             <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7863ec31-8858-47fe-a77e-354bd4535f44-profile_image-70x70.png"
-                alt="Flo_Ced_CoB Profilbild" class="profile-pic">
+                alt="Flo_Ced_CoB Profilbild" class="profile-pic" loading="lazy">
             <img src="https://yt3.googleusercontent.com/ytc/AIdro_nCj4D8u5adsJRGNv-jPl9LyDvFoUwHtCZGTEtLYHfezQ=s160-c-k-c0x00ffffff-no-rj"
-                alt="Chaosengelsdämon Profilbild" class="profile-pic">
+                alt="Chaosengelsdämon Profilbild" class="profile-pic" loading="lazy">
             <img src="https://pbs.twimg.com/profile_images/1874614677126193152/Wt0K_APx_200x200.jpg" alt="X Profilbild"
-                class="profile-pic">
+                class="profile-pic" loading="lazy">
         </div>
     </div>
 
     <div class="content-container">
         <!-- Info-Sektion  -->
-        <div class="info-card" style="animation-delay: 0.3s;">
+        <div class="info-card">
             <h2>Über mich</h2>
             <p>
                 Willkommen auf meiner Seite! Ich bin Flo, Hobby-Programmierer und streame leidenschaftlich gerne
@@ -327,7 +46,7 @@
             </p>
         </div>
 
-        <div class="info-card" style="animation-delay: 0.4s;">
+        <div class="info-card">
             <h2>Mein Twitch bot</h2>
             <p>
                 Du interessiertst dich für meinen selbst erstellten Twitch-Bot? Hier erhälst du alle wichtigen Details.
@@ -336,65 +55,84 @@
         </div>
 
         <!-- Social-Media-Sektion  -->
-        <div class="info-card" style="animation-delay: 0.5s;">
+        <div class="info-card">
             <h2>Meine Social-Media-Kanäle</h2>
             <div class="social-links">
                 <!-- YouTube -->
                 <a href="https://www.youtube.com/@chaosofbestofcob" target="_blank" class="social-link">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png"
-                        alt="YouTube-Logo">
+                        alt="YouTube-Logo" loading="lazy">
                     <span>Chaos of Bestof [CoB]</span>
                 </a>
 
                 <a href="https://www.youtube.com/@chaosengelsdamonced" target="_blank" class="social-link">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png"
-                        alt="YouTube-Logo">
+                        alt="YouTube-Logo" loading="lazy">
                     <span>Chaosengelsdämon [Ced]</span>
                 </a>
 
                 <a href="https://www.youtube.com/@chaosengelsdamonced" target="_blank" class="social-link">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png"
-                        alt="YouTube-Logo">
+                        alt="YouTube-Logo" loading="lazy">
                     <span>Flo_Ced_CoB (Stream Archiv)</span>
                 </a>
 
                 <a href="https://www.youtube.com/@chaosmemeknightcmk6798" target="_blank" class="social-link">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png"
-                        alt="YouTube-Logo">
+                        alt="YouTube-Logo" loading="lazy">
                     <span>Chaosmemeknight [Cmk]</span>
+                </a>
+
+
+                <a href="https://www.twitch.tv/flo_ced_cob" target="_blank" class="social-link">
+                    <img src="https://brand.twitch.com/assets/icons/favicon.ico" alt="Twitch-Logo" loading="lazy">
+                    <span>Twitch</span>
                 </a>
 
                 <!-- TikTok -->
                 <a href="https://www.tiktok.com/@flo_ced_cob" target="_blank" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/15713/15713399.png" alt="TikTok-Logo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/15713/15713399.png" alt="TikTok-Logo"
+                        loading="lazy">
                     <span>TikTok</span>
                 </a>
 
                 <!-- Discord -->
                 <a href="https://discord.com/invite/8Yc6yZx" target="_blank" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord-Logo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord-Logo"
+                        loading="lazy">
                     <span>Discord</span>
                 </a>
 
                 <!-- Instagram -->
                 <a href="https://www.instagram.com/flo_ced_cob/" target="_blank" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram-Logo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram-Logo"
+                        loading="lazy">
                     <span>Instagram</span>
                 </a>
                 <!-- X/Twitter -->
                 <a href="https://x.com/flo_ced_cob" target="_blank" class="social-link">
                     <div class="x-icon-container">
-                        <img src="https://img.icons8.com/?size=256&id=phOKFKYpe00C&format=png" alt="X/Twitter-Logo">
+                        <img src="https://img.icons8.com/?size=256&id=phOKFKYpe00C&format=png" alt="X/Twitter-Logo"
+                            loading="lazy">
                     </div>
                     <span>X/Twitter</span>
                 </a>
             </div>
         </div>
 
-        <div class="divider" style="animation-delay: 0.7s;"></div>
+
+        <!-- Eckdaten-Sektion  -->
+        <div class="info-card">
+            <h2>Eckdaten über mich</h2>
+            <div id="eckdaten-container">
+                <!-- Dynamisch durch JavaScript generiert -->
+            </div>
+        </div>
+
+        <div class="divider"></div>
 
         <!-- Streamplan-Sektion  -->
-        <div class="info-card" style="animation-delay: 0.7s;">
+        <div class="info-card">
             <h2>Mein Streamplan</h2>
             <div id="schedule-container">
                 <!-- Dynamisch durch JavaScript generiert -->
@@ -408,7 +146,7 @@
         </div>
 
         <!-- Info-Sektion für Streamprojekte -->
-        <div class="info-card project-card" style="animation-delay: 0.9s;">
+        <div class="info-card project-card">
             <h2>Bisherige und Zukünftige Streamprojekte</h2>
             <p>Du magst wissen, was alles schon einmal kam, bzw. was noch kommen wird? Dann schau dir die vollständige
                 Liste meiner abgeschlossenen und geplanten Projekte an!</p>
@@ -416,10 +154,17 @@
         </div>
 
         <!-- Trennlinie vor FAQ  -->
-        <div class="divider" style="animation-delay: 1.1s;"></div>
+        <div class="divider"></div>
+
+        <div class="info-card">
+            <h2>Mein Setup</h2>
+            <div id="setup-container">
+                <!-- Dynamisch durch JavaScript generiert -->
+            </div>
+        </div>
 
         <!-- FAQ-Sektion  und KORRIGIERTER TEXT -->
-        <div class="info-card" id="FAQ-Box" style="animation-delay: 1.3s;">
+        <div class="info-card" id="FAQ-Box">
             <h2>Häufig gestellte Fragen (FAQ)</h2>
             <p class="faq-question">Welche Spiele streame ich?</p>
             <p>Mein Hauptaugenmerk liegt auf <strong>Nintendo-Games</strong>! Ich liebe es, die fantastischen Welten und
@@ -446,70 +191,8 @@
         </div>
     </div>
 
-    <script>
-        // ----------------------------------------------------
-        // CODE FÜR DEN DYNAMISCHEN STREAMPLAN
-        // ----------------------------------------------------
-
-        // Daten für den Streamplan
-        const streamSchedule = [
-            { day: "Montag (Spontan)", game: "*" },
-            { day: "Dienstag (Spontan)", game: "*" },
-            { day: "Mittwoch (Spontan)", game: "*" },
-            { day: "Donnerstag (Spontan)", game: "*" },
-            { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Legenden Z-A" },
-            { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Pokemon Legenden Z-A" },
-            { day: "Sonntag (Start zwischen 20 und 22Uhr)", game: "Pokemon Legenden Z-A" }
-            // { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Karmesin DLC" },
-            // { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Mario und Luigi: Brothership" },
-            // { day: "Sonntag (Start zwischen 20 und 22Uhr)", game: "TOTK" }
-        ];
-
-        // Daten für die spontanen Spiele
-        const spontaneousGames = [
-            "Pokemon Schild shiny hunt",
-            "Minecraft",
-            "Mario Kart World",
-            "Mario Party Jomboreee",
-            "Eines der Games aus den Fixen Streamtagen"
-        ];
-
-        // Funktion, die den Streamplan rendert
-        function renderSchedule() {
-            const container = document.getElementById('schedule-container');
-            container.innerHTML = ''; // Container leeren, um Duplikate zu vermeiden
-            streamSchedule.forEach(entry => {
-                const entryDiv = document.createElement('div');
-                entryDiv.className = 'schedule-entry';
-                entryDiv.innerHTML = `
-                    <span class="schedule-day">${entry.day}</span>
-                    <span class="schedule-game">${entry.game}</span>
-                `;
-                container.appendChild(entryDiv);
-            });
-        }
-
-        // Funktion, die die spontanen Spiele rendert
-        function renderSpontaneousGames() {
-            const container = document.getElementById('spontaneous-games-container');
-            container.innerHTML = ''; // Container leeren
-            spontaneousGames.forEach(game => {
-                const li = document.createElement('li');
-                li.textContent = game;
-                container.appendChild(li);
-            });
-        }
-
-
-        // Startet die Animation und das Rendering, wenn die Seite geladen ist
-        window.onload = function () {
-            resizeCanvas(); // Ruft die Größenanpassung auf
-            backgroundAnimation(); // Startet die Hintergrundanimation
-            renderSchedule(); // Rendert den dynamischen Streamplan
-            renderSpontaneousGames(); // Rendert die spontanen Spiele
-        };
-    </script>
-    <script src="backgroundScript.js"></script>
+    <script src="infosZuFlo.js">    </script>
+    <script src="backgroundScript.js" defer></script>
 </body>
 
 </html>
