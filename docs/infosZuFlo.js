@@ -135,12 +135,9 @@ const streamSchedule = [
     { day: "Dienstag (Spontan)", game: "*" },
     { day: "Mittwoch (Spontan)", game: "*" },
     { day: "Donnerstag (Spontan)", game: "*" },
-    { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Legenden Z-A" },
-    { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Pokemon Legenden Z-A" },
-    { day: "Sonntag (Start zwischen 20 und 22Uhr)", game: "Pokemon Legenden Z-A" }
-    // { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Karmesin DLC" },
-    // { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Mario und Luigi: Brothership" },
-    // { day: "Sonntag (Start zwischen 20 und 22Uhr)", game: "TOTK oder Smash Bros Ultimate" }
+    { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Karmesin DLC/Pokemon Legenden Z-A" },
+    { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Mario und Luigi: Brothership" },
+    { day: "Sonntag (Start zwischen 20 und 22Uhr)", game: "TOTK oder Smash Bros Ultimate" }
 ];
 
 // Daten für die spontanen Spiele
