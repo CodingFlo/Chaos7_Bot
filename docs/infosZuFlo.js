@@ -115,7 +115,7 @@ const eckDaten = [
 
 // Daten für das Setup/Hardware
 const hardwareSetup = [
-    { title: "Hauptprozessor (CPU)", data: "AMD Ryzen 9 5900X" },
+    { title: "Hauptprozessor (CPU)", data: "AMD Ryzen 9 7900X" },
     { title: "Grafikkarte (GPU)", data: "NVIDIA GeForce RTX 4070TI" },
     { title: "Capture Card", data: "Elgato 4k pro" },
     { title: "Arbeitsspeicher (RAM)", data: "128 GB DDR5 5200MHz" },
