@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ausgewählte Clips</title>
+
+    <head>
+        <link rel="stylesheet" href="colors.css" />
+    </head>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        /* Wichtige Änderungen für den Hintergrund */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Das Canvas-Element für die Animation */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Vorhandene Styles */
+        @keyframes fadeInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--infoCardBorder);
+            margin: 0;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInFromTop 0.8s ease-out forwards;
+            z-index: 2;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--infoCardBorder);
+            box-shadow: 0 0 10px var(--shadow-color);
+            animation: fadeInFromTop 0.8s ease-out forwards;
+            opacity: 0;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--infoCardBorderHover);
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-card {
+            background-color: var(--infoCardBackground);
+            border-radius: 8px;
+            padding: 30px;
+            border: 1px solid var(--infoCardBorder);
+            box-shadow: 0 0 15px var(--shadow-color);
+            opacity: 0;
+            animation: slideInUp 0.7s ease-out forwards;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px var(--shadow-color-strong);
+        }
+
+        .info-card h2,
+        .info-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--infoCardBorder);
+            border-bottom: 1px solid var(--infoCardBorder);
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: var(--infoCardBorder);
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1.15em;
+            line-height: 1.7;
+            color: var(--color-text);
+        }
+
+        hr.divider {
+            border: 0;
+            height: 1px;
+            background-color: var(--infoCardBorder);
+            opacity: 0;
+            margin: 25px 0;
+            animation: slideInUp 0.7s ease-out forwards;
+            box-shadow: 0 1px 5px var(--shadow-divider);
+        }
+
+        .info-card a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.4s ease, text-shadow 0.4s ease;
+            display: inline-block;
+            background-color: var(--infoCardBorder);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .info-card a:hover {
+            color: var(--link-hover-color);
+            text-shadow: 0 0 5px var(--link-hover-shadow);
+            transform: scale(1.05);
+            transition: 250ms;
+        }
+
+        .clip-container {
+            /* Stil für den Container des Twitch-Players, falls benötigt */
+            width: 620px;
+            height: 378px;
+            margin: 20px auto;
+            box-shadow: 0 0 15px var(--shadow-color-strong);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+<body>
+    <canvas id="background-canvas"></canvas>
+
+    <div id="twitch-clip-embed" class="clip-container">
+        <iframe id="twitchIframe" src="about:blank" frameborder="0" allowfullscreen="true" scrolling="no" height="378"
+            width="620">
+        </iframe>
+    </div>
+
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <script>
+        // 1. Definiere die konstanten Teile der URL und die Iframe-ID
+        const CLIP_ID = "FilthyBoredCobraGrammarKing-XrMrD_FFIAVEPqSB";
+        const iframeElement = document.getElementById("twitchIframe");
+
+        // 2. Rufe den aktuellen Host-Namen ab (z.B. "localhost:3000" oder "dein-name.github.io")
+        const currentHost = window.location.host;
+
+        // 3. Optional: Füge weitere zulässige (aber nicht aktive) Domains hinzu,
+        //    falls du testen möchtest, ob der Embed auch ohne dynamische Erkennung funktioniert.
+        //    Twitch erlaubt dies, aber hier nutzen wir nur den aktuellen Host für die Sauberkeit.
+
+
+        // 4. Baue die vollständige, korrekte Iframe-URL
+        // Wir bauen die URL mit der *aktuell* geladenen Domain als einzigen parent-Parameter zusammen.
+        const twitchSrc = `https://clips.twitch.tv/embed?clip=${CLIP_ID}&parent=${currentHost}`;
+
+        // 5. Setze die URL in das Iframe-Element
+        if (iframeElement) {
+            iframeElement.src = twitchSrc;
+        }
+
+    </script>
+
+    <script src="backgroundScript.js" defer></script>
+</body>
+
+</html>
