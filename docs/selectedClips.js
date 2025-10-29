@@ -8,6 +8,10 @@ const CLIP_DATA = [
         title: "Planung ist alles!"
     },
     {
+        id: "https://www.twitch.tv/flo_ced_cob/clip/SpineySplendidSproutStinkyCheese-N4yq4gxtGU8nAXtl",
+        title: "Failerino"
+    },
+    {
         id: "KnottyBloodyDotterelRaccAttack-je1ypczCI8oId5oG",
         title: "Timing all dente"
     },
