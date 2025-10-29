@@ -45,7 +45,7 @@ const CLIPS_CONTAINER_ID = "clips-list-container";
 const STATIC_ALLOWED_PARENTS = [
     "localhost",
     "127.0.0.1",
-    "DEIN-USERNAME.github.io"
+    "codingflo.github.io"
 ];
 
 // 3. FUNKTION ZUM DYNAMISCHEN ERSTELLEN DER INFO-CARDS UND IFRAMES
