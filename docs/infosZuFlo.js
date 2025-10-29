@@ -174,7 +174,7 @@ function updateEckdaten(title, sourceTitle, suffix = "") {
 updateEckdaten("Alter", "Geburtstag");
 
 // Streamer seit berechnen und das Array aktualisieren
-updateEckdaten("Streamer seit", "Start des Streamer daseins", " Jahren");
+updateEckdaten("Daher Streamer seit", "Start des Streamer daseins", " Jahren");
 
 
 // ----------------------------------------------------

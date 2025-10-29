@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ausgewählte Clips</title>
+    <title>Ausgewählte Clips | Flo_Ced_CoB</title>
 
-    <head>
-        <link rel="stylesheet" href="colors.css" />
-    </head>
-
+    <link rel="stylesheet" href="colors.css" />
     <style>
+        /* ... (Deine Styles bleiben unverändert) ... */
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
         /* Wichtige Änderungen für den Hintergrund */
@@ -80,22 +78,6 @@
             margin-bottom: 30px;
         }
 
-        .profile-pic {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--infoCardBorder);
-            box-shadow: 0 0 10px var(--shadow-color);
-            animation: fadeInFromTop 0.8s ease-out forwards;
-            opacity: 0;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .profile-pic:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px var(--infoCardBorderHover);
-        }
-
         .content-container {
             width: 100%;
             max-width: 800px;
@@ -104,6 +86,7 @@
             gap: 25px;
         }
 
+        /* Basis-Stil der Info-Karten */
         .info-card {
             background-color: var(--infoCardBackground);
             border-radius: 8px;
@@ -111,6 +94,7 @@
             border: 1px solid var(--infoCardBorder);
             box-shadow: 0 0 15px var(--shadow-color);
             opacity: 0;
+            margin-bottom: 2em;
             animation: slideInUp 0.7s ease-out forwards;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
@@ -130,100 +114,94 @@
             margin-bottom: 15px;
         }
 
-        .faq-question {
-            font-weight: bold;
-            color: var(--infoCardBorder);
-            margin-top: 20px;
+        .clip-card {
+            /* Stil für die einzelnen Clip-Karten */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        p {
-            margin: 0;
-            font-size: 1.15em;
-            line-height: 1.7;
-            color: var(--color-text);
-        }
-
-        hr.divider {
-            border: 0;
-            height: 1px;
-            background-color: var(--infoCardBorder);
-            opacity: 0;
-            margin: 25px 0;
-            animation: slideInUp 0.7s ease-out forwards;
-            box-shadow: 0 1px 5px var(--shadow-divider);
-        }
-
-        .info-card a {
-            color: var(--link-color);
-            text-decoration: none;
-            transition: color 0.4s ease, text-shadow 0.4s ease;
-            display: inline-block;
-            background-color: var(--infoCardBorder);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 15px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .info-card a:hover {
-            color: var(--link-hover-color);
-            text-shadow: 0 0 5px var(--link-hover-shadow);
-            transform: scale(1.05);
-            transition: 250ms;
-        }
-
-        .clip-container {
-            /* Stil für den Container des Twitch-Players, falls benötigt */
-            width: 620px;
+        .clip-embed-wrapper {
+            /* Hier stellst du die Breite und Höhe über CSS ein */
+            max-width: 620px;
             height: 378px;
-            margin: 20px auto;
-            box-shadow: 0 0 15px var(--shadow-color-strong);
-            border-radius: 8px;
+            width: 100%;
+            /* Wichtig für die Responsivität auf kleineren Bildschirmen */
+            margin: 10px 0 10px 0;
             overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--shadow-color);
+        }
+
+        /* Das Iframe passt sich an seinen Wrapper an */
+        .clip-embed-wrapper iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-button-wrapper {
+            text-align: center;
+            margin-bottom: 30px;
+            /* Abstand zur TOC */
+            opacity: 0;
+            /* Für die fade-in Animation */
+            animation: fadeInFromTop 0.6s ease-out forwards;
+            animation-delay: var(--delay, 0.15s);
+            z-index: 2;
+            /* Über Canvas */
+        }
+
+        .home-button {
+            display: inline-block;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+
+            /* Farben & Stil passend zu info-card/accent */
+            background-color: var(--accent-2);
+            /* Dunklerer Akzent */
+            color: var(--color-background);
+            /* Helle Schrift auf Akzent */
+            border: 1px solid var(--accent);
+
+            padding: 8px 18px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px var(--shadow-color-strong);
+
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .home-button:hover {
+            background-color: var(--accent);
+            /* Hellerer/stärkerer Akzent beim Hover */
+            color: #fff;
+            transform: scale(1.02);
+            box-shadow: 0 0 12px var(--accent);
         }
     </style>
-
 </head>
 
 <body>
     <canvas id="background-canvas"></canvas>
 
-    <div id="twitch-clip-embed" class="clip-container">
-        <iframe id="twitchIframe" src="about:blank" frameborder="0" allowfullscreen="true" scrolling="no" height="378"
-            width="620">
-        </iframe>
+    <div class="header-container">
+        <h1>Ausgewählte Clips</h1>
     </div>
 
-    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <div class="header-button-wrapper fade-in" style="--delay:.15s">
+        <a href="infosZuFlo.html" class="home-button">
+            ← Zurück zur Startseite
+        </a>
+    </div>
 
-    <script>
-        // 1. Definiere die konstanten Teile der URL und die Iframe-ID
-        const CLIP_ID = "FilthyBoredCobraGrammarKing-XrMrD_FFIAVEPqSB";
-        const iframeElement = document.getElementById("twitchIframe");
+    <div class="content-container">
+        <div id="clips-list-container">
+        </div>
+    </div>
 
-        // 2. Rufe den aktuellen Host-Namen ab (z.B. "localhost:3000" oder "dein-name.github.io")
-        const currentHost = window.location.host;
-
-        // 3. Optional: Füge weitere zulässige (aber nicht aktive) Domains hinzu,
-        //    falls du testen möchtest, ob der Embed auch ohne dynamische Erkennung funktioniert.
-        //    Twitch erlaubt dies, aber hier nutzen wir nur den aktuellen Host für die Sauberkeit.
-
-
-        // 4. Baue die vollständige, korrekte Iframe-URL
-        // Wir bauen die URL mit der *aktuell* geladenen Domain als einzigen parent-Parameter zusammen.
-        const twitchSrc = `https://clips.twitch.tv/embed?clip=${CLIP_ID}&parent=${currentHost}`;
-
-        // 5. Setze die URL in das Iframe-Element
-        if (iframeElement) {
-            iframeElement.src = twitchSrc;
-        }
-
-    </script>
-
+    <script src="selectedClips.js" defer></script>
     <script src="backgroundScript.js" defer></script>
 </body>
 
