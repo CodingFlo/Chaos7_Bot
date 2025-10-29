@@ -4,7 +4,7 @@
 // **********************************************
 const CLIP_DATA = [
     {
-        id: "FilthyBoredCobraGrammarKing-XrMrD_FFIAVEPqSB",
+        id: "https://www.twitch.tv/flo_ced_cob/clip/FilthyBoredCobraGrammarKing-XrMrD_FFIAVEPqSB",
         title: "Planung ist alles!"
     },
     {
@@ -12,7 +12,7 @@ const CLIP_DATA = [
         title: "Failerino"
     },
     {
-        id: "KnottyBloodyDotterelRaccAttack-je1ypczCI8oId5oG",
+        id: "https://www.twitch.tv/flo_ced_cob/clip/KnottyBloodyDotterelRaccAttack-je1ypczCI8oId5oG",
         title: "Timing all dente"
     },
     {
