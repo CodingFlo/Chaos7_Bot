@@ -53,34 +53,36 @@ function renderTwitchClips() {
     const container = document.getElementById(CLIPS_CONTAINER_ID);
     if (!container) return;
 
-    // Erstellt die URL-Kette für den 'parent' Parameter (löst X-Frame-Options)
     const parentParams = STATIC_ALLOWED_PARENTS
         .map(p => `&parent=${p}`)
         .join('');
 
     CLIP_DATA.forEach((clip, index) => {
 
-        // --- A: Erstelle die Design-Karte (div.info-card) ---
+        // ... (Erstellung von clipCard, titleElement, wrapper) ...
         const clipCard = document.createElement('div');
         clipCard.className = 'info-card clip-card';
-        // Wichtig: Wir setzen hier KEIN animationDelay, da das später in applySequentialAnimations passiert
 
-        // Füge den Clip-Titel (h3) hinzu
         const titleElement = document.createElement('h2');
         titleElement.textContent = clip.title;
         clipCard.appendChild(titleElement);
 
-        // --- B: Erstelle den Wrapper für die CSS-Größenkontrolle ---
         const wrapper = document.createElement('div');
         wrapper.className = 'clip-embed-wrapper';
 
-        // --- C: Erstelle das Iframe-Element ---
+        // --- Loader Overlay ---
+        const loaderOverlay = document.createElement('div');
+        loaderOverlay.className = 'loader-overlay';
+        loaderOverlay.innerHTML = '<div class="loader-spinner"></div> Clip wird geladen...';
+        wrapper.appendChild(loaderOverlay);
+
+        // --- Iframe Element ---
         const iframe = document.createElement('iframe');
+        const clipId = clip.id.includes('/')
+            ? clip.id.substring(clip.id.lastIndexOf('/') + 1)
+            : clip.id;
 
-        // Baue die Iframe-Source (src) zusammen
-        iframe.src = `https://clips.twitch.tv/embed?clip=${clip.id.replace("https://www.twitch.tv/flo_ced_cob/clip/", "")}${parentParams}`;
-
-        // Setze die notwendigen Attribute
+        iframe.src = `https://clips.twitch.tv/embed?clip=${clipId}${parentParams}`;
         iframe.setAttribute('frameborder', '0');
         iframe.setAttribute('allowfullscreen', 'true');
         iframe.setAttribute('scrolling', 'no');
@@ -88,9 +90,8 @@ function renderTwitchClips() {
         iframe.style.height = '100%';
 
         wrapper.appendChild(iframe);
-        clipCard.appendChild(wrapper);
 
-        // --- D: Füge die fertige Karte dem Hauptcontainer hinzu ---
+        clipCard.appendChild(wrapper);
         container.appendChild(clipCard);
     });
 }
