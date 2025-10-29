@@ -25,7 +25,7 @@ const CLIP_DATA = [
     },
     {
         id: "https://www.twitch.tv/flo_ced_cob/clip/ProductiveTardyMageYouWHY-vdkfM9caPgkCdzHX",
-        title: "Meister der Sprachen"
+        title: "Ente? :|"
     },
     {
         id: "https://www.twitch.tv/flo_ced_cob/clip/PrettyPricklyCheddarBlargNaut-e7egzq435r5xwT4U",
