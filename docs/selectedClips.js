@@ -45,7 +45,6 @@ const CLIP_DATA = [
 const CLIPS_CONTAINER_ID = "clips-list-container";
 
 // Die Basis-Domains, die IMMER erlaubt sein sollen: localhost und deine GitHub Pages Domain.
-// WICHTIG: Ersetze "DEIN-USERNAME.github.io" durch deine tatsächliche GitHub Pages URL.
 const STATIC_ALLOWED_PARENTS = [
     "localhost",
     "127.0.0.1",
@@ -116,7 +115,6 @@ function applySequentialAnimationsClips() {
         element.style.animationDelay = `${delay}s`;
     });
 }
-
 
 // 5. INITIALISIERUNG
 // Das Skript muss warten, bis alle Clips gerendert sind, BEVOR es die Animationen setzt.
