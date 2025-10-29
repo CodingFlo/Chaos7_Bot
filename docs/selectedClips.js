@@ -32,6 +32,10 @@ const CLIP_DATA = [
         title: "(Das lasse ich unkommentiert)"
     },
     {
+        id: "https://www.twitch.tv/flo_ced_cob/clip/CreativeSpineyLatteMingLee-gMllJtOZUbYGd7tm",
+        title: "(Das lasse ich ERNEUT unkommentiert)"
+    },
+    {
         id: "https://www.twitch.tv/flo_ced_cob/clip/FragileKitschyGarbageThisIsSparta-0G1neFvymSdAnm6O",
         title: "Meister des MLGs"
     },
