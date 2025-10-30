@@ -16,7 +16,7 @@ function getCSSVariable(varName) {
 
 const particleColor = getCSSVariable('--canvas-color');
 
-// --- PARTICLE KLASSE (UNVERÄNDERT) ---
+// --- PARTICLE KLASSE ---
 class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
