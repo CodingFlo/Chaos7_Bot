@@ -6,9 +6,7 @@
 
 # Mache eine Ausnahme für die index.html im docs-Ordner
 !docs/*
-!docs/css/*
-!docs/img/*
-!docs/js/*
+!docs/**
 
 # Mache eine Ausnahme für die .gitignore-Datei selbst
 !.gitignore
