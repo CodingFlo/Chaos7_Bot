@@ -1,11 +1,18 @@
 const canvas = document.getElementById('background-canvas');
 const ctx = canvas.getContext('2d');
+
+// --- LAG-METER UND STEUERUNGSVARIABLEN ---
+const FPS_THRESHOLD = 30; // Ziel-FPS: Unter diesem Wert wird die Animation gestoppt
+const MEASUREMENT_INTERVAL = 30; // Anzahl der Frames für die durchschnittliche Messung
+let frameCount = 0;
+let lastFrameTime = performance.now();
+let fpsHistory = [];
+let isAnimationRunning = true; // Steuerung der Animation
+
+// --- BESTEHENDER CODE ---
 let particles = [];
+const MAX_SPEED = 0.15;
 
-// Maximal-Speed-Limit
-const MAX_SPEED = 0.15; // <--- leicht anpassbar für schnelle Displays
-
-// CSS-Variablen aus :root
 function getCSSVariable(varName) {
     return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
 }
@@ -40,18 +47,71 @@ class Particle {
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    createParticles(); // Partikelanzahl an neue Canvas-Größe anpassen
+    createParticles();
 }
 
 function createParticles() {
     particles = [];
-    const numberOfParticles = (canvas.width * canvas.height) / 9000;
+    // Reduziere die Partikelanzahl bei schlechter Performance
+    const particleDensityFactor = isAnimationRunning ? 9000 : 15000;
+    const numberOfParticles = (canvas.width * canvas.height) / particleDensityFactor;
     for (let i = 0; i < numberOfParticles; i++) {
         particles.push(new Particle());
     }
 }
 
-function backgroundAnimation() {
+function hexToRgb(hex) {
+    hex = hex.replace('#', '');
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r, g, b };
+}
+
+// --- HAUPTANIMATIONS-FUNKTION MIT LAG-PRÜFUNG ---
+function backgroundAnimation(currentTime) {
+    // Nur weitermachen, wenn die Animation laufen soll
+    if (!isAnimationRunning) {
+        // Falls die Animation gestoppt ist, nur einen leeren Frame anfordern
+        // um theoretisch wieder starten zu können, falls sich die Performance bessert.
+        requestAnimationFrame(backgroundAnimation);
+        return;
+    }
+
+    // --- FPS-MESSUNG START ---
+    const delta = currentTime - lastFrameTime;
+    const currentFPS = 1000 / delta;
+    lastFrameTime = currentTime;
+
+    fpsHistory.push(currentFPS);
+    frameCount++;
+
+    if (frameCount >= MEASUREMENT_INTERVAL) {
+        const averageFPS = fpsHistory.reduce((a, b) => a + b) / fpsHistory.length;
+
+        // Wenn die durchschnittliche FPS zu niedrig ist, stoppe die Animation
+        if (averageFPS < FPS_THRESHOLD) {
+            console.warn(`[Chaos7 Bot] Performance zu niedrig (${averageFPS.toFixed(2)} FPS < ${FPS_THRESHOLD} FPS). Hintergrund-Animation gestoppt.`);
+            isAnimationRunning = false;
+            // Canvas leeren, um Ressourcen freizugeben
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Optional: Class entfernen, um den statischen Zustand zu signalisieren
+            canvas.classList.remove('canvas-loaded');
+
+            // Partikel neu erstellen, um Ressourcen zu sparen (z.B. kleinere Anzahl)
+            createParticles();
+            // Wichtig: requestAnimationFrame wird unten wieder aufgerufen, stoppt aber hier durch das "isAnimationRunning" Flag im nächsten Frame
+
+        } else {
+            // FPS-Historie zurücksetzen
+            fpsHistory = [];
+            frameCount = 0;
+        }
+    }
+    // --- FPS-MESSUNG ENDE ---
+
+    // --- ANIMATIONS-LOGIK (WIE VORHER) ---
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let a = 0; a < particles.length; a++) {
@@ -86,30 +146,18 @@ function backgroundAnimation() {
     requestAnimationFrame(backgroundAnimation);
 }
 
-function hexToRgb(hex) {
-    hex = hex.replace('#', '');
-    const bigint = parseInt(hex, 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return { r, g, b };
+function applyFadeIn() {
+    // Kurze Verzögerung von 50ms, um sicherzustellen, dass das Canvas im DOM initialisiert ist.
+    setTimeout(() => {
+        if (isAnimationRunning) { // Nur Fade-In, wenn Animation auch wirklich läuft
+            canvas.classList.add('canvas-loaded');
+        }
+    }, 50);
 }
 
 window.addEventListener('resize', resizeCanvas);
 
 // Initialisierung
-resizeCanvas();          // Canvas-Größe und Partikel einmalig setzen
-backgroundAnimation();   // Animation starten
-function applyFadeIn() {
-    // Kurze Verzögerung von 50ms, um sicherzustellen, dass das Canvas im DOM initialisiert ist.
-    setTimeout(() => {
-        canvas.classList.add('canvas-loaded');
-    }, 50);
-}
-
-// Initialisierung
-resizeCanvas();
-backgroundAnimation();
-
-// Rufe die Einblendungsfunktion nach dem Start der Animation auf.
+resizeCanvas(); // Canvas-Größe und Partikel einmalig setzen
+backgroundAnimation(performance.now()); // Animation starten und Startzeit übergeben
 applyFadeIn();
