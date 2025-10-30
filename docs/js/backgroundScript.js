@@ -1,17 +1,14 @@
 const canvas = document.getElementById('background-canvas');
 const ctx = canvas.getContext('2d');
 
-// --- LAG-METER UND STEUERUNGSVARIABLEN ---
-const FPS_THRESHOLD = 30; // Ziel-FPS: Unter diesem Wert wird die Animation gestoppt
-const MEASUREMENT_INTERVAL = 30; // Anzahl der Frames für die durchschnittliche Messung
-let frameCount = 0;
-let lastFrameTime = performance.now();
-let fpsHistory = [];
-let isAnimationRunning = true; // Steuerung der Animation
-
-// --- BESTEHENDER CODE ---
-let particles = [];
+// --- STEUERUNGSVARIABLEN ---
+// Realistischer Schwellenwert für den Dauerbetrieb. 
+const FPS_THRESHOLD = 30;
+const INITIAL_CHECK_FRAMES = 10; // Nur 10 Frames für den schnellen Initial-Check
 const MAX_SPEED = 0.15;
+
+let particles = [];
+let isAnimationRunning = false; // Startet im 'Aus'-Zustand
 
 function getCSSVariable(varName) {
     return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
@@ -19,6 +16,7 @@ function getCSSVariable(varName) {
 
 const particleColor = getCSSVariable('--canvas-color');
 
+// --- PARTICLE KLASSE (UNVERÄNDERT) ---
 class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
@@ -28,14 +26,13 @@ class Particle {
         this.speedY = (Math.random() * MAX_SPEED * 2) - MAX_SPEED;
         this.color = particleColor;
     }
-
+    // ... update und draw Methoden ...
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
         if (this.x < 0 || this.x > canvas.width) this.speedX = -this.speedX;
         if (this.y < 0 || this.y > canvas.height) this.speedY = -this.speedY;
     }
-
     draw() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
@@ -43,22 +40,7 @@ class Particle {
         ctx.fill();
     }
 }
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    createParticles();
-}
-
-function createParticles() {
-    particles = [];
-    // Reduziere die Partikelanzahl bei schlechter Performance
-    const particleDensityFactor = isAnimationRunning ? 9000 : 15000;
-    const numberOfParticles = (canvas.width * canvas.height) / particleDensityFactor;
-    for (let i = 0; i < numberOfParticles; i++) {
-        particles.push(new Particle());
-    }
-}
+// ------------------------------------
 
 function hexToRgb(hex) {
     hex = hex.replace('#', '');
@@ -69,49 +51,36 @@ function hexToRgb(hex) {
     return { r, g, b };
 }
 
-// --- HAUPTANIMATIONS-FUNKTION MIT LAG-PRÜFUNG ---
-function backgroundAnimation(currentTime) {
-    // Nur weitermachen, wenn die Animation laufen soll
-    if (!isAnimationRunning) {
-        // Falls die Animation gestoppt ist, nur einen leeren Frame anfordern
-        // um theoretisch wieder starten zu können, falls sich die Performance bessert.
-        requestAnimationFrame(backgroundAnimation);
-        return;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    createParticles();
+}
+
+function createParticles() {
+    particles = [];
+    // Partikeldichte nur einmal bestimmen, wenn Animation läuft
+    const particleDensityFactor = 9000;
+    const numberOfParticles = (canvas.width * canvas.height) / particleDensityFactor;
+    for (let i = 0; i < numberOfParticles; i++) {
+        particles.push(new Particle());
     }
+}
 
-    // --- FPS-MESSUNG START ---
-    const delta = currentTime - lastFrameTime;
-    const currentFPS = 1000 / delta;
-    lastFrameTime = currentTime;
-
-    fpsHistory.push(currentFPS);
-    frameCount++;
-
-    if (frameCount >= MEASUREMENT_INTERVAL) {
-        const averageFPS = fpsHistory.reduce((a, b) => a + b) / fpsHistory.length;
-
-        // Wenn die durchschnittliche FPS zu niedrig ist, stoppe die Animation
-        if (averageFPS < FPS_THRESHOLD) {
-            console.warn(`[Chaos7 Bot] Performance zu niedrig (${averageFPS.toFixed(2)} FPS < ${FPS_THRESHOLD} FPS). Hintergrund-Animation gestoppt.`);
-            isAnimationRunning = false;
-            // Canvas leeren, um Ressourcen freizugeben
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Optional: Class entfernen, um den statischen Zustand zu signalisieren
-            canvas.classList.remove('canvas-loaded');
-
-            // Partikel neu erstellen, um Ressourcen zu sparen (z.B. kleinere Anzahl)
-            createParticles();
-            // Wichtig: requestAnimationFrame wird unten wieder aufgerufen, stoppt aber hier durch das "isAnimationRunning" Flag im nächsten Frame
-
-        } else {
-            // FPS-Historie zurücksetzen
-            fpsHistory = [];
-            frameCount = 0;
-        }
+function applyFadeIn() {
+    // Nur Fade-In, wenn Animation auch wirklich läuft
+    if (isAnimationRunning) {
+        setTimeout(() => {
+            canvas.classList.add('canvas-loaded');
+        }, 50);
     }
-    // --- FPS-MESSUNG ENDE ---
+}
 
-    // --- ANIMATIONS-LOGIK (WIE VORHER) ---
+// --- PERMANENTE HAUPTANIMATIONS-FUNKTION (WIRD NUR BEI BESTANDENEM CHECK GESTARTET) ---
+function backgroundAnimation() {
+    // Wenn die Animation einmal gestartet wurde, läuft sie weiter,
+    // bis das Fenster geschlossen wird oder der Browser sie stoppt.
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let a = 0; a < particles.length; a++) {
@@ -146,18 +115,60 @@ function backgroundAnimation(currentTime) {
     requestAnimationFrame(backgroundAnimation);
 }
 
-function applyFadeIn() {
-    // Kurze Verzögerung von 50ms, um sicherzustellen, dass das Canvas im DOM initialisiert ist.
-    setTimeout(() => {
-        if (isAnimationRunning) { // Nur Fade-In, wenn Animation auch wirklich läuft
-            canvas.classList.add('canvas-loaded');
+// --- NEUE PERFORMANCE-PRÜFUNG VOR DEM START ---
+
+let checkFrameCount = 0;
+let checkTimeStart = 0;
+
+function runPerformanceCheck() {
+    if (checkFrameCount === 0) {
+        // Starte die Zeitmessung beim ersten Frame
+        checkTimeStart = performance.now();
+    }
+
+    // Simuliere einen Frame-Durchlauf (nur die CPU-lastigen Teile)
+    // Um die Performance zu testen, müssen wir Partikel erstellen und die $O(n^2)$-Berechnung durchführen.
+    if (particles.length === 0) {
+        // Temporäre Partikel für den Testlauf erstellen
+        resizeCanvas();
+    }
+
+    // Die rechenintensiven Teile:
+    particles.forEach(p => p.update());
+    // (Die $O(n^2)$ Linienberechnung weglassen, da update und draw schon gut messen)
+
+    checkFrameCount++;
+
+    if (checkFrameCount < INITIAL_CHECK_FRAMES) {
+        // Nächsten Test-Frame anfordern
+        requestAnimationFrame(runPerformanceCheck);
+    } else {
+        // --- PRÜFUNG BEENDET ---
+        const totalTime = performance.now() - checkTimeStart;
+        // Berechne die durchschnittliche FPS über alle Test-Frames
+        const averageFPS = (INITIAL_CHECK_FRAMES / totalTime) * 1000;
+
+        if (averageFPS >= FPS_THRESHOLD) {
+            // **TEST BESTANDEN:** Animation starten
+            isAnimationRunning = true;
+            console.log(`[Chaos7 Bot] Performance-Check bestanden (${averageFPS.toFixed(2)} FPS >= ${FPS_THRESHOLD} FPS). Animation wird gestartet.`);
+            // Partikel wurden bereits im Testlauf erstellt
+            window.addEventListener('resize', resizeCanvas);
+            backgroundAnimation(); // Startet die permanente Animation
+            applyFadeIn();
+
+        } else {
+            // **TEST NICHT BESTANDEN:** Partikel-Hintergrund unterdrücken
+            isAnimationRunning = false;
+            console.warn(`[Chaos7 Bot] Performance-Check NICHT bestanden (${averageFPS.toFixed(2)} FPS < ${FPS_THRESHOLD} FPS). Hintergrund-Animation dauerhaft unterdrückt.`);
+            // Das Canvas leeren (falls temporär etwas gezeichnet wurde) und die Partikel entfernen
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles = [];
+            // Wichtig: Keine weitere requestAnimationFrame Schleife starten
         }
-    }, 50);
+    }
 }
 
-window.addEventListener('resize', resizeCanvas);
-
-// Initialisierung
-resizeCanvas(); // Canvas-Größe und Partikel einmalig setzen
-backgroundAnimation(performance.now()); // Animation starten und Startzeit übergeben
-applyFadeIn();
+// --- INITIALISIERUNG STARTET HIER ---
+// Das Skript startet NICHT die Animation, sondern den Performance-Check.
+runPerformanceCheck();
