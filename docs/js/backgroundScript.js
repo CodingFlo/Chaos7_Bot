@@ -115,7 +115,7 @@ function backgroundAnimation() {
     requestAnimationFrame(backgroundAnimation);
 }
 
-// --- NEUE PERFORMANCE-PRÜFUNG VOR DEM START ---
+// --- PERFORMANCE-PRÜFUNG VOR DEM START ---
 
 let checkFrameCount = 0;
 let checkTimeStart = 0;
@@ -171,4 +171,19 @@ function runPerformanceCheck() {
 
 // --- INITIALISIERUNG STARTET HIER ---
 // Das Skript startet NICHT die Animation, sondern den Performance-Check.
-runPerformanceCheck();
+document.addEventListener('DOMContentLoaded', () => {
+    function runIfVisible() {
+        if (document.visibilityState === 'visible') {
+            runPerformanceCheck();
+            document.removeEventListener('visibilitychange', runIfVisible);
+        }
+    }
+
+    if (document.visibilityState === 'visible') {
+        // Seite ist sofort sichtbar (z. B. normaler Klick)
+        runPerformanceCheck();
+    } else {
+        // Seite ist noch im Hintergrund (z. B. Mittelklick -> neuer Tab)
+        document.addEventListener('visibilitychange', runIfVisible);
+    }
+});
