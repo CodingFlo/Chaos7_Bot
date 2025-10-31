@@ -43,18 +43,34 @@ body {
   opacity: 0;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
+
 .profile-pic:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px var(--shadow-color-strong);
 }
 
 @keyframes fadeInFromTop {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes slideInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .content-container {
@@ -77,6 +93,7 @@ body {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   margin-bottom: 18px;
 }
+
 .info-card h2,
 .info-card h3 {
   font-family: 'Orbitron', sans-serif;
@@ -86,6 +103,7 @@ body {
   margin-top: 0;
   margin-bottom: 15px;
 }
+
 .info-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 25px var(--shadow-color-strong);
@@ -104,12 +122,14 @@ body {
   margin-top: 15px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 .project-link:hover,
 .info-card a:hover {
   background-color: var(--infoCardBorderHover);
   transform: scale(1.05);
   color: #fff;
 }
+
 a:hover {
   color: var(--link-hover-color);
   text-shadow: 0 0 5px var(--link-hover-shadow);
@@ -123,6 +143,7 @@ a:hover {
   margin-top: 20px;
   flex-direction: column-reverse;
 }
+
 .social-links a {
   display: flex;
   align-items: center;
@@ -135,16 +156,19 @@ a:hover {
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   white-space: nowrap;
 }
+
 .social-links a:hover {
   background-color: var(--social-bg-hover);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 15px var(--shadow-color);
 }
+
 .social-links img {
   width: 28px;
   height: 28px;
   object-fit: contain;
 }
+
 .social-links .x-icon-container {
   width: 30px;
   aspect-ratio: 1/1;
@@ -167,19 +191,23 @@ a:hover {
   border-bottom: 1px solid var(--shadow-divider);
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
 .schedule-entry:hover {
   transform: scale(1.02);
   background-color: var(--schedule-hover-bg);
   border-radius: 4px;
 }
+
 .schedule-day {
   font-weight: bold;
   color: var(--link-color);
 }
+
 .schedule-game {
   color: var(--color-text);
   text-align: right;
 }
+
 .divider {
   border: 0;
   height: 1px;
@@ -189,12 +217,15 @@ a:hover {
   animation: slideInUp 0.7s ease-out forwards;
   box-shadow: 0 1px 5px var(--shadow-divider);
 }
+
 .faq-question {
   font-weight: bold;
   color: var(--infoCardBorder);
   margin-top: 20px;
 }
-p, #FAQ-Box ul {
+
+p,
+#FAQ-Box ul {
   margin: 0;
   font-size: 1.15em;
   line-height: 1.7;
@@ -206,10 +237,17 @@ p, #FAQ-Box ul {
     width: 50px;
     height: 50px;
   }
+
   .header-wrapper h1 {
     font-size: 2rem;
   }
+
   .content-container {
     padding: 0 4px;
   }
+}
+
+.gameInfoText {
+  margin-top: 1ch;
+  margin-bottom: 1ch;
 }

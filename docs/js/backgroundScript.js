@@ -6,6 +6,8 @@ const ctx = canvas.getContext('2d');
 const FPS_THRESHOLD = 30;
 const INITIAL_CHECK_FRAMES = 10; // Nur 10 Frames für den schnellen Initial-Check
 const MAX_SPEED = 0.15;
+// Partikeldichte nur einmal bestimmen, wenn Animation läuft
+const particleDensityFactor = 5000;
 
 let particles = [];
 let isAnimationRunning = false; // Startet im 'Aus'-Zustand
@@ -26,13 +28,14 @@ class Particle {
         this.speedY = (Math.random() * MAX_SPEED * 2) - MAX_SPEED;
         this.color = particleColor;
     }
-    // ... update und draw Methoden ...
+
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
         if (this.x < 0 || this.x > canvas.width) this.speedX = -this.speedX;
         if (this.y < 0 || this.y > canvas.height) this.speedY = -this.speedY;
     }
+
     draw() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
@@ -59,8 +62,6 @@ function resizeCanvas() {
 
 function createParticles() {
     particles = [];
-    // Partikeldichte nur einmal bestimmen, wenn Animation läuft
-    const particleDensityFactor = 9000;
     const numberOfParticles = (canvas.width * canvas.height) / particleDensityFactor;
     for (let i = 0; i < numberOfParticles; i++) {
         particles.push(new Particle());
