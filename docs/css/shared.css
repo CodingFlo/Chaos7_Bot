@@ -96,3 +96,19 @@ h2 {
     margin-top: 0;
     margin-bottom: 15px;
 }
+
+.profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--infoCardBorder);
+    box-shadow: 0 0 10px var(--shadow-color);
+    animation: fadeInFromTop 0.8s ease-out forwards;
+    opacity: 0;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.profile-pic:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--infoCardBorderHover);
+}
