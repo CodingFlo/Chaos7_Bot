@@ -215,15 +215,6 @@ li:hover {
     transform: scaleX(1);
 }
 
-.header-button-wrapper {
-    text-align: center;
-    margin-bottom: 30px;
-    opacity: 0;
-    animation: fadeInFromTop 0.6s ease-out forwards;
-    animation-delay: var(--delay, 0.15s);
-    z-index: 2;
-}
-
 .home-button {
     display: inline-block;
     text-decoration: none;
