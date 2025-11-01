@@ -9,8 +9,8 @@ html {
 }
 
 body {
-    margin: 0 !important;
-    padding: 0 !important;
+    margin: 0;
+    padding: 0;
     font-family: 'Inter', sans-serif;
     background: var(--color-background);
     color: var(--color-text);
@@ -22,12 +22,7 @@ body {
     padding: 20px;
     background-color: var(--color-background);
     color: var(--color-text);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    overflow-x: hidden;
-    box-sizing: border-box;
+    display: unset !important;
 }
 
 canvas#background-canvas {
