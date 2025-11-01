@@ -112,3 +112,26 @@ h2 {
     transform: scale(1.05);
     box-shadow: 0 0 15px var(--infoCardBorderHover);
 }
+
+.info-card a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+    display: inline-block;
+    background-color: var(--infoCardBorder);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.info-card a:hover {
+    color: var(--link-hover-color);
+    text-shadow: 0 0 5px var(--link-hover-shadow);
+    transform: scale(1.05);
+    transition: 250ms;
+}

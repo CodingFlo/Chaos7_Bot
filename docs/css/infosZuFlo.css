@@ -92,8 +92,7 @@ body {
   box-shadow: 0 5px 25px var(--shadow-color-strong);
 }
 
-.project-link,
-.info-card a {
+.project-link {
   display: inline-block;
   background-color: var(--infoCardBorder);
   color: #fff;
@@ -106,8 +105,7 @@ body {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.project-link:hover,
-.info-card a:hover {
+.project-link:hover {
   background-color: var(--infoCardBorderHover);
   transform: scale(1.05);
   color: #fff;
