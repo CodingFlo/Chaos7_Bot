@@ -21,6 +21,7 @@ body {
   color: var(--infoCardBorder);
   font-size: 3rem;
   margin-top: 20px;
+  flex-basis: 100%;
 }
 
 .profile-pics {
