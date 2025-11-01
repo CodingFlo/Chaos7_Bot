@@ -65,28 +65,6 @@ body {
   margin: 0 auto;
 }
 
-.info-card {
-  background-color: var(--infoCardBackground);
-  border-radius: 8px;
-  padding: 30px;
-  border: 1px solid var(--infoCardBorder);
-  box-shadow: 0 0 15px var(--shadow-color);
-  opacity: 0;
-  animation: slideInUp 0.6s ease-out forwards;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  margin-bottom: 18px;
-}
-
-.info-card h2,
-.info-card h3 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--infoCardBorder);
-  border-bottom: 1px solid var(--infoCardBorder);
-  padding-bottom: 8px;
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
 .info-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 25px var(--shadow-color-strong);
@@ -95,7 +73,7 @@ body {
 .project-link {
   display: inline-block;
   background-color: var(--infoCardBorder);
-  color: #fff;
+  color: var(--color-text);
   padding: 10px 20px;
   border-radius: 20px;
   text-decoration: none;
@@ -108,7 +86,7 @@ body {
 .project-link:hover {
   background-color: var(--infoCardBorderHover);
   transform: scale(1.05);
-  color: #fff;
+  color: var(--color-text);
 }
 
 a:hover {
@@ -125,7 +103,7 @@ a:hover {
   flex-direction: column-reverse;
 }
 
-.social-links a {
+.social-links>a {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -138,7 +116,7 @@ a:hover {
   white-space: nowrap;
 }
 
-.social-links a:hover {
+.social-links>a:hover {
   background-color: var(--social-bg-hover);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 15px var(--shadow-color);

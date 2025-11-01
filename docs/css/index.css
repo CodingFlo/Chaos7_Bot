@@ -88,32 +88,6 @@ h1 {
     gap: 25px;
 }
 
-.info-card {
-    background-color: var(--infoCardBackground);
-    border-radius: 8px;
-    padding: 30px;
-    border: 1px solid var(--infoCardBorder);
-    box-shadow: 0 0 15px var(--shadow-color);
-    opacity: 0;
-    animation: slideInUp 0.7s ease-out forwards;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.info-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 25px var(--shadow-color-strong);
-}
-
-.info-card h2,
-.info-card h3 {
-    font-family: 'Orbitron', sans-serif;
-    color: var(--infoCardBorder);
-    border-bottom: 1px solid var(--infoCardBorder);
-    padding-bottom: 8px;
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
 .faq-question {
     font-weight: bold;
     color: var(--infoCardBorder);
