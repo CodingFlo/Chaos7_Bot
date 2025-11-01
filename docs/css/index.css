@@ -27,6 +27,7 @@ body {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -38,6 +39,7 @@ body {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -72,6 +74,7 @@ h1 {
     opacity: 0;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
+
 .profile-pic:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px var(--infoCardBorderHover);
@@ -95,10 +98,12 @@ h1 {
     animation: slideInUp 0.7s ease-out forwards;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
+
 .info-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 25px var(--shadow-color-strong);
 }
+
 .info-card h2,
 .info-card h3 {
     font-family: 'Orbitron', sans-serif;
@@ -108,17 +113,20 @@ h1 {
     margin-top: 0;
     margin-bottom: 15px;
 }
+
 .faq-question {
     font-weight: bold;
     color: var(--infoCardBorder);
     margin-top: 20px;
 }
+
 p {
     margin: 0;
     font-size: 1.15em;
     line-height: 1.7;
     color: var(--color-text);
 }
+
 hr.divider {
     border: 0;
     height: 1px;
@@ -128,6 +136,7 @@ hr.divider {
     animation: slideInUp 0.7s ease-out forwards;
     box-shadow: 0 1px 5px var(--shadow-divider);
 }
+
 .info-card a {
     color: var(--link-color);
     text-decoration: none;
@@ -143,10 +152,10 @@ hr.divider {
     margin-top: 15px;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 .info-card a:hover {
     color: var(--link-hover-color);
     text-shadow: 0 0 5px var(--link-hover-shadow);
     transform: scale(1.05);
     transition: 250ms;
 }
-

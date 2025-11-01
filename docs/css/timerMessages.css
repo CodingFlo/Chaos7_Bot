@@ -1,12 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
 @keyframes fadeInFromTop {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 @keyframes slideInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 .info-container {
     margin-bottom: 25px;
     padding: 10px 20px;
@@ -26,16 +43,20 @@
     justify-content: center;
     align-items: center;
 }
+
 .info-container span {
     white-space: nowrap;
 }
+
 .info-container span::after {
     content: "|";
     margin: 0 10px;
 }
+
 .info-container span:last-child::after {
     content: none;
 }
+
 .messages-container {
     width: 100%;
     max-width: 800px;
@@ -43,6 +64,7 @@
     flex-direction: column;
     gap: 25px;
 }
+
 .header-card {
     background-color: var(--card-bg);
     border-radius: 8px;
@@ -57,26 +79,31 @@
     opacity: 0;
     animation: slideInUp 0.5s ease-out 0.4s forwards;
 }
+
 p {
     margin: 0;
     font-size: 1.15em;
     line-height: 1.7;
     color: var(--color-text);
 }
+
 a {
     color: var(--link-color);
     text-decoration: none;
     transition: color 0.4s ease, text-shadow 0.4s ease;
 }
+
 a:hover {
     color: var(--link-hover-color);
     text-shadow: 0 0 5px var(--link-hover-shadow);
 }
+
 @media (max-width: 500px) {
     .info-container {
         flex-direction: column;
         align-items: center;
     }
+
     .info-container span::after {
         content: none;
     }
