@@ -1,380 +1,27 @@
-
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuschauer-Aktivitätsranking</title>
-    
-    <link rel="stylesheet" href="colors.css" />
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-        @keyframes fadeInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
+    <meta name="description" content="Zuschauer-Ranking und Aktivitätsstatistiken für Chaos7.">
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://deine-seite.de/viewerActivity.html" />
+    <meta property="og:title" content="Zuschauer-Ranking – Chaos7 Bot" />
+    <meta property="og:description" content="Zuschauer-Ranking und Aktivitätsstatistiken für Chaos7." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://deine-seite.de/viewerActivity.html" />
+    <meta property="og:image"
+        content="https://static-cdn.jtvnw.net/jtv_user_pictures/f7ba1f61-5771-4272-b8fc-9d170c4f9256-profile_image-70x70.png" />
+    <meta name="twitter:card" content="summary" />
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes growIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--color-background);
-            color: var(--color-text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow-x: hidden;
-            box-sizing: border-box;
-        }
-
-        #background-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--accent);
-            text-shadow: none;
-            margin: 0 0 20px 0;
-            opacity: 0;
-            animation: fadeInFromTop 0.6s ease-out forwards;
-            z-index: 2;
-            text-align: center;
-        }
-
-        .info-box-container {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 25px;
-            opacity: 0;
-            animation: fadeInFromTop 0.6s ease-out 0.2s forwards;
-            z-index: 2;
-        }
-
-        .info-box {
-            font-size: 1.1em;
-            font-weight: bold;
-            color: var(--color-text);
-            background-color: var(--infoCardBackground);
-            border: 1px solid var(--infoCardBorder);
-            box-shadow: 0 0 15px var(--shadow-color), 0 0 5px var(--shadow-divider);
-            border-radius: 12px;
-            padding: 15px 25px;
-            text-align: center;
-            text-shadow: 1px 1px 2px #000;
-            backdrop-filter: blur(5px);
-            box-sizing: border-box;
-        }
-
-        .info-box h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2em;
-            color: var(--accent);
-            margin: 0 0 10px 0;
-        }
-
-        .command-table-wrapper {
-            width: 100%;
-            max-width: 800px;
-            border-radius: 8px;
-            border: 1px solid var(--infoCardBorder);
-            opacity: 0;
-            animation: growIn 0.8s cubic-bezier(0.2, 0.6, 0.3, 1.2) 0.4s forwards;
-            z-index: 2;
-            background-color: var(--infoCardBackground);
-            box-shadow: 0 0 20px var(--shadow-color);
-            box-sizing: border-box;
-        }
-
-        .command-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: transparent;
-        }
-
-        thead,
-        tbody {
-            border: none;
-            box-shadow: none;
-            background-color: transparent;
-        }
-
-        thead {
-            border-top-left-radius: 7px;
-            border-top-right-radius: 7px;
-        }
-
-        thead tr {
-            opacity: 0;
-            animation: fadeInFromTop 0.5s ease-out 0.8s forwards;
-            display: table-row;
-        }
-
-        thead tr th {
-            background-color: var(--infoCardBorder);
-            transition: 250ms;
-        }
-
-        thead tr th:hover {
-            background-color: var(--infoCardBorderHover);
-            transition: 250ms;
-        }
-
-        th,
-        td {
-            padding: 18px 20px;
-            text-align: left;
-            color: #ffffff;
-            border-bottom: 1px solid var(--infoCardBorder);
-        }
-
-        th {
-            font-weight: bold;
-            cursor: pointer;
-            user-select: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-right: 1px solid var(--infoCardBorder);
-            text-shadow: none;
-            display: table-cell;
-            position: relative;
-        }
-
-        th:first-child {
-            border-top-left-radius: 7px;
-        }
-
-        th:last-child {
-            border-right: none;
-            border-top-right-radius: 7px;
-        }
-
-        th:hover {
-            background-color: var(--infoCardBorderHover);
-        }
-
-        th.sorted {
-            background-color: var(--infoCardBorderHover);
-        }
-
-        .sort-icon {
-            color: inherit;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        tbody tr:hover {
-            background-color: rgba(0, 0, 50, 0.3);
-            box-shadow: 0 0 20px rgba(0, 102, 255, 0.6);
-            transform: scale(1.01);
-            transition: all 0.2s ease-in-out;
-        }
-
-        tr {
-            opacity: 0;
-        }
-
-        tr.animated {
-            animation: slideInUp 0.3s ease-out forwards;
-        }
-
-        /* Mobile styles */
-        @media (max-width: 660px) {
-            body {
-                padding: 10px;
-            }
-
-            .info-box-container {
-                gap: 10px;
-                margin-bottom: 15px;
-            }
-
-            .info-box {
-                padding: 10px;
-                font-size: 0.9em;
-            }
-
-            .command-table-wrapper {
-                border: none;
-                box-shadow: none;
-                background-color: transparent;
-                border-radius: 0;
-                padding: 0;
-            }
-
-            .command-table {
-                display: block;
-            }
-
-            thead {
-                display: block;
-                margin-bottom: 15px;
-            }
-
-            thead tr {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-                animation: none;
-                opacity: 1;
-            }
-
-            thead tr th {
-                background-color: var(--infoCardBackground);
-                transition: 250ms;
-                display: block;
-                text-align: center;
-                padding: 12px 0;
-                border: 1px solid var(--infoCardBorder);
-                border-radius: 8px;
-                color: #ffffff;
-                font-size: 0.8em;
-                box-shadow: 0 0 10px var(--shadow-color);
-                width: 100%;
-            }
-
-            th:first-child {
-                border-radius: 8px 8px 0 0;
-            }
-
-            th:last-child {
-                border-radius: 0 0 8px 8px;
-            }
-
-            th:hover {
-                background-color: var(--infoCardBorderHover);
-            }
-
-            th.sorted {
-                background-color: var(--infoCardBorderHover);
-            }
-
-            .sort-icon {
-                position: static;
-                margin-left: 5px;
-            }
-
-            tbody {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                border: none;
-                box-shadow: none;
-                padding: 20px;
-            }
-
-            tr {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: auto auto;
-                gap: 10px;
-                margin-bottom: 0;
-                border: 1px solid var(--infoCardBorder);
-                border-radius: 8px;
-                box-shadow: 0 0 10px var(--shadow-color), inset 0 0 10px var(--shadow-color);
-                background-color: var(--infoCardBackground);
-                padding: 20px;
-                transition: none;
-                animation: slideInUp 0.3s ease-out forwards;
-            }
-
-            tr:hover {
-                box-shadow: 0 0 10px var(--shadow-color-strong), inset 0 0 10px var(--shadow-color-strong);
-                transform: none;
-            }
-
-            .rank-td {
-                grid-area: 1 / 1 / 2 / 2;
-                font-weight: bold;
-                font-size: 1.1em;
-                color: var(--accent);
-            }
-
-            .username-td {
-                grid-area: 1 / 2 / 2 / 3;
-                font-weight: bold;
-                font-size: 1.1em;
-                color: #ffffff;
-                margin-bottom: 5px;
-            }
-
-            .activity-td {
-                grid-area: 2 / 1 / 3 / 2;
-            }
-
-            .time-td {
-                grid-area: 2 / 2 / 3 / 3;
-            }
-
-            td {
-                display: block;
-                text-align: center;
-                padding: 0;
-                border-bottom: none;
-                word-break: break-word;
-            }
-
-            td::before {
-                content: attr(data-label);
-                display: block;
-                font-weight: bold;
-                text-transform: uppercase;
-                color: var(--accent);
-                margin-bottom: 2px;
-                font-size: 0.8em;
-            }
-
-            .rank-td::before,
-            .username-td::before {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/colors.css" />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="stylesheet" href="css/viewerActivity.css" />
 </head>
+
 <body>
     <!-- The canvas for the animated background -->
     <canvas id="background-canvas"></canvas>
@@ -383,8 +30,14 @@
     <div class="info-box-container">
         <div class="info-box">
             <h2>Stream-Statistiken</h2>
+<<<<<<< HEAD
             <p>Zuletzt aktualisiert: 31.10.2025, 23:11<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
             <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong></p>
+=======
+            <p>Zuletzt aktualisiert: 29.10.2025, 22:25<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
+            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong>
+            </p>
+>>>>>>> 6b0e69f257e428e92443a9290bb624be46dd70d9
             <p>Start der Messung ist der 21.08.2025</p>
         </div>
     </div>
@@ -399,123 +52,16 @@
                 </tr>
             </thead>
             <tbody id="command-table-body">
-                
-            <tr>
-                <td colspan="4" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
-            </tr>
+
+                <tr>
+                    <td colspan="4" style="text-align: center; opacity: 0.5;">Keine Aktivitätsdaten verfügbar.</td>
+                </tr>
             </tbody>
         </table>
     </div>
-    <script>
-        
-        function applyRowAnimation() {
-            const rows = document.querySelectorAll('#command-table-body tr');
-            rows.forEach((row, index) => {
-                row.classList.remove('animated');
-                void row.offsetWidth; // Trigger reflow to restart animation
-                row.classList.add('animated');
-                const delay = 0.3 + index * 0.02;
-                row.style.animationDelay = `${delay}s`;
-            });
-        }
-        document.addEventListener('DOMContentLoaded', applyRowAnimation);
-
-        let currentSortColumn = 'sort-rank'; // Default sort is now rank
-        let sortOrder = 'desc'; // Default sort order for rank is descending
-
-        function sortTableByColumn(columnId) {
-            const tableBody = document.getElementById('command-table-body');
-            const header = document.getElementById(columnId);
-
-            if (currentSortColumn !== columnId) {
-                // Wenn sich die Spalte ändert, wird die Sortierreihenfolge zurückgesetzt
-                sortOrder = (columnId === 'sort-rank' || columnId === 'sort-activity' || columnId === 'sort-time') ? 'desc' : 'asc';
-                const prevHeader = document.getElementById(currentSortColumn);
-                if (prevHeader) {
-                    prevHeader.classList.remove('sorted');
-                    prevHeader.querySelector('.sort-icon').textContent = '';
-                }
-            } else {
-                sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-            }
-
-            currentSortColumn = columnId;
-            header.classList.add('sorted');
-            const columnIndex = header.cellIndex;
-            const rows = Array.from(tableBody.rows);
-
-            const sortedRows = rows.sort((a, b) => {
-                const aText = a.cells[columnIndex].textContent;
-                const bText = b.cells[columnIndex].textContent;
-                let comparison;
-                if (columnId === 'sort-activity' || columnId === 'sort-rank') {
-                    const aValue = parseFloat(aText.replace(/[^0-9.]/g, ''));
-                    const bValue = parseFloat(bText.replace(/[^0-9.]/g, ''));
-                    comparison = aValue - bValue;
-                } else if (columnId === 'sort-time') {
-                    const parseDuration = (durationStr) => {
-                        const parts = durationStr.match(/(d+)(d|h|m|s)/g);
-                        if (!parts) return 0;
-                        let totalMs = 0;
-                        parts.forEach(part => {
-                            const value = parseInt(part.slice(0, -1));
-                            const unit = part.slice(-1);
-                            switch (unit) {
-                                case 'd': totalMs += value * 24 * 60 * 60 * 1000; break;
-                                case 'h': totalMs += value * 60 * 60 * 1000; break;
-                                case 'm': totalMs += value * 60 * 1000; break;
-                                case 's': totalMs += value * 1000; break;
-                            }
-                        });
-                        return totalMs;
-                    };
-                    const aValue = parseDuration(aText);
-                    const bValue = parseDuration(bText);
-                    comparison = aValue - bValue;
-                }
-                else {
-                    comparison = aText.localeCompare(bText);
-                }
-                return sortOrder === 'asc' ? comparison : -comparison;
-            });
-
-            sortedRows.forEach(row => tableBody.appendChild(row));
-            applyRowAnimation();
-            document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
-            if (header.querySelector('.sort-icon')) {
-                header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
-            }
-        }
-        document.getElementById('sort-username').onclick = () => sortTableByColumn('sort-username');
-        document.getElementById('sort-activity').onclick = () => sortTableByColumn('sort-activity');
-        document.getElementById('sort-rank').onclick = () => sortTableByColumn('sort-rank');
-        document.getElementById('sort-time').onclick = () => sortTableByColumn('sort-time');
-        document.addEventListener('DOMContentLoaded', () => {
-            sortTableByColumn('sort-rank'); // Default sort on page load
-        });
-
-        // Reagiert auf die Größenänderung des Fensters
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Verfolgt die Mausbewegung
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-
-        // Initialisierung beim Laden der Seite
-        window.onload = function () {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            resizeCanvas(); // Ruft die Größenanpassung auf
-            backgroundAnimation(); // Startet die Hintergrundanimation
-        };
-    
-    </script>
-
-    <script src="backgroundScript.js"></script>
+    <script src="js/backgroundScript.js"></script>
+    <script src="js/applySequentialAnimations.js" defer></script>
+    <script src="js/viewerActivity.js"></script>
 </body>
+
 </html>
