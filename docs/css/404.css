@@ -1,7 +1,19 @@
-.info-card {
-    position: absolute !important;
-    top: 50%!important;
-    left: 50%!important;
-    transform: translate(-50%, -50%) !important;
+@keyframes slideIn404 {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -100%);
+    }
 
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+#box404 {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+
+    animation: slideIn404 0.6s ease-out forwards;
 }
