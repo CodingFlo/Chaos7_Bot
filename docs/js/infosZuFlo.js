@@ -136,7 +136,7 @@ const streamSchedule = [
     { day: "Dienstag (Spontan)", game: "*" },
     { day: "Mittwoch (Spontan)", game: "*" },
     { day: "Donnerstag (Spontan)", game: "*" },
-    { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Karmesin DLCc oder Pokemon Legenden Z-A" },
+    { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Karmesin DLC oder Pokemon Legenden Z-A" },
     { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Mario und Luigi: Brothership" },
     { day: "Sonntag (Start zwischen 20 und 22Uhr)", game: "TOTK oder Smash Bros Ultimate" }
 ];
