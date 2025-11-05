@@ -20,8 +20,8 @@ const CLIP_DATA = [
         title: "Kommt Böse am falschen Ort zur falschen Zeit"
     },
     {
-        id: "https://www.twitch.tv/flo_ced_cob/clip/LittleCrackyBean4Head-gs10F_ePtU3ggziT",
-        title: "Kommt Böse am falschen Ort zur falschen Zeit"
+        id: "https://www.twitch.tv/flo_ced_cob/clip/ResourcefulBlightedFishTBTacoRight-XVhlkH_UgIttfwZ0",
+        title: "Nicht nur durchgeknallt, sondern auch abgeknallt"
     },
     {
         id: "https://www.twitch.tv/flo_ced_cob/clip/TawdryExuberantOysterPJSalt-qdsVzjadyF1rPxJz",
