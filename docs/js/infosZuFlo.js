@@ -150,6 +150,15 @@ const spontaneousGames = [
     "Eines der Games aus den Fixen Streamtagen"
 ];
 
+// Daten für ausgefallene Stream-Tage
+const canceledStreams = [
+    { date: "2025-11-15", reason: "vielleicht|24h Stream bei Christario" },
+    { date: "2025-11-16", reason: "vielleicht|24h Stream bei Christario" },
+    { date: "2025-11-22", reason: "Konzert" },
+    { date: "2025-11-29", reason: "Konzert" },
+    { date: "2025-10-30", reason: "Zu lange her (wird ausgeblendet)" },
+];
+
 // ----------------------------------------------------
 // DATENVERARBEITUNG
 // ----------------------------------------------------
@@ -170,13 +179,54 @@ function updateEckdaten(title, sourceTitle, suffix = "") {
     }
 }
 
+/**
+ * Formatiert das Datum basierend auf der zeitlichen Nähe zu heute.
+ * @param {string} dateString - Das Datum im Format YYYY-MM-TT.
+ * @returns {string|null} Der formatierte String oder null, wenn das Datum älter als eine Woche ist.
+ */
+function getDisplayDate(dateString) {
+    const targetDate = new Date(dateString);
+    if (isNaN(targetDate)) return dateString;
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    const targetTime = targetDate.getTime();
+    const todayTime = today.getTime();
+
+    const diffTime = targetTime - todayTime;
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    const ONE_WEEK_IN_DAYS = 7;
+    const dateOptions = { weekday: 'long' };
+    const fullDateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+
+    // 1. Ausblenden (Älter als 7 Tage)
+    if (diffDays < -ONE_WEEK_IN_DAYS) {
+        return null;
+    }
+
+    // 2. Letzten WOCHENTAG (Vergangenheit innerhalb 7 Tagen)
+    if (diffDays < 0) {
+        const lastWeekDay = targetDate.toLocaleDateString('de-DE', dateOptions);
+        return `Letzten ${lastWeekDay}`;
+    }
+
+    // 3. Diesen WOCHENTAG (Gegenwart/Zukunft innerhalb 7 Tagen)
+    if (diffDays >= 0 && diffDays < ONE_WEEK_IN_DAYS) {
+        const thisWeekDay = targetDate.toLocaleDateString('de-DE', dateOptions);
+        return `Diesen ${thisWeekDay}`;
+    }
+
+    // 4. Volles Datum (Später als 7 Tage)
+    return targetDate.toLocaleDateString('de-DE', fullDateOptions);
+}
+
 // Alter berechnen und das Array aktualisieren
 updateEckdaten("Alter", "Geburtstag");
 
 // Streamer seit berechnen und das Array aktualisieren
 updateEckdaten("Daher Streamer seit", "Start des Streamer daseins", " Jahren");
-
-
 // ----------------------------------------------------
 // RENDERING-FUNKTIONEN
 // ----------------------------------------------------
@@ -243,6 +293,63 @@ function renderSpontaneousGames() {
     });
 }
 
+// Funktion, die die abgesagten Streams rendert
+function renderCanceledStreams() {
+    const container = document.getElementById('canceled-streams');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const todayTime = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
+
+    // 1. Sortierung der Daten
+    const sortedCanceledStreams = canceledStreams.slice().sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+
+        const isAFuture = dateA >= todayTime;
+        const isBFuture = dateB >= todayTime;
+
+        // Wenn beide in der Vergangenheit liegen (Vergangen ganz oben): 
+        // Absteigend sortieren (neuester Tag zuerst: b - a)
+        if (!isAFuture && !isBFuture) {
+            return dateB - dateA;
+        }
+
+        // Wenn beide in der Zukunft liegen (Demnächst anstehend): 
+        // Aufsteigend sortieren (nächster Tag zuerst: a - b)
+        if (isAFuture && isBFuture) {
+            return dateA - dateB;
+        }
+
+        // Wenn A Vergangenheit und B Zukunft ist: A kommt vor B (-1)
+        if (!isAFuture && isBFuture) {
+            return -1;
+        }
+
+        // Wenn A Zukunft und B Vergangenheit ist: A kommt nach B (1)
+        if (isAFuture && !isBFuture) {
+            return 1;
+        }
+
+        return 0;
+    });
+
+    // 2. Rendering
+    sortedCanceledStreams.forEach(entry => {
+        const displayDate = getDisplayDate(entry.date);
+
+        // Nur anzeigen, wenn displayDate nicht null ist (d.h. nicht älter als 7 Tage)
+        if (displayDate) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span class="schedule-day">${displayDate}</span>
+                <span class="schedule-game">(${entry.reason})</span>
+            `;
+            container.appendChild(li);
+        }
+    });
+}
+
 // ----------------------------------------------------
 // INITIALISIERUNG
 // ----------------------------------------------------
@@ -258,6 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderEckdaten();
     renderSetup();
     renderSchedule();
+    renderCanceledStreams();
     renderSpontaneousGames();
-    applySequentialAnimations()
+    applySequentialAnimations();
 });
