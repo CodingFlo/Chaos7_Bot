@@ -52,7 +52,7 @@
    /* für staggered animationen */
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
    :root {
       /* Basis-Akzente bleiben: Rot als Hauptfarbe */
       --main-accent: #ff4d4d;
