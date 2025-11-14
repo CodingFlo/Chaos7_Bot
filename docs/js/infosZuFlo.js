@@ -418,8 +418,8 @@ function renderCanceledStreams() {
 
         // Verwenden Sie das Format "Tag: [Reason]" aus dem vorherigen Schritt
         li.innerHTML = `
-            <span class="schedule-day">${entry.date}</span>
-            <span class="schedule-game">Tag: ${entry.reason}</span> 
+            <span class="schedule-day">${entry.date}:</span>
+            <span class="schedule-game">${entry.reason}</span> 
         `;
         container.appendChild(li);
     });
