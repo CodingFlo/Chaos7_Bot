@@ -152,17 +152,17 @@ const spontaneousGames = [
 
 // Daten für ausgefallene Stream-Tage
 const canceledStreams = [
-    // { date: "2025-11-15", reason: "vielleicht|24h Stream bei Christario" },
-    // { date: "2025-11-16", reason: "vielleicht|24h Stream bei Christario" },
-    // { date: "2025-11-22", reason: "Konzert" },
-    // { date: "2025-11-29", reason: "Konzert" },
-    // { date: "2025-10-30", reason: "Zu lange her (wird ausgeblendet)" },
+    { date: "2025-11-15", reason: "vielleicht|24h Stream bei Christario" },
+    { date: "2025-11-16", reason: "vielleicht|24h Stream bei Christario" },
+    { date: "2025-11-22", reason: "Konzert" },
+    { date: "2025-11-29", reason: "Konzert" },
+    { date: "2025-10-30", reason: "Zu lange her (wird ausgeblendet)" },
 ];
 
 // Daten für kleine, kurzfristige Änderungen
 const smallChanges = [
-    // { date: "2025-11-14", reason: "Pokemon ZA mit Zelda getauscht" },
-    // { date: "2025-11-16", reason: "Zelda mit Pokemon ZA getauscht" },
+    { date: "2025-11-14", reason: "Pokemon ZA mit Zelda getauscht" },
+    { date: "2025-11-16", reason: "Zelda mit Pokemon ZA getauscht" },
 ];
 
 // ----------------------------------------------------
