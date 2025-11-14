@@ -16,6 +16,10 @@ const CLIP_DATA = [
         title: "Timing all dente"
     },
     {
+        id: "https://www.twitch.tv/flo_ced_cob/clip/ObeseClumsyJellyfishItsBoshyTime-xOl6KtYhK_c0SQ6Z",
+        title: "Der Pendel-Kampf!"
+    },
+    {
         id: "https://www.twitch.tv/flo_ced_cob/clip/LittleCrackyBean4Head-gs10F_ePtU3ggziT",
         title: "Kommt Böse am falschen Ort zur falschen Zeit"
     },
