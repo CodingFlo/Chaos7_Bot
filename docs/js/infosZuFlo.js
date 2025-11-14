@@ -152,11 +152,17 @@ const spontaneousGames = [
 
 // Daten für ausgefallene Stream-Tage
 const canceledStreams = [
-    { date: "2025-11-15", reason: "vielleicht|24h Stream bei Christario" },
-    { date: "2025-11-16", reason: "vielleicht|24h Stream bei Christario" },
-    { date: "2025-11-22", reason: "Konzert" },
-    { date: "2025-11-29", reason: "Konzert" },
-    { date: "2025-10-30", reason: "Zu lange her (wird ausgeblendet)" },
+    // { date: "2025-11-15", reason: "vielleicht|24h Stream bei Christario" },
+    // { date: "2025-11-16", reason: "vielleicht|24h Stream bei Christario" },
+    // { date: "2025-11-22", reason: "Konzert" },
+    // { date: "2025-11-29", reason: "Konzert" },
+    // { date: "2025-10-30", reason: "Zu lange her (wird ausgeblendet)" },
+];
+
+// Daten für kleine, kurzfristige Änderungen
+const smallChanges = [
+    // { date: "2025-11-14", reason: "Pokemon ZA mit Zelda getauscht" },
+    // { date: "2025-11-16", reason: "Zelda mit Pokemon ZA getauscht" },
 ];
 
 // ----------------------------------------------------
@@ -220,6 +226,52 @@ function getDisplayDate(dateString) {
 
     // 4. Volles Datum (Später als 7 Tage)
     return targetDate.toLocaleDateString('de-DE', fullDateOptions);
+}
+
+/**
+ * BESTIMMT DEN ANZEIGESTATUS für kleine Änderungen.
+ * Zeigt nur "Heute" oder "Diesen WOCHENTAG" an.
+ * @param {string} dateString - Das Datum im Format YYYY-MM-TT.
+ * @returns {string|null} Der Status ("Heute", "Diesen WOCHENTAG") oder null (ausblenden).
+ */
+function getSmallChangeDisplayStatus(dateString) {
+    const targetDate = new Date(dateString);
+    if (isNaN(targetDate)) return null;
+
+    const now = new Date();
+    // Setze heute auf 00:00 Uhr
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    const diffTime = targetDate.getTime() - today.getTime();
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    // Wochentags-Index von heute (So=0, Mo=1, ..., Sa=6)
+    const todayDayIndex = today.getDay();
+
+    // Berechnung der maximal erlaubten diffDays bis zum Ende der Woche (Sonntag=0):
+    let maxDiffDaysThisWeekEnd;
+    if (todayDayIndex === 0) { // Wenn heute Sonntag ist, ist die max. Differenz 0 (nur heute anzeigen)
+        maxDiffDaysThisWeekEnd = 0;
+    } else {
+        // Berechne die Anzahl der Tage von heute bis Sonntag inkl. (z.B. Fr(5) -> 2 Tage (Sa, So))
+        // (6 - todayDayIndex) ist die Differenz bis Samstag. +1 schließt Sonntag ein.
+        maxDiffDaysThisWeekEnd = (6 - todayDayIndex) + 1;
+    }
+
+    // 1. Vergangen (Past) oder zu weit in der Zukunft (Länger als diese Woche): Ausblenden
+    // Wir blenden aus, wenn diffDays kleiner 0 ODER größer als die erlaubte Differenz ist.
+    if (diffDays < 0 || diffDays > maxDiffDaysThisWeekEnd) {
+        return null;
+    }
+
+    // 2. Heute (Today)
+    if (diffDays === 0) {
+        return "Heute";
+    }
+
+    // 3. Diese Woche in der Zukunft (von morgen bis Sonntag)
+    const thisWeekDay = targetDate.toLocaleDateString('de-DE', { weekday: 'long' });
+    return `Diesen ${thisWeekDay}`;
 }
 
 // Alter berechnen und das Array aktualisieren
@@ -297,7 +349,10 @@ function renderSpontaneousGames() {
 function renderCanceledStreams() {
     const container = document.getElementById('canceled-streams');
     if (!container) return;
-    container.innerHTML = '';
+
+    // Wir leeren den Container nicht sofort, da wir ihn nur leeren,
+    // wenn wir entweder Einträge rendern ODER den Fallback-Text setzen.
+    // Das innere HTML bleibt unberührt, bis wir eine Entscheidung getroffen haben.
 
     const todayTime = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
 
@@ -334,19 +389,73 @@ function renderCanceledStreams() {
         return 0;
     });
 
-    // 2. Rendering
-    sortedCanceledStreams.forEach(entry => {
+    // 2. Filtern und Mappen der anzuzeigenden Einträge (durch die Logik von getDisplayDate)
+    const streamsToDisplay = sortedCanceledStreams.map(entry => {
+        // HINWEIS: Die Funktion getDisplayDate muss im globalen Scope definiert sein!
         const displayDate = getDisplayDate(entry.date);
 
-        // Nur anzeigen, wenn displayDate nicht null ist (d.h. nicht älter als 7 Tage)
         if (displayDate) {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span class="schedule-day">${displayDate}</span>
-                <span class="schedule-game">(${entry.reason})</span>
-            `;
-            container.appendChild(li);
+            return {
+                date: displayDate,
+                reason: entry.reason
+            };
         }
+        return null;
+    }).filter(item => item !== null); // Entfernt alle 'null' Einträge
+
+
+    // 3. FALLBACK-LOGIK: Wenn die Liste nach der Filterung leer ist
+    if (streamsToDisplay.length === 0) {
+        // Fügt den Fallback-Text als Listenelement ein
+        container.innerHTML = '<li class="no-changes-message">Derzeitig ist kein Streamausfall geplant</li>';
+        return;
+    }
+
+    // 4. Rendering der tatsächlichen Einträge
+    container.innerHTML = '';
+    streamsToDisplay.forEach(entry => {
+        const li = document.createElement('li');
+
+        // Verwenden Sie das Format "Tag: [Reason]" aus dem vorherigen Schritt
+        li.innerHTML = `
+            <span class="schedule-day">${entry.date}</span>
+            <span class="schedule-game">Tag: ${entry.reason}</span> 
+        `;
+        container.appendChild(li);
+    });
+}
+
+function renderSmallChanges() {
+    const container = document.getElementById('changed-streams');
+    if (!container) return;
+
+    // 1. Filtern und Mappen der anzuzeigenden Einträge
+    const changesToDisplay = smallChanges.map(entry => {
+        const displayStatus = getSmallChangeDisplayStatus(entry.date);
+        if (displayStatus) {
+            return {
+                status: displayStatus,
+                reason: entry.reason
+            };
+        }
+        return null;
+    }).filter(item => item !== null);
+
+    // 2. FALLBACK-LOGIK: Wenn Liste leer ist
+    if (changesToDisplay.length === 0) {
+        container.innerHTML = '<li class="no-changes-message">Derzeitig gibt es keine Änderungen im Streamplan</li>';
+        return;
+    }
+
+    // 3. Rendering der tatsächlichen Einträge
+    container.innerHTML = '';
+    changesToDisplay.forEach(entry => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <span class="schedule-day">${entry.status}</span>
+            <span class="schedule-game">Tag: ${entry.reason}</span> 
+        `;
+        container.appendChild(li);
     });
 }
 
@@ -367,5 +476,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSchedule();
     renderCanceledStreams();
     renderSpontaneousGames();
+    renderSmallChanges();
     applySequentialAnimations();
 });
