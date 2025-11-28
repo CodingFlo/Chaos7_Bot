@@ -12,12 +12,20 @@ const CLIP_DATA = [
         title: "Failerino"
     },
     {
+        id: "https://www.twitch.tv/flo_ced_cob/clip/SpinelessGorgeousCarrotMrDestructoid-TO3fBTLGZcd4nlu1",
+        title: "Die Wasserkocher-Lache"
+    },
+    {
         id: "https://www.twitch.tv/flo_ced_cob/clip/KnottyBloodyDotterelRaccAttack-je1ypczCI8oId5oG",
         title: "Timing all dente"
     },
     {
         id: "https://www.twitch.tv/flo_ced_cob/clip/ObeseClumsyJellyfishItsBoshyTime-xOl6KtYhK_c0SQ6Z",
         title: "Der Pendel-Kampf!"
+    },
+    {
+        id: "https://www.twitch.tv/flo_ced_cob/clip/RoundFitShingleKreygasm-s5IbjESS7j12-T6o",
+        title: "Nicht mal fame und schon so verzweifelt 😔🚬"
     },
     {
         id: "https://www.twitch.tv/flo_ced_cob/clip/LittleCrackyBean4Head-gs10F_ePtU3ggziT",
