@@ -25,7 +25,7 @@ const CLIP_DATA = [
     },
     {
         id: "https://www.twitch.tv/flo_ced_cob/clip/RoundFitShingleKreygasm-s5IbjESS7j12-T6o",
-        title: "Nicht mal fame und schon so verzweifelt 😔🚬"
+        title: "Nicht mal fame und schon so verzweifelt..."
     },
     {
         id: "https://www.twitch.tv/flo_ced_cob/clip/LittleCrackyBean4Head-gs10F_ePtU3ggziT",
