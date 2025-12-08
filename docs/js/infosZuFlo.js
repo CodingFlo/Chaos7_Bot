@@ -137,7 +137,7 @@ const streamSchedule = [
     { day: "Mittwoch (Spontan)", game: "*" },
     { day: "Donnerstag (Spontan)", game: "*" },
     { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Karmesin DLC oder Pokemon Legenden Z-A" },
-    { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Smash Bros Ultimate" },
+    { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Mario Land 1 & 2" },
     { day: "Sonntag (Start zwischen 20 und 22Uhr)", game: "The Legend of Zelda: Tears of The Kingdom" }
 ];
 
@@ -147,6 +147,7 @@ const spontaneousGames = [
     "Minecraft",
     "Mario Kart World",
     "Mario Party Jomboreee",
+    "Smash Bros ultimate",
     "Eines der Games aus den Fixen Streamtagen"
 ];
 
