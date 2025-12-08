@@ -15,7 +15,7 @@ const PROJECT_DATA = [
     { name: "Plants Vs Zombies Remake", fixKom: true, geplant: false, erledigt: false, streamOnly: false, alsVideo: false },
     { name: "Pokemon Karmesin", fixKom: true, geplant: false, erledigt: false, streamOnly: false, alsVideo: false },
     { name: "Pokemon Legenden Z-A", fixKom: true, geplant: false, erledigt: false, streamOnly: false, alsVideo: false },
-    { name: "Smash Bros Ultimate", fixKom: true, geplant: false, erledigt: false, streamOnly: false, alsVideo: false },
+    { name: "Smash Bros Ultimate", fixKom: false, geplant: false, erledigt: true, streamOnly: false, alsVideo: false },
     { name: "The Legend of Zelda: Tears of the Kingdom", fixKom: true, geplant: false, erledigt: false, streamOnly: false, alsVideo: false },
     { name: "Wario Land 3", fixKom: true, geplant: false, erledigt: false, streamOnly: false, alsVideo: false },
 
