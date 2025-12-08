@@ -162,6 +162,7 @@ const canceledStreams = [
 
 // Daten für kleine, kurzfristige Änderungen
 const smallChanges = [
+    { date: "2026-02", reason: "10h Shiny Hunt Stream (Kein Datum bekannt. Nur das Monat)" },
     { date: "2025-11-14", reason: "Pokemon ZA mit Zelda getauscht" },
     { date: "2025-11-16", reason: "Zelda mit Pokemon ZA getauscht" },
 ];
