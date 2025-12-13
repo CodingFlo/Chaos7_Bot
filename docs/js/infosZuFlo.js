@@ -137,7 +137,7 @@ const streamSchedule = [
     { day: "Mittwoch (Spontan)", game: "*" },
     { day: "Donnerstag (Spontan)", game: "*" },
     { day: "Freitag (Start zwischen 20 und 22Uhr)", game: "Pokemon Karmesin DLC oder Pokemon Legenden Z-A" },
-    { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Mario Land 1 & 2" },
+    { day: "Samstag (Start zwischen 20 und 22Uhr)", game: "Mario Bros DS" },
     { day: "Sonntag (Start zwischen 20 und 22Uhr)", game: "The Legend of Zelda: Tears of The Kingdom" }
 ];
 
