@@ -1,0 +1,16 @@
+/* Stream Stats Table Columns */
+.command-table th:nth-child(1) {
+    width: 40%;
+}
+
+/* Spiel */
+.command-table th:nth-child(2) {
+    width: 30%;
+}
+
+/* Anzahl Streams */
+.command-table th:nth-child(3) {
+    width: 30%;
+}
+
+/* Gesamtdauer */
