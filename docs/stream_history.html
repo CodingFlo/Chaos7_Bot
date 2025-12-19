@@ -4,20 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stream Statistik - Chaos7</title>
+    <title>Stream Historie - Chaos7</title>
 
-    <meta name="description" content="Statistik über gestreamte Spiele von Chaos7.">
+    <meta name="description" content="Historie der letzten Streams von Chaos7.">
     
     <link rel="stylesheet" href="css/colors.css" />
     <link rel="stylesheet" href="css/commands.css" /> <!-- Wiederverwendung des CSS Styles -->
     <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/streamStats.css" />
+    <style>
+        /* Spezifische Anpassungen falls nötig */
+        .command-table th:nth-child(1) { width: 40%; } /* Titel */
+        .command-table th:nth-child(2) { width: 20%; } /* Kategorie */
+        .command-table th:nth-child(3) { width: 20%; } /* Datum */
+        .command-table th:nth-child(4) { width: 20%; } /* Dauer */
+    </style>
 </head>
 <body>
     <!-- Canvas für den animierten Hintergrund -->
     <canvas id="background-canvas"></canvas>
 
-    <h1>Stream Statistik</h1>
+    <h1>Stream Historie</h1>
 
     <div class="header-button-wrapper fade-in">
         <a href="index.html" class="home-button">
@@ -29,13 +35,42 @@
         <table class="command-table">
             <thead>
                 <tr>
-                    <th id="sort-game" data-sort-order="asc">Spiel / Kategorie <span class="sort-icon"></span></th>
-                    <th id="sort-count" data-sort-order="desc">Anzahl Streams <span class="sort-icon"></span></th>
-                    <th id="sort-duration" data-sort-order="desc">Gesamtzeit <span class="sort-icon"></span></th>
+                    <th id="sort-title" data-sort-order="asc">Titel <span class="sort-icon"></span></th>
+                    <th id="sort-category" data-sort-order="asc">Kategorie <span class="sort-icon"></span></th>
+                    <th id="sort-date" data-sort-order="desc">Datum <span class="sort-icon"></span></th>
+                    <th id="sort-duration" data-sort-order="asc">Dauer <span class="sort-icon"></span></th>
                 </tr>
             </thead>
-            <tbody id="stats-table-body">
+            <tbody id="stream-table-body">
                 
+                    <tr>
+                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2644724015" target="_blank" style="color: inherit; text-decoration: none;">Dimension Ideenlos! Zeit für die Mega Erkundung! :D // Pokemon ZA</a></td>
+                        <td data-label="Kategorie">Unbekannt</td>
+                        <td data-label="Datum" data-timestamp="1765826830000">15.12.2025, 20:27</td>
+                        <td data-label="Dauer">2h59m56s</td>
+                    </tr>
+                    
+                    <tr>
+                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2643739118" target="_blank" style="color: inherit; text-decoration: none;">Ene mene Miste! Heute finden wir Kisten! :D // TEARS OF THE KINGDOM</a></td>
+                        <td data-label="Kategorie">Unbekannt</td>
+                        <td data-label="Datum" data-timestamp="1765725232000">14.12.2025, 16:13</td>
+                        <td data-label="Dauer">2h22m8s</td>
+                    </tr>
+                    
+                    <tr>
+                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2642729692" target="_blank" style="color: inherit; text-decoration: none;">Mario Land oder doch eher Schwarz weiß Land? :) // MARIO LAND 1</a></td>
+                        <td data-label="Kategorie">Unbekannt</td>
+                        <td data-label="Datum" data-timestamp="1765626911000">13.12.2025, 12:55</td>
+                        <td data-label="Dauer">5h28m40s</td>
+                    </tr>
+                    
+                    <tr>
+                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2642176665" target="_blank" style="color: inherit; text-decoration: none;">Dimension Windows Crash oder sehen wir doch neue Megas? :O // POKEMON ZA</a></td>
+                        <td data-label="Kategorie">Unbekannt</td>
+                        <td data-label="Datum" data-timestamp="1765571430000">12.12.2025, 21:30</td>
+                        <td data-label="Dauer">3h19m49s</td>
+                    </tr>
+                    
             </tbody>
         </table>
     </div>
@@ -43,21 +78,15 @@
     <script src="js/backgroundScript.js"></script>
     <script src="js/applySequentialAnimations.js"></script>
     <script>
-        const tableBody = document.getElementById('stats-table-body');
+        // Inline Sortier-Skript angepasst für diese Tabelle
+        const tableBody = document.getElementById('stream-table-body');
         const headers = document.querySelectorAll('th[id^="sort-"]');
-        let sortedColumnId = 'sort-count'; 
+        let sortedColumnId = 'sort-date'; // Default sort
         let sortOrder = 'desc';
 
         // Initiale Animation
         window.addEventListener('load', () => {
-             if (window.applyRowAnimation) window.applyRowAnimation(0.5, '#stats-table-body tr');
-             // Initial Sort header icon setzen
-             const initialHeader = document.getElementById(sortedColumnId);
-             if(initialHeader) {
-                 initialHeader.classList.add('sorted');
-                 const icon = initialHeader.querySelector('.sort-icon');
-                 if(icon) icon.textContent = ' ▼';
-             }
+             if (window.applyRowAnimation) window.applyRowAnimation(0.5, '#stream-table-body tr');
         });
 
         headers.forEach(header => {
@@ -67,14 +96,10 @@
                 if (sortedColumnId === columnId) {
                     sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
                 } else {
-                    sortOrder = 'asc'; // Reset to asc for new column usually, but for stats desc is often better. Let's stick to simple toggle logic.
-                    // For numbers (count, duration) desc is usually preferred first, but let's keep standard behavior.
+                    sortOrder = 'asc';
                     if (sortedColumnId) {
                         const oldHeader = document.getElementById(sortedColumnId);
-                        if(oldHeader) {
-                            oldHeader.classList.remove('sorted');
-                            oldHeader.querySelector('.sort-icon').textContent = '';
-                        }
+                        if(oldHeader) oldHeader.classList.remove('sorted');
                     }
                 }
 
@@ -87,22 +112,22 @@
                 const sortedRows = rows.sort((a, b) => {
                     let aVal, bVal;
                     
-                    if (columnId === 'sort-count') {
-                        aVal = parseInt(a.cells[columnIndex].textContent);
-                        bVal = parseInt(b.cells[columnIndex].textContent);
-                        return sortOrder === 'asc' ? aVal - bVal : bVal - aVal;
-                    } 
-                    else if (columnId === 'sort-duration') {
-                        aVal = parseInt(a.cells[columnIndex].getAttribute('data-seconds') || 0);
-                        bVal = parseInt(b.cells[columnIndex].getAttribute('data-seconds') || 0);
+                    // Datum spezial behandlung
+                    if (columnId === 'sort-date') {
+                        aVal = parseInt(a.cells[columnIndex].getAttribute('data-timestamp') || 0);
+                        bVal = parseInt(b.cells[columnIndex].getAttribute('data-timestamp') || 0);
                         return sortOrder === 'asc' ? aVal - bVal : bVal - aVal;
                     }
-                    else {
-                        // Text comparison
-                        aVal = a.cells[columnIndex].textContent.trim().toLowerCase();
-                        bVal = b.cells[columnIndex].textContent.trim().toLowerCase();
-                        return sortOrder === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+
+                    // Standard Text Vergleich
+                    aVal = a.cells[columnIndex].textContent.trim().toLowerCase();
+                    bVal = b.cells[columnIndex].textContent.trim().toLowerCase();
+                    
+                    if (columnId === 'sort-duration') {
+                        // Versuch Dauer zu parsen? Vorerst String Vergleich
                     }
+
+                    return sortOrder === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
                 });
 
                 while (tableBody.firstChild) {
@@ -110,12 +135,14 @@
                 }
                 sortedRows.forEach(row => tableBody.appendChild(row));
 
+                // Icons update
                 document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
                 if (header.querySelector('.sort-icon')) {
                     header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
                 }
                 
-                if (window.applyRowAnimation) window.applyRowAnimation(0, '#stats-table-body tr');
+                // Animation erneut anwenden
+                if (window.applyRowAnimation) window.applyRowAnimation(0, '#stream-table-body tr');
             });
         });
     </script>
