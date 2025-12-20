@@ -153,8 +153,6 @@ const spontaneousGames = [
 
 // Daten für ausgefallene Stream-Tage
 const canceledStreams = [
-    { date: "2025-11-15", reason: "vielleicht|24h Stream bei Christario" },
-    { date: "2025-11-16", reason: "vielleicht|24h Stream bei Christario" },
     { date: "2025-11-22", reason: "Konzert" },
     { date: "2025-11-29", reason: "Konzert" },
     { date: "2025-10-30", reason: "Zu lange her (wird ausgeblendet)" },
