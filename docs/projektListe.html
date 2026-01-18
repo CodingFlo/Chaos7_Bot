@@ -17,99 +17,13 @@
     <meta property="og:image"
         content="https://static-cdn.jtvnw.net/jtv_user_pictures/f7ba1f61-5771-4272-b8fc-9d170c4f9256-profile_image-70x70.png" />
     <meta name="twitter:card" content="summary" />
-
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;600&display=swap"
-        rel="stylesheet" />
-
-    <link rel="stylesheet" href="css/colors.css" />
-    <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/projektListe.css" />
 </head>
 
-<body>
-    <canvas id="background-canvas"></canvas>
 
-    <h1 class="fade-in">Flos Projektliste</h1>
-
-    <div class="header-button-wrapper fade-in">
-        <a href="infosZuFlo.html" class="home-button">
-            ← Zurück zur Startseite
-        </a>
-    </div>
-
-    <nav class="toc fade-in">
-        <ul class="toc-links">
-            <li><a href="#" data-target="#fix-kommende-projekte">Fix-Kommende Projekte</a></li>
-            <li><a href="#" data-target="#geplante-projekte">Geplante Projekte</a></li>
-            <li><a href="#" data-target="#erledigte-projekte">Erledigte Projekte</a></li>
-            <li><a href="#" data-target="#stream-only-projekte">Stream only Projekte</a></li>
-            <li><a href="#" data-target="#als-video-erledigt">Als Video erledigt</a></li>
-        </ul>
-    </nav>
-
-    <section id="fix-kommende-projekte" class="slide-up">
-        <div class="section-header fade-in">
-            <h2>Fix-Kommende Projekte</h2>
-            <button class="sort-button" onclick="sortList(this)">
-                Sortieren
-                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
-                </svg>
-            </button>
-        </div>
-    </section>
-
-    <section id="geplante-projekte" class="slide-up">
-        <div class="section-header fade-in">
-            <h2>Geplante Projekte</h2>
-            <button class="sort-button" onclick="sortList(this)">
-                Sortieren
-                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
-                </svg>
-            </button>
-        </div>
-    </section>
-
-    <section id="erledigte-projekte" class="slide-up">
-        <div class="section-header fade-in">
-            <h2>Erledigte Projekte</h2>
-            <button class="sort-button" onclick="sortList(this)">
-                Sortieren
-                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
-                </svg>
-            </button>
-        </div>
-    </section>
-
-    <section id="stream-only-projekte" class="slide-up">
-        <div class="section-header fade-in">
-            <h2>Stream only Projekte</h2>
-            <button class="sort-button" onclick="sortList(this)">
-                Sortieren
-                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
-                </svg>
-            </button>
-        </div>
-    </section>
-
-    <section id="als-video-erledigt" class="slide-up">
-        <div class="section-header fade-in">
-            <h2>Als Video erledigt</h2>
-            <button class="sort-button" onclick="sortList(this)">
-                Sortieren
-                <svg class="sort-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2L6 8h12zm0 20l6-6H6z" />
-                </svg>
-            </button>
-        </div>
-    </section>
-
-    <script src="js/backgroundScript.js"></script>
-    <script src="js/applySequentialAnimations.js" defer></script>
-    <script src="js/projektListe.js" defer></script>
+<body style="margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden;">
+    <iframe src="https://chaos7.ddns.net:3000/c7/websites/projektListe.html"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+    </iframe>
 </body>
 
 </html>

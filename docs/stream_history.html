@@ -1,158 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stream Historie - Chaos7</title>
+    <title>Stream Historie - Chaos7 Bot</title>
 
-    <meta name="description" content="Historie der letzten Streams von Chaos7.">
-    
-    <link rel="stylesheet" href="css/colors.css" />
-    <link rel="stylesheet" href="css/commands.css" /> <!-- Wiederverwendung des CSS Styles -->
-    <link rel="stylesheet" href="css/shared.css" />
-    <style>
-        /* Spezifische Anpassungen falls nötig */
-        .command-table th:nth-child(1) { width: 40%; } /* Titel */
-        .command-table th:nth-child(2) { width: 20%; } /* Kategorie */
-        .command-table th:nth-child(3) { width: 20%; } /* Datum */
-        .command-table th:nth-child(4) { width: 20%; } /* Dauer */
-    </style>
+    <meta name="description" content="Historie der letzten Streams von Chaos7 Bot.">
 </head>
-<body>
-    <!-- Canvas für den animierten Hintergrund -->
-    <canvas id="background-canvas"></canvas>
 
-    <h1>Stream Historie</h1>
-
-    <div class="header-button-wrapper fade-in">
-        <a href="index.html" class="home-button">
-            ← Zurück zur Startseite
-        </a>
-    </div>
-    
-    <div class="command-table-wrapper">
-        <table class="command-table">
-            <thead>
-                <tr>
-                    <th id="sort-title" data-sort-order="asc">Titel <span class="sort-icon"></span></th>
-                    <th id="sort-category" data-sort-order="asc">Kategorie <span class="sort-icon"></span></th>
-                    <th id="sort-date" data-sort-order="desc">Datum <span class="sort-icon"></span></th>
-                    <th id="sort-duration" data-sort-order="asc">Dauer <span class="sort-icon"></span></th>
-                </tr>
-            </thead>
-            <tbody id="stream-table-body">
-                
-                    <tr>
-                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2664655375" target="_blank" style="color: inherit; text-decoration: none;">Sidequest da. Sidequest hier! Das Abentuer steht nicht still! :D // POKEMON ZA</a></td>
-                        <td data-label="Kategorie">Unbekannt</td>
-                        <td data-label="Datum" data-timestamp="1767902134000">08.01.2026, 20:55</td>
-                        <td data-label="Dauer">1h7m20s</td>
-                    </tr>
-                    
-                    <tr>
-                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2663762212" target="_blank" style="color: inherit; text-decoration: none;">Der Affe spielt ein Affenspiel?! :O // DK BANANZA</a></td>
-                        <td data-label="Kategorie">Unbekannt</td>
-                        <td data-label="Datum" data-timestamp="1767813228000">07.01.2026, 20:13</td>
-                        <td data-label="Dauer">2h12m12s</td>
-                    </tr>
-                    
-                    <tr>
-                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2662765364" target="_blank" style="color: inherit; text-decoration: none;">Auf gehts in den Letzten Dungeon! :D // TEARS OF THE KINGDOM</a></td>
-                        <td data-label="Kategorie">Unbekannt</td>
-                        <td data-label="Datum" data-timestamp="1767715908000">06.01.2026, 17:11</td>
-                        <td data-label="Dauer">2h20m19s</td>
-                    </tr>
-                    
-                    <tr>
-                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2662076214" target="_blank" style="color: inherit; text-decoration: none;">Heute Himmels-Erkundung oder Lag-Erkundung? :) // TEARS OF THE KINGDOM</a></td>
-                        <td data-label="Kategorie">Unbekannt</td>
-                        <td data-label="Datum" data-timestamp="1767643551000">05.01.2026, 21:05</td>
-                        <td data-label="Dauer">5h57m19s</td>
-                    </tr>
-                    
-                    <tr>
-                        <td data-label="Titel"><a href="https://www.twitch.tv/videos/2661242863" target="_blank" style="color: inherit; text-decoration: none;">Ist das die Wahre Zelda? :O // TEARS OF THE KINGDOM</a></td>
-                        <td data-label="Kategorie">Unbekannt</td>
-                        <td data-label="Datum" data-timestamp="1767557192000">04.01.2026, 21:06</td>
-                        <td data-label="Dauer">2h4m4s</td>
-                    </tr>
-                    
-            </tbody>
-        </table>
-    </div>
-
-    <script src="js/backgroundScript.js"></script>
-    <script src="js/applySequentialAnimations.js"></script>
-    <script>
-        // Inline Sortier-Skript angepasst für diese Tabelle
-        const tableBody = document.getElementById('stream-table-body');
-        const headers = document.querySelectorAll('th[id^="sort-"]');
-        let sortedColumnId = 'sort-date'; // Default sort
-        let sortOrder = 'desc';
-
-        // Initiale Animation
-        window.addEventListener('load', () => {
-             if (window.applyRowAnimation) window.applyRowAnimation(0.5, '#stream-table-body tr');
-        });
-
-        headers.forEach(header => {
-            header.addEventListener('click', () => {
-                const columnId = header.id;
-
-                if (sortedColumnId === columnId) {
-                    sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-                } else {
-                    sortOrder = 'asc';
-                    if (sortedColumnId) {
-                        const oldHeader = document.getElementById(sortedColumnId);
-                        if(oldHeader) oldHeader.classList.remove('sorted');
-                    }
-                }
-
-                sortedColumnId = columnId;
-                header.classList.add('sorted');
-
-                const columnIndex = header.cellIndex;
-                const rows = Array.from(tableBody.rows);
-
-                const sortedRows = rows.sort((a, b) => {
-                    let aVal, bVal;
-                    
-                    // Datum spezial behandlung
-                    if (columnId === 'sort-date') {
-                        aVal = parseInt(a.cells[columnIndex].getAttribute('data-timestamp') || 0);
-                        bVal = parseInt(b.cells[columnIndex].getAttribute('data-timestamp') || 0);
-                        return sortOrder === 'asc' ? aVal - bVal : bVal - aVal;
-                    }
-
-                    // Standard Text Vergleich
-                    aVal = a.cells[columnIndex].textContent.trim().toLowerCase();
-                    bVal = b.cells[columnIndex].textContent.trim().toLowerCase();
-                    
-                    if (columnId === 'sort-duration') {
-                        // Versuch Dauer zu parsen? Vorerst String Vergleich
-                    }
-
-                    return sortOrder === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-                });
-
-                while (tableBody.firstChild) {
-                    tableBody.removeChild(tableBody.firstChild);
-                }
-                sortedRows.forEach(row => tableBody.appendChild(row));
-
-                // Icons update
-                document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '');
-                if (header.querySelector('.sort-icon')) {
-                    header.querySelector('.sort-icon').textContent = sortOrder === 'asc' ? ' ▲' : ' ▼';
-                }
-                
-                // Animation erneut anwenden
-                if (window.applyRowAnimation) window.applyRowAnimation(0, '#stream-table-body tr');
-            });
-        });
-    </script>
+<body style="margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden;">
+    <iframe src="https://chaos7.ddns.net:3000/c7/websites/stream_history.html"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+    </iframe>
 </body>
+
 </html>
-    

@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,53 +16,12 @@
     <meta property="og:image"
         content="https://static-cdn.jtvnw.net/jtv_user_pictures/f7ba1f61-5771-4272-b8fc-9d170c4f9256-profile_image-70x70.png" />
     <meta name="twitter:card" content="summary" />
-
-    <link rel="stylesheet" href="css/colors.css" />
-    <link rel="stylesheet" href="css/shared.css" />
-    <link rel="stylesheet" href="css/viewerActivity.css" />
 </head>
-<body>
-    <!-- The canvas for the animated background -->
-    <canvas id="background-canvas"></canvas>
 
-    <h1>Zuschauer-Aktivitätsranking von Flo_Ced_CoB</h1>
-    
-    <div class="header-button-wrapper fade-in">
-        <a href="index.html" class="home-button">
-            ← Zurück zur Startseite
-        </a>
-    </div>
-
-    <div class="info-box-container">
-        <div class="info-box">
-            <h2>Stream-Statistiken</h2>
-            <p>Zuletzt aktualisiert: 11.01.2026, 14:10<br>Nächste Aktualisierung: In ca. 15 Minuten.</p>
-            <p>Die Aktivitäten der letzten 90 Tage zählen für das Ranking.<br>Gesamt-Stream-Dauer: <strong>0s</strong></p>
-            <p>Start der Messung ist der 21.08.2025</p>
-        </div>
-    </div>
-    
-    <div class="command-table-wrapper">
-        <table class="command-table">
-            <thead>
-                <tr>
-                    <th id="sort-rank">Rang<span class="sort-icon"></span></th>
-                    <th id="sort-username">Benutzername <span class="sort-icon"></span></th>
-                    <th id="sort-activity">Aktivität <span class="sort-icon"></span></th>
-                    <th id="sort-time">Gesamtzeit<span class="sort-icon"></span></th>
-                </tr>
-            </thead>
-            <tbody id="command-table-body">
-                
-            <tr>
-                <td colspan="4">Keine Aktivitätsdaten verfügbar.</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <script src="js/backgroundScript.js"></script>
-    <script src="js/applySequentialAnimations.js" defer></script>
-    <script src="js/viewerActivity.js"></script>
+<body style="margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden;">
+    <iframe src="https://chaos7.ddns.net:3000/c7/websites/viewerActivity.html"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+    </iframe>
 </body>
+
 </html>

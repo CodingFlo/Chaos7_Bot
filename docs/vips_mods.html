@@ -1,85 +1,17 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIPs & Moderatoren</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Übernehme die Schriftart aus der index.html -->
-
-    <link rel="stylesheet" href="css/colors.css" />
-    <link rel="stylesheet" href="css/vips_mods.css" />
-    <link rel="stylesheet" href="css/shared.css" />
 </head>
-<body>
-    <!-- Canvas für den animierten Hintergrund -->
-    <canvas id="background-canvas"></canvas>
 
-    <div class="container mx-auto">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-center mb-6 glow-text">VIPs & Moderatoren</h1>
-    
-        <div class="header-button-wrapper fade-in">
-            <a href="index.html" class="home-button">
-                ← Zurück zur Startseite
-            </a>
-        </div>
-
-        <p class="text-center mb-8">Stand: 11.1.2026 um 14:10:58</p>
-        
-        <div class="cards-grid">
-            <!-- Mods Liste ist jetzt links und hat die roten Farben -->
-            <div class="card">
-                <h2 class="card-header">
-                    Moderatoren
-                </h2>
-                <ul class="space-y-3">
-                    <li>
-            <span class="font-semibold text-lg text-white">10meisterbaelle</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">chaos7_bot</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">kall_me_kat_</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">nintentony</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">sery_bot</span>
-        </li>
-                </ul>
-            </div>
-
-            <!-- VIPs Liste ist jetzt rechts und hat die rosa-farbenen Farben -->
-            <div class="card">
-                <h2 class="card-header">
-                    VIPs
-                </h2>
-                <ul class="space-y-3">
-                    <li>
-            <span class="font-semibold text-lg text-white">Brand_Marc</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">Christario</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">DerGametendo</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">ElTobito99</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">gazafan0</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">Hades_Anokata</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">Malcador1993</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">nameless_person_kappa</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">ohaos7_bot</span>
-        </li><li>
-            <span class="font-semibold text-lg text-white">UndeadCollector</span>
-        </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/backgroundScript.js"></script>
-    <script src="js/applySequentialAnimations.js" defer></script>
+<body style="margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden;">
+    <iframe src="https://chaos7.ddns.net:3000/c7/websites/vips_mods.html"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+    </iframe>
 </body>
+
 </html>
