@@ -3,31 +3,66 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lade Inhalte...</title>
+    <script src="loader.js" defer></script>
+    <style>
+        /* Schlichter, dunkler Ladebildschirm */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #1a1a1a;
+            color: white;
+            font-family: sans-serif;
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #0099ff;
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink {
+
+            0%,
+            80%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+
+            40% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <script>
-        const targetUrl = 'https://chaos7.ddns.net:3000/c7/websites/commands.html';
-
-        fetch(targetUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Netzwerk-Antwort war nicht ok');
-                }
-                return response.text();
-            })
-            .then(html => {
-                // Ersetzt das gesamte Dokument-Inhalt
-                document.open();
-                document.write(html);
-                document.close();
-            })
-            .catch(error => {
-                console.error('Fehler beim Abrufen der Seite:', error);
-                document.body.innerHTML = 'Fehler beim Laden der Inhalte. Details in der Konsole.';
-            });
-    </script>
+    <div class="dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
 </body>
 
 </html>
