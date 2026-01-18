@@ -1,11 +1,13 @@
 (function () {
+    const botName = "c7"
+
     // 1. Verschleierte Basis-Konfiguration
     // Entspricht: https://chaos7.ddns.net:3000/c7/websites/
     const _parts = [
         "https",
         "://" + "chaos7",
         ".ddns" + ".net:3000",
-        "/c7" + "/websites/"
+        `/${botName}` + "/websites/"
     ];
     const baseUrl = _parts.join('');
 
