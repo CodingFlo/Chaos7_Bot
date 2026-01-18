@@ -1,27 +1,33 @@
 <!DOCTYPE html>
-<html lang="de" style="margin: 0; padding: 0; height: 100%; overflow: hidden;">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Befehle von Chaos7</title>
-
-    <meta name="description" content="Alle Commands, Shortcuts und Erklärungen für den Chaos7 Bot Twitch Bot.">
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://codingflo.github.io/Chaos7_Bot" />
-    <meta property="og:title" content="Commands – Chaos7 Bot Bot" />
-    <meta property="og:description" content="Alle Commands, Shortcuts und Erklärungen für den Chaos7 Bot Twitch Bot." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://codingflo.github.io/Chaos7 Bot_Bot" />
-    <meta property="og:image"
-        content="https://static-cdn.jtvnw.net/jtv_user_pictures/f7ba1f61-5771-4272-b8fc-9d170c4f9256-profile_image-70x70.png" />
-    <meta name="twitter:card" content="summary" />
+    <title>Lade Inhalte...</title>
 </head>
 
-<body style="margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden;">
-    <iframe src="https://chaos7.ddns.net:3000/c7/websites/commands.html"
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
-    </iframe>
+<body>
+    <script>
+        const targetUrl = 'https://chaos7.ddns.net:3000/c7/websites/commands.html';
+
+        fetch(targetUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Netzwerk-Antwort war nicht ok');
+                }
+                return response.text();
+            })
+            .then(html => {
+                // Ersetzt das gesamte Dokument-Inhalt
+                document.open();
+                document.write(html);
+                document.close();
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen der Seite:', error);
+                document.body.innerHTML = 'Fehler beim Laden der Inhalte. Details in der Konsole.';
+            });
+    </script>
 </body>
 
 </html>

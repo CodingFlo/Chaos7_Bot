@@ -3,28 +3,31 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Über den Twitch Bot</title>
-
-    <link rel="stylesheet" href="css/colors.css" />
-    <link rel="stylesheet" href="css/404.css" />
-    <link rel="stylesheet" href="css/shared.css" />
+    <title>Lade Inhalte...</title>
 </head>
 
 <body>
-    <!-- Das neue Canvas-Element für den animierten Hintergrund -->
-    <canvas id="background-canvas"></canvas>
+    <script>
+        const targetUrl = 'https://chaos7.ddns.net:3000/c7/websites/404.html';
 
-    <div id="box404" class="info-card">
-        <h2>HTTP ERROR 404: ZIEL NICHT ERREICHBAR</h2>
-        <p><strong>Die angeforderte Datei oder der Pfad existiert nicht.</strong></p>
-        <p>Der Link, dem Sie gefolgt sind, ist möglicherweise fehlerhaft, oder die Seite wurde deindiziert.</p>
-        <p><a href="https://codingflo.github.io/Chaos7_Bot/index.html">Zur Startseite von
-                Chaos7</a></p>
-    </div>
-
-    <script src="js/backgroundScript.js"></script>
-    <script src="js/applySequentialAnimations.js"></script>
+        fetch(targetUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Netzwerk-Antwort war nicht ok');
+                }
+                return response.text();
+            })
+            .then(html => {
+                // Ersetzt das gesamte Dokument-Inhalt
+                document.open();
+                document.write(html);
+                document.close();
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen der Seite:', error);
+                document.body.innerHTML = 'Fehler beim Laden der Inhalte. Details in der Konsole.';
+            });
+    </script>
 </body>
 
 </html>
