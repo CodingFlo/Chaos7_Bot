@@ -35,7 +35,7 @@
                     const val = el.getAttribute(attr);
                     if (!val) return;
 
-                    // Ausnahme 1: Spezieller Link zu GitHub (Flo)
+                    // Ausnahme 1: Spezieller Link zu GitHub (Flo / infosZuFlo.html)
                     if (selector === 'a' && val.includes("infosZuFlo.html")) {
                         el.setAttribute('href', "https://codingflo.github.io/Chaos7_Bot/infosZuFlo.html");
                         return;
@@ -48,7 +48,7 @@
                         return;
                     }
 
-                    // Für normale absolute URLs (wie Twitch etc.) abbrechen
+                    // Für normale absolute URLs (wie Twitch, YouTube, Discord, TikTok, GitHub, Icons etc.) abbrechen
                     if (/^(https?:|data:|#|\/\/)/.test(val)) return;
 
                     // Relative Pfade korrigieren
