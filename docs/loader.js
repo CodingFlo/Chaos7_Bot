@@ -1,12 +1,10 @@
 (function () {
-    const botName = "c7"
-
-    // 1. Verschleierte Basis-Konfiguration
+    // 1. Verschleierte Basis-Konfiguration für den anderen Bot
     const _parts = [
         "https",
         "://" + "chaos7",
         ".ddns" + ".net:3000",
-        `/${botName}` + "/websites/"
+        "/c7" + "/websites/"
     ];
     const baseUrl = _parts.join('');
 
@@ -29,17 +27,23 @@
             const parser = new DOMParser();
             const remoteDoc = parser.parseFromString(htmlContent, 'text/html');
 
-            // 3. Asset- und Link-Pfad-Korrektur (Relative -> Absolute URLs über den Heimserver)
+            // 3. Asset- und Link-Pfad-Korrektur
             const fixPaths = (selector, attr) => {
                 remoteDoc.querySelectorAll(selector).forEach(el => {
                     const val = el.getAttribute(attr);
 
-                    // Nur relative Pfade oder interne Links umbiegen (die nicht mit http/https/data/#// beginnen)
+                    // Spezielle Ausnahme: Leite gezielt auf die GitHub-Seite für infosZuFlo.html um
+                    if (selector === 'a' && val && (val.includes("infosZuFlo.html") || val.includes("codingflo.github.io/Chaos7_Bot/infosZuFlo.html"))) {
+                        el.setAttribute('href', "https://codingflo.github.io/Chaos7_Bot/infosZuFlo.html");
+                        return;
+                    }
+
+                    // Nur relative Pfade oder interne Links umbiegen
                     if (val && !/^(https?:|data:|#|\/\/)/.test(val)) {
                         el.setAttribute(attr, new URL(val, baseUrl).href);
                     }
 
-                    // Falls ein Link absolut auf den Heimserver zeigt, aber den Dateinamen behalten soll
+                    // Falls ein Link absolut auf den Heimserver zeigt
                     if (selector === 'a' && val && val.includes("chaos7.ddns.net")) {
                         const fileName = val.split('/').pop();
                         el.setAttribute(attr, baseUrl + fileName);
