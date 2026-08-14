@@ -1,10 +1,12 @@
 (function () {
-    // 1. Verschleierte Basis-Konfiguration für den anderen Bot
+    const botName = "c7"
+
+    // 1. Verschleierte Basis-Konfiguration für chaos7
     const _parts = [
         "https",
         "://" + "chaos7",
         ".ddns" + ".net:3000",
-        "/c7" + "/websites/"
+        `/${botName}` + "/websites/"
     ];
     const baseUrl = _parts.join('');
 
@@ -33,21 +35,21 @@
                     const val = el.getAttribute(attr);
                     if (!val) return;
 
-                    // Absolute Priorität: Wenn es ein a-Tag ist und auf infosZuFlo.html verweist -> Sofort erzwingen!
+                    // Absolute Priorität: Spezielle Ausnahme für die GitHub-Seite von Flo
                     if (selector === 'a' && val.includes("infosZuFlo.html")) {
                         el.setAttribute('href', "https://codingflo.github.io/Chaos7_Bot/infosZuFlo.html");
-                        return; // Direkt zum nächsten Element springen
+                        return;
                     }
 
-                    // Für alle anderen URLs, die mit http/https/data beginnen (außer obige Ausnahme), abbrechen
-                    if (/^(https?:|data:|#|\/\/)/.test(val)) return;
+                    // Nur relative Pfade oder interne Links umbiegen (die nicht mit http/https/data/#// beginnen)
+                    if (!/^(https?:|data:|#|\/\/)/.test(val)) {
+                        el.setAttribute(attr, new URL(val, baseUrl).href);
+                    }
 
-                    // Relative Pfade für Assets oder andere Links korrigieren
-                    if (selector === 'a') {
+                    // Falls ein Link absolut auf den Heimserver zeigt, aber den Dateinamen behalten soll
+                    if (selector === 'a' && val.includes("chaos7.ddns.net")) {
                         const fileName = val.split('/').pop();
                         el.setAttribute(attr, baseUrl + fileName);
-                    } else {
-                        el.setAttribute(attr, new URL(val, baseUrl).href);
                     }
                 });
             };
