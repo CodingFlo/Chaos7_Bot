@@ -1,62 +1,44 @@
 (function () {
-    const botName = "c7"
+    const botName = "c7";
+    // Basis für den Fetch-Befehl bleibt dein Server
+    const _parts = ["https", "://" + "chaos7", ".ddns" + ".net:3000", `/${botName}` + "/websites/"];
+    const remoteBaseUrl = _parts.join('');
 
-    // 1. Verschleierte Basis-Konfiguration
-    const _parts = [
-        "https",
-        "://" + "chaos7",
-        ".ddns" + ".net:3000",
-        `/${botName}` + "/websites/"
-    ];
-    const baseUrl = _parts.join('');
+    // Basis für die Link-Korrektur: Das, was gerade im Browser oben steht
+    const localBaseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
 
-    // 2. Automatische Erkennung des aktuellen Dateinamens
     const currentFileName = window.location.pathname.split('/').pop() || "index.html";
-
-    const targetUrl = baseUrl + currentFileName;
+    const targetUrl = remoteBaseUrl + currentFileName;
 
     async function launch() {
         try {
             const response = await fetch(targetUrl);
-
-            if (!response.ok) {
-                throw new Error(`Server antwortet mit Status ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`Status ${response.status}`);
             const htmlContent = await response.text();
 
-            // DOM vorbereiten
             const parser = new DOMParser();
             const remoteDoc = parser.parseFromString(htmlContent, 'text/html');
 
-            // 3. Asset- und Link-Pfad-Korrektur
             const fixPaths = (selector, attr) => {
                 remoteDoc.querySelectorAll(selector).forEach(el => {
                     const val = el.getAttribute(attr);
                     if (!val) return;
 
-                    // Ausnahme 1: Spezieller Link zu GitHub (Flo / infosZuFlo.html)
-                    if (selector === 'a' && val.includes("infosZuFlo.html")) {
-                        el.setAttribute('href', "https://codingflo.github.io/Chaos7_Bot/infosZuFlo.html");
-                        return;
-                    }
-
-                    // Ausnahme 2: Links, die absolut auf deinen Heimserver zeigen (z.B. index.html oder Unterseiten)
+                    // 1. Navigation/Links: Wenn es ein interner Link ist, lokal auflösen
                     if (selector === 'a' && val.includes("chaos7.ddns.net")) {
-                        const fileName = val.split('/').pop() || "index.html";
-                        el.setAttribute(attr, baseUrl + fileName);
+                        const fileName = val.split('/').pop();
+                        el.setAttribute(attr, window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + fileName);
                         return;
                     }
 
-                    // Für normale absolute URLs (wie Twitch, YouTube, Discord, TikTok, GitHub, Icons etc.) abbrechen
-                    if (/^(https?:|data:|#|\/\/)/.test(val)) return;
-
-                    // Relative Pfade korrigieren
-                    if (selector === 'a') {
-                        const fileName = val.split('/').pop();
-                        el.setAttribute(attr, baseUrl + fileName);
-                    } else {
-                        el.setAttribute(attr, new URL(val, baseUrl).href);
+                    // 2. Assets (CSS, JS, Bilder): Diese MÜSSEN vom Server kommen, 
+                    // da sie lokal auf deinem Test-Rechner nicht existieren.
+                    if (selector !== 'a') {
+                        // Wenn der Pfad relativ ist, mache ihn absolut zum Server
+                        if (!/^(https?:|data:|#|\/\/)/.test(val)) {
+                            // Hier erzwingen wir die absolute URL zum Remote-Server
+                            el.setAttribute(attr, new URL(val, remoteBaseUrl).href);
+                        }
                     }
                 });
             };
@@ -67,18 +49,22 @@
             fixPaths('source', 'src');
             fixPaths('a', 'href');
 
-            // 4. Seite komplett ersetzen
             document.open();
             document.write(remoteDoc.documentElement.outerHTML);
             document.close();
 
+            setTimeout(() => {
+                const loader = document.querySelector('#loader, .loader, #loading-screen');
+                if (loader) {
+                    loader.style.display = 'none';
+                    loader.style.opacity = '0';
+                }
+                window.dispatchEvent(new Event('load'));
+            }, 500);
+
         } catch (err) {
             console.error("Loader Error:", err);
-            document.body.innerHTML = `
-                <div style="text-align:center; font-family:sans-serif; color:#555; padding-top:20vh;">
-                    <h2 style="color:#09f;">Inhalt konnte nicht geladen werden</h2>
-                    <p>${currentFileName} auf dem Remote-Server nicht erreichbar.</p>
-                </div>`;
+            document.body.innerHTML = `<div style="text-align:center; padding-top:20vh;"><h2>Fehler</h2><p>Inhalt nicht erreichbar.</p></div>`;
         }
     }
 
