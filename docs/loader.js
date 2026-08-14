@@ -1,7 +1,7 @@
 (function () {
     const botName = "c7"
 
-    // 1. Verschleierte Basis-Konfiguration für chaos7
+    // 1. Verschleierte Basis-Konfiguration
     const _parts = [
         "https",
         "://" + "chaos7",
@@ -35,21 +35,28 @@
                     const val = el.getAttribute(attr);
                     if (!val) return;
 
-                    // Absolute Priorität: Spezielle Ausnahme für die GitHub-Seite von Flo
+                    // Ausnahme 1: Spezieller Link zu GitHub (Flo)
                     if (selector === 'a' && val.includes("infosZuFlo.html")) {
                         el.setAttribute('href', "https://codingflo.github.io/Chaos7_Bot/infosZuFlo.html");
                         return;
                     }
 
-                    // Nur relative Pfade oder interne Links umbiegen (die nicht mit http/https/data/#// beginnen)
-                    if (!/^(https?:|data:|#|\/\/)/.test(val)) {
-                        el.setAttribute(attr, new URL(val, baseUrl).href);
+                    // Ausnahme 2: Links, die absolut auf deinen Heimserver zeigen (z.B. index.html oder Unterseiten)
+                    if (selector === 'a' && val.includes("chaos7.ddns.net")) {
+                        const fileName = val.split('/').pop() || "index.html";
+                        el.setAttribute(attr, baseUrl + fileName);
+                        return;
                     }
 
-                    // Falls ein Link absolut auf den Heimserver zeigt, aber den Dateinamen behalten soll
-                    if (selector === 'a' && val.includes("chaos7.ddns.net")) {
+                    // Für normale absolute URLs (wie Twitch etc.) abbrechen
+                    if (/^(https?:|data:|#|\/\/)/.test(val)) return;
+
+                    // Relative Pfade korrigieren
+                    if (selector === 'a') {
                         const fileName = val.split('/').pop();
                         el.setAttribute(attr, baseUrl + fileName);
+                    } else {
+                        el.setAttribute(attr, new URL(val, baseUrl).href);
                     }
                 });
             };
