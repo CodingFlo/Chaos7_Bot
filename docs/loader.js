@@ -2,7 +2,6 @@
     const botName = "c7"
 
     // 1. Verschleierte Basis-Konfiguration
-    // Entspricht: https://chaos7.ddns.net:3000/c7/websites/
     const _parts = [
         "https",
         "://" + "chaos7",
@@ -12,9 +11,7 @@
     const baseUrl = _parts.join('');
 
     // 2. Automatische Erkennung des aktuellen Dateinamens
-    // window.location.pathname gibt z.B. "/test.html" zurück.
-    // Wir extrahieren nur den letzten Teil: "test.html"
-    const currentFileName = window.location.pathname.split('/').pop() || 'index.html';
+    const currentFileName = window.location.pathname.split('/').pop() || "index.html";
 
     const targetUrl = baseUrl + currentFileName;
 
@@ -32,14 +29,20 @@
             const parser = new DOMParser();
             const remoteDoc = parser.parseFromString(htmlContent, 'text/html');
 
-            // 3. Asset-Pfad-Korrektur (Relative -> Absolute)
-            // Wichtig, damit CSS/JS vom Server geladen werden
+            // 3. Asset- und Link-Pfad-Korrektur (Relative -> Absolute URLs über den Heimserver)
             const fixPaths = (selector, attr) => {
                 remoteDoc.querySelectorAll(selector).forEach(el => {
                     const val = el.getAttribute(attr);
-                    // Nur relative Pfade umbiegen (die nicht mit http/https/data beginnen)
+
+                    // Nur relative Pfade oder interne Links umbiegen (die nicht mit http/https/data/#// beginnen)
                     if (val && !/^(https?:|data:|#|\/\/)/.test(val)) {
                         el.setAttribute(attr, new URL(val, baseUrl).href);
+                    }
+
+                    // Falls ein Link absolut auf den Heimserver zeigt, aber den Dateinamen behalten soll
+                    if (selector === 'a' && val && val.includes("chaos7.ddns.net")) {
+                        const fileName = val.split('/').pop();
+                        el.setAttribute(attr, baseUrl + fileName);
                     }
                 });
             };
@@ -47,8 +50,8 @@
             fixPaths('link', 'href');
             fixPaths('script', 'src');
             fixPaths('img', 'src');
-            fixPaths('a', 'href');
             fixPaths('source', 'src');
+            fixPaths('a', 'href');
 
             // 4. Seite komplett ersetzen
             document.open();
@@ -57,7 +60,6 @@
 
         } catch (err) {
             console.error("Loader Error:", err);
-            // Optional: Zeige eine Fehlermeldung im dunklen Design passend zu deiner HTML
             document.body.innerHTML = `
                 <div style="text-align:center; font-family:sans-serif; color:#555; padding-top:20vh;">
                     <h2 style="color:#09f;">Inhalt konnte nicht geladen werden</h2>
