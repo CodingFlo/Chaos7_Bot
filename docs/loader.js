@@ -4,9 +4,6 @@
     const _parts = ["https", "://" + "chaos7", ".ddns" + ".net:3000", `/${botName}` + "/websites/"];
     const remoteBaseUrl = _parts.join('');
 
-    // Basis für die Link-Korrektur: Das, was gerade im Browser oben steht
-    const localBaseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
-
     const currentFileName = window.location.pathname.split('/').pop() || "index.html";
     const targetUrl = remoteBaseUrl + currentFileName;
 
